@@ -107,7 +107,7 @@ Partial Class timeControlInfo
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(296, 284)
+        Me.ClientSize = New System.Drawing.Size(301, 284)
         Me.Controls.Add(Me.pb_example)
         Me.Controls.Add(Me.tlp_timeControlInfo)
         Me.Controls.Add(Me.lbl_header)
