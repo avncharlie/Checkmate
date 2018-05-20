@@ -72,11 +72,17 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Time Controls.vb">
+    <Compile Include="timeControlInfo.Designer.vb">
+      <DependentUpon>timeControlInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="timeControlInfo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Time Controls.Designer.vb">
-      <DependentUpon>Time Controls.vb</DependentUpon>
+    <Compile Include="timeControls.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="timeControls.Designer.vb">
+      <DependentUpon>timeControls.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -96,8 +102,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Time Controls.resx">
-      <DependentUpon>Time Controls.vb</DependentUpon>
+    <EmbeddedResource Include="timeControlInfo.resx">
+      <DependentUpon>timeControlInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="timeControls.resx">
+      <DependentUpon>timeControls.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

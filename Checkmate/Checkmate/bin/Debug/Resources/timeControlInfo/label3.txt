@@ -1,0 +1,1 @@
+Time controls are usualy expressed as x+y, where x is the total time in minutes for each player and y is the increment in seconds. For example a game with a time control of 1 + 5 would mean each player has one minute in total to play and five seconds increment every time they moved.

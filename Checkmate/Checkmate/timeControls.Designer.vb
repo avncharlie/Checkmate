@@ -24,18 +24,18 @@ Partial Class timeControls
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(timeControls))
         Me.tlp_timeControls = New System.Windows.Forms.TableLayoutPanel()
-        Me.btn_9 = New System.Windows.Forms.Button()
-        Me.btn_8 = New System.Windows.Forms.Button()
+        Me.lbl_timeControls = New System.Windows.Forms.Label()
+        Me.link_howDoesThisWork = New System.Windows.Forms.LinkLabel()
+        Me.btn_back = New System.Windows.Forms.Button()
         Me.btn_7 = New System.Windows.Forms.Button()
-        Me.btn_6 = New System.Windows.Forms.Button()
-        Me.btn_5 = New System.Windows.Forms.Button()
+        Me.btn_8 = New System.Windows.Forms.Button()
+        Me.btn_9 = New System.Windows.Forms.Button()
         Me.btn_4 = New System.Windows.Forms.Button()
+        Me.btn_5 = New System.Windows.Forms.Button()
+        Me.btn_6 = New System.Windows.Forms.Button()
         Me.btn_3 = New System.Windows.Forms.Button()
         Me.btn_2 = New System.Windows.Forms.Button()
         Me.btn_1 = New System.Windows.Forms.Button()
-        Me.link_howDoesThisWork = New System.Windows.Forms.LinkLabel()
-        Me.btn_back = New System.Windows.Forms.Button()
-        Me.lbl_timeControls = New System.Windows.Forms.Label()
         Me.tlp_timeControls.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -72,27 +72,42 @@ Partial Class timeControls
         Me.tlp_timeControls.Size = New System.Drawing.Size(394, 471)
         Me.tlp_timeControls.TabIndex = 1
         '
-        'btn_9
+        'lbl_timeControls
         '
-        Me.btn_9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btn_9.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_9.Location = New System.Drawing.Point(265, 298)
-        Me.btn_9.Name = "btn_9"
-        Me.btn_9.Size = New System.Drawing.Size(126, 114)
-        Me.btn_9.TabIndex = 8
-        Me.btn_9.Text = "Custom"
-        Me.btn_9.UseVisualStyleBackColor = True
+        Me.lbl_timeControls.AutoSize = True
+        Me.tlp_timeControls.SetColumnSpan(Me.lbl_timeControls, 3)
+        Me.lbl_timeControls.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbl_timeControls.Font = New System.Drawing.Font("Verdana", 18.0!)
+        Me.lbl_timeControls.Location = New System.Drawing.Point(3, 0)
+        Me.lbl_timeControls.Name = "lbl_timeControls"
+        Me.lbl_timeControls.Size = New System.Drawing.Size(388, 46)
+        Me.lbl_timeControls.TabIndex = 11
+        Me.lbl_timeControls.Text = "Choose Time Control"
+        Me.lbl_timeControls.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
-        'btn_8
+        'link_howDoesThisWork
         '
-        Me.btn_8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btn_8.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_8.Location = New System.Drawing.Point(134, 298)
-        Me.btn_8.Name = "btn_8"
-        Me.btn_8.Size = New System.Drawing.Size(125, 114)
-        Me.btn_8.TabIndex = 7
-        Me.btn_8.Text = "15 + 15"
-        Me.btn_8.UseVisualStyleBackColor = True
+        Me.link_howDoesThisWork.AutoSize = True
+        Me.tlp_timeControls.SetColumnSpan(Me.link_howDoesThisWork, 2)
+        Me.link_howDoesThisWork.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.link_howDoesThisWork.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.link_howDoesThisWork.Location = New System.Drawing.Point(3, 424)
+        Me.link_howDoesThisWork.Name = "link_howDoesThisWork"
+        Me.link_howDoesThisWork.Size = New System.Drawing.Size(256, 47)
+        Me.link_howDoesThisWork.TabIndex = 9
+        Me.link_howDoesThisWork.TabStop = True
+        Me.link_howDoesThisWork.Text = "How does this work?"
+        Me.link_howDoesThisWork.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'btn_back
+        '
+        Me.btn_back.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btn_back.Location = New System.Drawing.Point(265, 427)
+        Me.btn_back.Name = "btn_back"
+        Me.btn_back.Size = New System.Drawing.Size(126, 41)
+        Me.btn_back.TabIndex = 10
+        Me.btn_back.Text = "Back"
+        Me.btn_back.UseVisualStyleBackColor = True
         '
         'btn_7
         '
@@ -105,16 +120,38 @@ Partial Class timeControls
         Me.btn_7.Text = "10 + 0"
         Me.btn_7.UseVisualStyleBackColor = True
         '
-        'btn_6
+        'btn_8
         '
-        Me.btn_6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btn_6.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_6.Location = New System.Drawing.Point(265, 178)
-        Me.btn_6.Name = "btn_6"
-        Me.btn_6.Size = New System.Drawing.Size(126, 114)
-        Me.btn_6.TabIndex = 5
-        Me.btn_6.Text = "5 + 5"
-        Me.btn_6.UseVisualStyleBackColor = True
+        Me.btn_8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btn_8.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_8.Location = New System.Drawing.Point(134, 298)
+        Me.btn_8.Name = "btn_8"
+        Me.btn_8.Size = New System.Drawing.Size(125, 114)
+        Me.btn_8.TabIndex = 7
+        Me.btn_8.Text = "15 + 15"
+        Me.btn_8.UseVisualStyleBackColor = True
+        '
+        'btn_9
+        '
+        Me.btn_9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btn_9.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_9.Location = New System.Drawing.Point(265, 298)
+        Me.btn_9.Name = "btn_9"
+        Me.btn_9.Size = New System.Drawing.Size(126, 114)
+        Me.btn_9.TabIndex = 8
+        Me.btn_9.Text = "Custom"
+        Me.btn_9.UseVisualStyleBackColor = True
+        '
+        'btn_4
+        '
+        Me.btn_4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btn_4.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_4.Location = New System.Drawing.Point(3, 178)
+        Me.btn_4.Name = "btn_4"
+        Me.btn_4.Size = New System.Drawing.Size(125, 114)
+        Me.btn_4.TabIndex = 3
+        Me.btn_4.Text = "3 + 5"
+        Me.btn_4.UseVisualStyleBackColor = True
         '
         'btn_5
         '
@@ -127,16 +164,16 @@ Partial Class timeControls
         Me.btn_5.Text = "5 + 0"
         Me.btn_5.UseVisualStyleBackColor = True
         '
-        'btn_4
+        'btn_6
         '
-        Me.btn_4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btn_4.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_4.Location = New System.Drawing.Point(3, 178)
-        Me.btn_4.Name = "btn_4"
-        Me.btn_4.Size = New System.Drawing.Size(125, 114)
-        Me.btn_4.TabIndex = 3
-        Me.btn_4.Text = "3 + 5"
-        Me.btn_4.UseVisualStyleBackColor = True
+        Me.btn_6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btn_6.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_6.Location = New System.Drawing.Point(265, 178)
+        Me.btn_6.Name = "btn_6"
+        Me.btn_6.Size = New System.Drawing.Size(126, 114)
+        Me.btn_6.TabIndex = 5
+        Me.btn_6.Text = "5 + 5"
+        Me.btn_6.UseVisualStyleBackColor = True
         '
         'btn_3
         '
@@ -171,43 +208,6 @@ Partial Class timeControls
         Me.btn_1.Text = "1 + 0"
         Me.btn_1.UseVisualStyleBackColor = True
         '
-        'link_howDoesThisWork
-        '
-        Me.link_howDoesThisWork.AutoSize = True
-        Me.tlp_timeControls.SetColumnSpan(Me.link_howDoesThisWork, 2)
-        Me.link_howDoesThisWork.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.link_howDoesThisWork.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.link_howDoesThisWork.Location = New System.Drawing.Point(3, 424)
-        Me.link_howDoesThisWork.Name = "link_howDoesThisWork"
-        Me.link_howDoesThisWork.Size = New System.Drawing.Size(256, 47)
-        Me.link_howDoesThisWork.TabIndex = 9
-        Me.link_howDoesThisWork.TabStop = True
-        Me.link_howDoesThisWork.Text = "How does this work?"
-        Me.link_howDoesThisWork.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'btn_back
-        '
-        Me.btn_back.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btn_back.Location = New System.Drawing.Point(265, 427)
-        Me.btn_back.Name = "btn_back"
-        Me.btn_back.Size = New System.Drawing.Size(126, 41)
-        Me.btn_back.TabIndex = 10
-        Me.btn_back.Text = "Back"
-        Me.btn_back.UseVisualStyleBackColor = True
-        '
-        'lbl_timeControls
-        '
-        Me.lbl_timeControls.AutoSize = True
-        Me.tlp_timeControls.SetColumnSpan(Me.lbl_timeControls, 3)
-        Me.lbl_timeControls.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lbl_timeControls.Font = New System.Drawing.Font("Verdana", 18.0!)
-        Me.lbl_timeControls.Location = New System.Drawing.Point(3, 0)
-        Me.lbl_timeControls.Name = "lbl_timeControls"
-        Me.lbl_timeControls.Size = New System.Drawing.Size(388, 46)
-        Me.lbl_timeControls.TabIndex = 11
-        Me.lbl_timeControls.Text = "Choose Time Control"
-        Me.lbl_timeControls.TextAlign = System.Drawing.ContentAlignment.BottomLeft
-        '
         'timeControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
@@ -217,6 +217,7 @@ Partial Class timeControls
         Me.Font = New System.Drawing.Font("Verdana", 7.875!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.Name = "timeControls"
         Me.Text = "Checkmate"
         Me.tlp_timeControls.ResumeLayout(False)
