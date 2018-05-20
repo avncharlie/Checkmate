@@ -77,9 +77,10 @@ Partial Class timeControls
         Me.lbl_timeControls.AutoSize = True
         Me.tlp_timeControls.SetColumnSpan(Me.lbl_timeControls, 3)
         Me.lbl_timeControls.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lbl_timeControls.Font = New System.Drawing.Font("Verdana", 18.0!)
+        Me.lbl_timeControls.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_timeControls.Location = New System.Drawing.Point(3, 0)
         Me.lbl_timeControls.Name = "lbl_timeControls"
+        Me.lbl_timeControls.Padding = New System.Windows.Forms.Padding(8, 0, 0, 0)
         Me.lbl_timeControls.Size = New System.Drawing.Size(388, 46)
         Me.lbl_timeControls.TabIndex = 11
         Me.lbl_timeControls.Text = "Choose Time Control"
@@ -218,6 +219,7 @@ Partial Class timeControls
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
+        Me.MaximizeBox = False
         Me.Name = "timeControls"
         Me.Text = "Checkmate"
         Me.tlp_timeControls.ResumeLayout(False)

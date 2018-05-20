@@ -72,6 +72,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="customTimeControl.Designer.vb">
+      <DependentUpon>customTimeControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="customTimeControl.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="timeControlInfo.Designer.vb">
       <DependentUpon>timeControlInfo.vb</DependentUpon>
     </Compile>
@@ -102,6 +108,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="customTimeControl.resx">
+      <DependentUpon>customTimeControl.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="timeControlInfo.resx">
       <DependentUpon>timeControlInfo.vb</DependentUpon>
     </EmbeddedResource>
