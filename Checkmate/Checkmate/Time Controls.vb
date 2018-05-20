@@ -1,4 +1,4 @@
-﻿Public Class Menu
+﻿Public Class timeControls
 
     Private Sub Menu_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
     End Sub
