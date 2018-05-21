@@ -9,10 +9,11 @@
 
     Private Sub btn_9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_9.Click
         customTimeControl.Show()
-        Me.Hide()
+        Me.Close()
     End Sub
 
-    Private Sub TimeControls_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub btn_back_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_back.Click
         mainMenu.Show()
+        Me.Close()
     End Sub
 End Class

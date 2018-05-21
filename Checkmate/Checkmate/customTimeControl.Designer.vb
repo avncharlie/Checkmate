@@ -92,6 +92,7 @@ Partial Class customTimeControl
         Me.tbox_totalTime.Name = "tbox_totalTime"
         Me.tbox_totalTime.Size = New System.Drawing.Size(58, 20)
         Me.tbox_totalTime.TabIndex = 5
+        Me.tbox_totalTime.Text = "1"
         '
         'tbox_increment
         '
@@ -99,6 +100,7 @@ Partial Class customTimeControl
         Me.tbox_increment.Name = "tbox_increment"
         Me.tbox_increment.Size = New System.Drawing.Size(58, 20)
         Me.tbox_increment.TabIndex = 6
+        Me.tbox_increment.Text = "0"
         '
         'lbl_result
         '

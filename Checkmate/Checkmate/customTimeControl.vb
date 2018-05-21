@@ -1,62 +1,76 @@
 ﻿Public Class customTimeControl
+    Dim finalTotalTime As Integer = 1
+    Dim finalIncrement As Integer = 0
 
     Private Sub customTimeControl_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        updateVisuals()
+        updateLabel()
     End Sub
 
-    Private Sub customTimeControl_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        timeControls.Show()
+    ' update preview label
+    Private Sub updateLabel()
+        lbl_result.Text = finalTotalTime & " + " & finalIncrement
     End Sub
 
-    Private Sub tb_timePerSide_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_timePerSide.Scroll, tb_increment.Scroll
-        updateVisuals()
+    ' update textbox and preview label value's when slider changed
+    Private Sub tb_timePerSide_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_timePerSide.Scroll
+        Dim value = tb_timePerSide.Value
+        finalTotalTime = value
+        tbox_totalTime.Text = value
+        updateLabel()
     End Sub
 
-    Private Sub updateVisuals()
-        updateVisualsFromTrackbar()
-        tbox_totalTime.Text = tb_timePerSide.Value
-        tbox_increment.Text = tb_increment.Value
+    ' update textbox and preview label value's when slider changed
+    Private Sub tb_increment_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_increment.Scroll
+        Dim value = tb_increment.Value
+        finalIncrement = value
+        tbox_increment.Text = value
+        updateLabel()
     End Sub
 
-    Private Sub updateVisualsFromTrackbar()
-        lbl_result.Text = tb_timePerSide.Value & " + " & tb_increment.Value
-    End Sub
-
-    Private Sub updateVisualsFromTextboxes()
-        Dim totalTime = tbox_totalTime.Text
-        Dim increment = tbox_increment.Text
-        If Not IsNumeric(totalTime) Then
-            totalTime = tb_timePerSide.Value
-        End If
-        If Not IsNumeric(increment) Then
-            increment = tb_increment.Value
-        End If
-        lbl_result.Text = totalTime & " + " & increment
-    End Sub
-
-    Private Sub tbox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbox_totalTime.TextChanged, tbox_increment.TextChanged
-        Dim tboxValue = sender.Text
-        If IsNumeric(tboxValue) Then
-            If tboxValue >= 1 And tboxValue <= 60 Then
-                If CType(sender, TextBox).Name = "tbox_increment" Then
-                    tb_increment.Value = tboxValue
-                Else
-                    tb_timePerSide.Value = tboxValue
-                End If
-                updateVisualsFromTrackbar()
-            ElseIf tboxValue >= 60 And tboxValue <= 1000 Then
-                If CType(sender, TextBox).Name = "tbox_increment" Then
-                    tb_increment.Value = 60
-                Else
-                    tb_timePerSide.Value = 60
-                End If
-                updateVisualsFromTextboxes()
+    ' update slider and preview label value's when textbox changed
+    Private Sub tbox_totalTime_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbox_totalTime.TextChanged
+        Dim value = tbox_totalTime.Text
+        If IsNumeric(value) Then
+            If value >= 1 And value <= 60 Then
+                finalTotalTime = value
+                tb_timePerSide.Value = value
+                updateLabel()
+            ElseIf value > 60 And value <= 1000 Then
+                finalTotalTime = value
+                tb_timePerSide.Value = 60
+                updateLabel()
             End If
         End If
     End Sub
 
+    ' update slider and preview label value's when textbox changed
+    Private Sub tbox_increment_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbox_increment.TextChanged
+        Dim value = tbox_increment.Text
+        If IsNumeric(value) Then
+            If value >= 1 And value <= 60 Then
+                finalIncrement = value
+                tb_increment.Value = value
+                updateLabel()
+            ElseIf value > 60 And value <= 1000 Then
+                finalIncrement = value
+                tb_increment.Value = 60
+                updateLabel()
+            End If
+        End If
+    End Sub
+
+    ' validate input of textboxes
+    Private Sub tbox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles tbox_increment.KeyPress, tbox_totalTime.KeyPress
+        Dim allowedChars As String = "0123456789"
+        If allowedChars.IndexOf(e.KeyChar) = -1 And Char.IsControl(e.KeyChar) <> True Then
+            e.Handled = True
+        End If
+    End Sub
+
+    ' show time controls form and hide this form when back button pressed
     Private Sub btn_back_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_back.Click
         timeControls.Show()
         Me.Close()
     End Sub
+
 End Class
