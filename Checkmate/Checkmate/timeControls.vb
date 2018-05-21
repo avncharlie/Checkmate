@@ -11,4 +11,8 @@
         customTimeControl.Show()
         Me.Hide()
     End Sub
+
+    Private Sub TimeControls_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        mainMenu.Show()
+    End Sub
 End Class

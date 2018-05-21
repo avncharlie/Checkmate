@@ -48,6 +48,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -76,6 +79,12 @@
       <DependentUpon>customTimeControl.vb</DependentUpon>
     </Compile>
     <Compile Include="customTimeControl.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainMenu.Designer.vb">
+      <DependentUpon>mainMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mainMenu.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="timeControlInfo.Designer.vb">
@@ -111,6 +120,9 @@
     <EmbeddedResource Include="customTimeControl.resx">
       <DependentUpon>customTimeControl.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="mainMenu.resx">
+      <DependentUpon>mainMenu.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="timeControlInfo.resx">
       <DependentUpon>timeControlInfo.vb</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +146,9 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

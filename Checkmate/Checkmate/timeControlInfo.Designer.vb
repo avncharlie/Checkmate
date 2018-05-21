@@ -79,6 +79,10 @@ Partial Class timeControlInfo
         Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.tlp_timeControlInfo.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.tlp_timeControlInfo.Size = New System.Drawing.Size(289, 400)
         Me.tlp_timeControlInfo.TabIndex = 3
         '
@@ -90,7 +94,7 @@ Partial Class timeControlInfo
         Me.lbl_3.Location = New System.Drawing.Point(3, 52)
         Me.lbl_3.Name = "lbl_3"
         Me.lbl_3.Padding = New System.Windows.Forms.Padding(0, 0, 0, 10)
-        Me.lbl_3.Size = New System.Drawing.Size(283, 348)
+        Me.lbl_3.Size = New System.Drawing.Size(283, 26)
         Me.lbl_3.TabIndex = 3
         '
         'pb_example
