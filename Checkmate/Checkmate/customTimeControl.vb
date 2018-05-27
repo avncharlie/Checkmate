@@ -73,4 +73,11 @@
         Me.Close()
     End Sub
 
+    ' update time control data and close form
+    Private Sub btn_continue_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_continue.Click
+        options.increment = finalIncrement
+        options.totalTime = finalTotalTime
+        Me.Close()
+        game.Show()
+    End Sub
 End Class

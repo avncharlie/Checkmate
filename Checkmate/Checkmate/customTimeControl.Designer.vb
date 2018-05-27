@@ -31,7 +31,7 @@ Partial Class customTimeControl
         Me.tbox_totalTime = New System.Windows.Forms.TextBox()
         Me.tbox_increment = New System.Windows.Forms.TextBox()
         Me.lbl_result = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btn_continue = New System.Windows.Forms.Button()
         Me.btn_back = New System.Windows.Forms.Button()
         CType(Me.tb_timePerSide, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tb_increment, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -112,15 +112,15 @@ Partial Class customTimeControl
         Me.lbl_result.TabIndex = 7
         Me.lbl_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Button1
+        'btn_continue
         '
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(334, 195)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(85, 56)
-        Me.Button1.TabIndex = 8
-        Me.Button1.Text = "Continue"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btn_continue.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_continue.Location = New System.Drawing.Point(334, 195)
+        Me.btn_continue.Name = "btn_continue"
+        Me.btn_continue.Size = New System.Drawing.Size(85, 56)
+        Me.btn_continue.TabIndex = 8
+        Me.btn_continue.Text = "Continue"
+        Me.btn_continue.UseVisualStyleBackColor = True
         '
         'btn_back
         '
@@ -137,7 +137,7 @@ Partial Class customTimeControl
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(431, 294)
         Me.Controls.Add(Me.btn_back)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btn_continue)
         Me.Controls.Add(Me.lbl_result)
         Me.Controls.Add(Me.tbox_increment)
         Me.Controls.Add(Me.tbox_totalTime)
@@ -165,6 +165,6 @@ Partial Class customTimeControl
     Friend WithEvents tbox_totalTime As System.Windows.Forms.TextBox
     Friend WithEvents tbox_increment As System.Windows.Forms.TextBox
     Friend WithEvents lbl_result As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btn_continue As System.Windows.Forms.Button
     Friend WithEvents btn_back As System.Windows.Forms.Button
 End Class

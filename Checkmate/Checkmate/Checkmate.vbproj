@@ -81,12 +81,19 @@
     <Compile Include="customTimeControl.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="game.Designer.vb">
+      <DependentUpon>game.vb</DependentUpon>
+    </Compile>
+    <Compile Include="game.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="mainMenu.Designer.vb">
       <DependentUpon>mainMenu.vb</DependentUpon>
     </Compile>
     <Compile Include="mainMenu.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="options.vb" />
     <Compile Include="timeControlInfo.Designer.vb">
       <DependentUpon>timeControlInfo.vb</DependentUpon>
     </Compile>
@@ -120,6 +127,9 @@
     <EmbeddedResource Include="customTimeControl.resx">
       <DependentUpon>customTimeControl.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="game.resx">
+      <DependentUpon>game.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="mainMenu.resx">
       <DependentUpon>mainMenu.vb</DependentUpon>
     </EmbeddedResource>
@@ -148,7 +158,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\timeControlInfoExample.png" />
+    <None Include="Resources\mainScreenChessboard.png" />
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

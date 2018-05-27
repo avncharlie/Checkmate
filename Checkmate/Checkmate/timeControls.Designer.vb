@@ -29,7 +29,7 @@ Partial Class timeControls
         Me.btn_back = New System.Windows.Forms.Button()
         Me.btn_7 = New System.Windows.Forms.Button()
         Me.btn_8 = New System.Windows.Forms.Button()
-        Me.btn_9 = New System.Windows.Forms.Button()
+        Me.btn_custom = New System.Windows.Forms.Button()
         Me.btn_4 = New System.Windows.Forms.Button()
         Me.btn_5 = New System.Windows.Forms.Button()
         Me.btn_6 = New System.Windows.Forms.Button()
@@ -50,7 +50,7 @@ Partial Class timeControls
         Me.tlp_timeControls.Controls.Add(Me.btn_back, 2, 6)
         Me.tlp_timeControls.Controls.Add(Me.btn_7, 0, 4)
         Me.tlp_timeControls.Controls.Add(Me.btn_8, 1, 4)
-        Me.tlp_timeControls.Controls.Add(Me.btn_9, 2, 4)
+        Me.tlp_timeControls.Controls.Add(Me.btn_custom, 2, 4)
         Me.tlp_timeControls.Controls.Add(Me.btn_4, 0, 3)
         Me.tlp_timeControls.Controls.Add(Me.btn_5, 1, 3)
         Me.tlp_timeControls.Controls.Add(Me.btn_6, 2, 3)
@@ -132,16 +132,16 @@ Partial Class timeControls
         Me.btn_8.Text = "15 + 15"
         Me.btn_8.UseVisualStyleBackColor = True
         '
-        'btn_9
+        'btn_custom
         '
-        Me.btn_9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btn_9.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_9.Location = New System.Drawing.Point(265, 298)
-        Me.btn_9.Name = "btn_9"
-        Me.btn_9.Size = New System.Drawing.Size(126, 114)
-        Me.btn_9.TabIndex = 8
-        Me.btn_9.Text = "Custom"
-        Me.btn_9.UseVisualStyleBackColor = True
+        Me.btn_custom.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btn_custom.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_custom.Location = New System.Drawing.Point(265, 298)
+        Me.btn_custom.Name = "btn_custom"
+        Me.btn_custom.Size = New System.Drawing.Size(126, 114)
+        Me.btn_custom.TabIndex = 8
+        Me.btn_custom.Text = "Custom"
+        Me.btn_custom.UseVisualStyleBackColor = True
         '
         'btn_4
         '
@@ -228,7 +228,7 @@ Partial Class timeControls
 
     End Sub
     Friend WithEvents tlp_timeControls As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents btn_9 As System.Windows.Forms.Button
+    Friend WithEvents btn_custom As System.Windows.Forms.Button
     Friend WithEvents btn_8 As System.Windows.Forms.Button
     Friend WithEvents btn_7 As System.Windows.Forms.Button
     Friend WithEvents btn_6 As System.Windows.Forms.Button

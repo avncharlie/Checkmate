@@ -1,0 +1,17 @@
+Dim BMP As New Drawing.Bitmap(300, 300)
+    Dim GFX As Graphics = Graphics.FromImage(BMP)
+
+
+Private Sub draw()
+        GFX.FillRectangle(Brushes.Yellow, 0, 0, pb_canvas.Width, pb_canvas.Height)
+        GFX.DrawLine(Pens.Aqua, 0, 0, 50, 50)
+        Dim newImage As Image = Image.FromFile(Application.StartupPath + "\Resources\BlackBishop.png")
+        GFX.DrawImage(newImage, 0, 0)
+        GFX.DrawImage(newImage, 10, 10)
+        pb_canvas.Image = BMP
+    End Sub
+
+    Private Sub flip()
+        pb_canvas.Image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+        pb_canvas.Refresh()
+    End Sub

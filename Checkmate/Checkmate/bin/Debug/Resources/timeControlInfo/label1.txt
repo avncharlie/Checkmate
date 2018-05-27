@@ -1,1 +1,0 @@
-Time controls restrict the total time each player has in a game. The time a player takes on their turn is deducted from the time they have remaining while the other players clock is paused. Once a player moves, their clock is paused while the other player takes their turn.

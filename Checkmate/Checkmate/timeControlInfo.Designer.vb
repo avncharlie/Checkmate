@@ -121,6 +121,7 @@ Partial Class timeControlInfo
         Me.KeyPreview = True
         Me.Name = "timeControlInfo"
         Me.Text = "Time Controls Information"
+        Me.TopMost = True
         Me.tlp_timeControlInfo.ResumeLayout(False)
         Me.tlp_timeControlInfo.PerformLayout()
         CType(Me.pb_example, System.ComponentModel.ISupportInitialize).EndInit()
