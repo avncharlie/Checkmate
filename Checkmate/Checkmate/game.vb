@@ -5,11 +5,12 @@
     ' \__ \ _|  | | | |_| |  _/
     ' |___/___| |_|  \___/|_|  
 
-    ' move history and previous chessboards
+    ' chessboard, move history and previous chessboards
+    Dim chessboard(7, 7) As Char
     Dim history As String = ""
     Dim previousChessboards As String = Checkmate.My.Resources.txt_chessboardStartingPosition
 
-    ' the TimeSpan data type automatically spills the minutes over to the hours if the amount of minutes is over 60
+    ' time left
     Dim timeLeftWhite As New TimeSpan(0, options.totalTime, 0)
     Dim timeLeftBlack As New TimeSpan(0, options.totalTime, 0)
     Dim increment As New TimeSpan(0, 0, options.increment)
@@ -19,7 +20,12 @@
     Dim whiteTimer As New Timer With {.Interval = 100}
     Dim blackTimer As New Timer With {.Interval = 100}
 
-    Dim chessboard(7, 7) As Char
+    ' interval is the slight pause before switching sides
+    Dim movePauseTimer As New Timer With {.Interval = 400}
+    Dim ignoreMoveTimer = False
+
+    ' turn - if true, white, if false, black
+    Dim turn As Boolean = True
 
     '  __  __   _   ___ _  _ 
     ' |  \/  | /_\ |_ _| \| |
@@ -41,13 +47,17 @@
     ' |_||_|___|____|_| |___|_|_\|___/
 
     ' display board
-    Private Sub displayBoard()
+    Private Sub displayBoard(Optional ByVal whiteSideOrientation As Boolean = True)
         lb_visualStub.Items.Clear()
         Dim foo As String = ""
         For y = 0 To 7
             foo = ""
             For x = 0 To 7
-                foo = foo & " " & chessboard(x, 7 - y)
+                If whiteSideOrientation Then
+                    foo = foo & " " & chessboard(x, 7 - y)
+                Else
+                    foo = foo & " " & chessboard(x, y)
+                End If
             Next
             lb_visualStub.Items.Add(foo)
         Next
@@ -88,6 +98,15 @@
             makeCharUpper = c
         End If
     End Function
+
+    ' update move indicator
+    Private Sub updateMoveIndicator()
+        If turn Then
+            lbl_moveIndicator.Text = "White to move"
+        Else
+            lbl_moveIndicator.Text = "Black to move"
+        End If
+    End Sub
 
 
     '  _  _ ___ ___ _____ ___  _____   __
@@ -218,6 +237,10 @@
 
     ' move piece in chessboard, update history, store previous chessboard position in previousChessboards
     Private Sub movePiece(ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
+        ' update moveIndicator
+        turn = Not turn
+        updateMoveIndicator()
+
         ' make history
         makeHistory(x1, y1, x2, y2)
 
@@ -275,7 +298,14 @@
     ' move piece test
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         movePiece(TextBox4.Text, TextBox3.Text, TextBox6.Text, TextBox5.Text)
-        displayBoard()
+
+        displayBoard(Not turn)
+
+        ' makes sure delay is same for both sides
+        movePauseTimer.Stop()
+        movePauseTimer.Start()
+
+        ignoreMoveTimer = False
     End Sub
 
 
@@ -295,6 +325,15 @@
     Private Sub initTimers()
         AddHandler whiteTimer.Tick, AddressOf whiteTimer_tick
         AddHandler blackTimer.Tick, AddressOf blackTimer_tick
+        AddHandler movePauseTimer.Tick, AddressOf moveTimer
+    End Sub
+
+    ' gives slight delay before switching sides of board
+    Private Sub moveTimer(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If ignoreMoveTimer = False Then
+            ignoreMoveTimer = True
+            displayBoard(turn)
+        End If
     End Sub
 
     ' update white time remaining on tick and update label
@@ -376,5 +415,6 @@
         addBlackIncrement()
         pauseBlackTimer(False)
     End Sub
+
 
 End Class
