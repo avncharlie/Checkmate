@@ -23,6 +23,10 @@ Checkmate
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
+</member><member name="P:Checkmate.My.Resources.Resources.txt_chessboardStartingPosition">
+	<summary>
+  Looks up a localized string similar to RNBQKBNRPPPPPPPP                                pppppppprnbqkbnr.
+</summary>
 </member><member name="P:Checkmate.My.Resources.Resources.txt_timeControlInfoLabel1">
 	<summary>
   Looks up a localized string similar to Time controls restrict the total time each player has in a game. The time a player takes on their turn is deducted from the time they have remaining while the other players clock is paused. Once a player moves, their clock is paused while the other player takes their turn..

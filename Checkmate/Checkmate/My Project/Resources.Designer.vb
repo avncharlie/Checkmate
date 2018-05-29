@@ -81,6 +81,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to RNBQKBNRPPPPPPPP                                pppppppprnbqkbnr.
+        '''</summary>
+        Friend ReadOnly Property txt_chessboardStartingPosition() As String
+            Get
+                Return ResourceManager.GetString("txt_chessboardStartingPosition", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Time controls restrict the total time each player has in a game. The time a player takes on their turn is deducted from the time they have remaining while the other players clock is paused. Once a player moves, their clock is paused while the other player takes their turn..
         '''</summary>
         Friend ReadOnly Property txt_timeControlInfoLabel1() As String

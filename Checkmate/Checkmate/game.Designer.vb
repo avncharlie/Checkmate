@@ -28,7 +28,7 @@ Partial Class game
         Me.lbl_blackTimeHeader = New System.Windows.Forms.Label()
         Me.lbl_whiteTimeCounter = New System.Windows.Forms.Label()
         Me.lbl_blackTimeCounter = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lbl_moveIndicator = New System.Windows.Forms.Label()
         Me.btn_takeBack = New System.Windows.Forms.Button()
         Me.lbl_movesHeader = New System.Windows.Forms.Label()
         Me.btn_resign = New System.Windows.Forms.Button()
@@ -70,8 +70,35 @@ Partial Class game
         Me.AsdToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.lb_visualStub = New System.Windows.Forms.ListBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.TextBox10 = New System.Windows.Forms.TextBox()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.TextBox12 = New System.Windows.Forms.TextBox()
         CType(Me.pb_canvas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ms_menu.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'pb_canvas
@@ -125,16 +152,16 @@ Partial Class game
         Me.lbl_blackTimeCounter.TabIndex = 4
         Me.lbl_blackTimeCounter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label1
+        'lbl_moveIndicator
         '
-        Me.Label1.BackColor = System.Drawing.SystemColors.Info
-        Me.Label1.Font = New System.Drawing.Font("OCR A Extended", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(595, 198)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(211, 39)
-        Me.Label1.TabIndex = 5
-        Me.Label1.Text = "White to move"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lbl_moveIndicator.BackColor = System.Drawing.SystemColors.Info
+        Me.lbl_moveIndicator.Font = New System.Drawing.Font("OCR A Extended", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_moveIndicator.Location = New System.Drawing.Point(595, 198)
+        Me.lbl_moveIndicator.Name = "lbl_moveIndicator"
+        Me.lbl_moveIndicator.Size = New System.Drawing.Size(211, 39)
+        Me.lbl_moveIndicator.TabIndex = 5
+        Me.lbl_moveIndicator.Text = "White to move"
+        Me.lbl_moveIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'btn_takeBack
         '
@@ -179,7 +206,6 @@ Partial Class game
         'lv_moves
         '
         Me.lv_moves.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.hiddenColumn, Me.white, Me.black})
-        Me.lv_moves.Enabled = False
         Me.lv_moves.Location = New System.Drawing.Point(599, 290)
         Me.lv_moves.Name = "lv_moves"
         Me.lv_moves.Size = New System.Drawing.Size(208, 264)
@@ -405,17 +431,224 @@ Partial Class game
         Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.OpenToolStripMenuItem.Text = "Open"
         '
+        'lb_visualStub
+        '
+        Me.lb_visualStub.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.lb_visualStub.Font = New System.Drawing.Font("Courier New", 38.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lb_visualStub.FormattingEnabled = True
+        Me.lb_visualStub.ItemHeight = 56
+        Me.lb_visualStub.Location = New System.Drawing.Point(27, 68)
+        Me.lb_visualStub.Name = "lb_visualStub"
+        Me.lb_visualStub.Size = New System.Drawing.Size(533, 452)
+        Me.lb_visualStub.TabIndex = 14
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(8, 22)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(41, 20)
+        Me.TextBox1.TabIndex = 15
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(103, 19)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 16
+        Me.Button1.Text = "Run"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(196, 24)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(0, 13)
+        Me.Label2.TabIndex = 17
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(55, 22)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(42, 20)
+        Me.TextBox2.TabIndex = 18
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.TextBox2)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.TextBox1)
+        Me.GroupBox1.Location = New System.Drawing.Point(27, 616)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(224, 56)
+        Me.GroupBox1.TabIndex = 19
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Piece at coordinate"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.TextBox5)
+        Me.GroupBox2.Controls.Add(Me.TextBox6)
+        Me.GroupBox2.Controls.Add(Me.TextBox3)
+        Me.GroupBox2.Controls.Add(Me.Button2)
+        Me.GroupBox2.Controls.Add(Me.TextBox4)
+        Me.GroupBox2.Location = New System.Drawing.Point(27, 678)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(360, 56)
+        Me.GroupBox2.TabIndex = 20
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Move piece"
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(182, 22)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(42, 20)
+        Me.TextBox5.TabIndex = 20
+        '
+        'TextBox6
+        '
+        Me.TextBox6.Location = New System.Drawing.Point(135, 22)
+        Me.TextBox6.Name = "TextBox6"
+        Me.TextBox6.Size = New System.Drawing.Size(41, 20)
+        Me.TextBox6.TabIndex = 19
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(55, 22)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(42, 20)
+        Me.TextBox3.TabIndex = 18
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(270, 20)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 16
+        Me.Button2.Text = "Run"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(8, 22)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(41, 20)
+        Me.TextBox4.TabIndex = 15
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Label1)
+        Me.GroupBox3.Controls.Add(Me.TextBox9)
+        Me.GroupBox3.Controls.Add(Me.Button3)
+        Me.GroupBox3.Controls.Add(Me.TextBox10)
+        Me.GroupBox3.Location = New System.Drawing.Point(268, 616)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(245, 56)
+        Me.GroupBox3.TabIndex = 21
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Algebraic notation"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(196, 25)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 13)
+        Me.Label1.TabIndex = 20
+        Me.Label1.Text = "Label1"
+        '
+        'TextBox9
+        '
+        Me.TextBox9.Location = New System.Drawing.Point(55, 22)
+        Me.TextBox9.Name = "TextBox9"
+        Me.TextBox9.Size = New System.Drawing.Size(42, 20)
+        Me.TextBox9.TabIndex = 18
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(103, 17)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 16
+        Me.Button3.Text = "Run"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'TextBox10
+        '
+        Me.TextBox10.Location = New System.Drawing.Point(8, 22)
+        Me.TextBox10.Name = "TextBox10"
+        Me.TextBox10.Size = New System.Drawing.Size(41, 20)
+        Me.TextBox10.TabIndex = 15
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.TextBox7)
+        Me.GroupBox4.Controls.Add(Me.TextBox8)
+        Me.GroupBox4.Controls.Add(Me.TextBox11)
+        Me.GroupBox4.Controls.Add(Me.Button4)
+        Me.GroupBox4.Controls.Add(Me.TextBox12)
+        Me.GroupBox4.Location = New System.Drawing.Point(406, 678)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(360, 56)
+        Me.GroupBox4.TabIndex = 21
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Take piece"
+        '
+        'TextBox7
+        '
+        Me.TextBox7.Location = New System.Drawing.Point(182, 22)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.Size = New System.Drawing.Size(42, 20)
+        Me.TextBox7.TabIndex = 20
+        '
+        'TextBox8
+        '
+        Me.TextBox8.Location = New System.Drawing.Point(135, 22)
+        Me.TextBox8.Name = "TextBox8"
+        Me.TextBox8.Size = New System.Drawing.Size(41, 20)
+        Me.TextBox8.TabIndex = 19
+        '
+        'TextBox11
+        '
+        Me.TextBox11.Location = New System.Drawing.Point(55, 22)
+        Me.TextBox11.Name = "TextBox11"
+        Me.TextBox11.Size = New System.Drawing.Size(42, 20)
+        Me.TextBox11.TabIndex = 18
+        '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(270, 20)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
+        Me.Button4.TabIndex = 16
+        Me.Button4.Text = "Run"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'TextBox12
+        '
+        Me.TextBox12.Location = New System.Drawing.Point(8, 22)
+        Me.TextBox12.Name = "TextBox12"
+        Me.TextBox12.Size = New System.Drawing.Size(41, 20)
+        Me.TextBox12.TabIndex = 15
+        '
         'game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(818, 599)
+        Me.ClientSize = New System.Drawing.Size(818, 750)
+        Me.Controls.Add(Me.GroupBox4)
+        Me.Controls.Add(Me.GroupBox3)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.lb_visualStub)
         Me.Controls.Add(Me.lv_moves)
         Me.Controls.Add(Me.btn_options)
         Me.Controls.Add(Me.btn_resign)
         Me.Controls.Add(Me.lbl_movesHeader)
         Me.Controls.Add(Me.btn_takeBack)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lbl_moveIndicator)
         Me.Controls.Add(Me.lbl_blackTimeCounter)
         Me.Controls.Add(Me.lbl_whiteTimeCounter)
         Me.Controls.Add(Me.lbl_blackTimeHeader)
@@ -429,6 +662,14 @@ Partial Class game
         CType(Me.pb_canvas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ms_menu.ResumeLayout(False)
         Me.ms_menu.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -438,7 +679,7 @@ Partial Class game
     Friend WithEvents lbl_blackTimeHeader As System.Windows.Forms.Label
     Friend WithEvents lbl_whiteTimeCounter As System.Windows.Forms.Label
     Friend WithEvents lbl_blackTimeCounter As System.Windows.Forms.Label
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lbl_moveIndicator As System.Windows.Forms.Label
     Friend WithEvents btn_takeBack As System.Windows.Forms.Button
     Friend WithEvents lbl_movesHeader As System.Windows.Forms.Label
     Friend WithEvents btn_resign As System.Windows.Forms.Button
@@ -480,4 +721,27 @@ Partial Class game
     Friend WithEvents tsmi_boardStyleStub2 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_boardStyleStub3 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_newBoardStyleStub As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents lb_visualStub As System.Windows.Forms.ListBox
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox6 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents TextBox9 As System.Windows.Forms.TextBox
+    Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents TextBox10 As System.Windows.Forms.TextBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents TextBox7 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox11 As System.Windows.Forms.TextBox
+    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents TextBox12 As System.Windows.Forms.TextBox
 End Class

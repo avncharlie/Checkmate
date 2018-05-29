@@ -62,13 +62,13 @@ Partial Class timeControls
         Me.tlp_timeControls.Location = New System.Drawing.Point(0, 0)
         Me.tlp_timeControls.Name = "tlp_timeControls"
         Me.tlp_timeControls.RowCount = 7
-        Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.803922!))
+        Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.80392!))
         Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.960784!))
         Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.4902!))
         Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.4902!))
         Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.4902!))
         Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.960784!))
-        Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.803922!))
+        Me.tlp_timeControls.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.80392!))
         Me.tlp_timeControls.Size = New System.Drawing.Size(394, 471)
         Me.tlp_timeControls.TabIndex = 1
         '
