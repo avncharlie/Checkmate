@@ -82,23 +82,11 @@ Partial Class game
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox9 = New System.Windows.Forms.TextBox()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.TextBox10 = New System.Windows.Forms.TextBox()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
-        Me.TextBox8 = New System.Windows.Forms.TextBox()
-        Me.TextBox11 = New System.Windows.Forms.TextBox()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.TextBox12 = New System.Windows.Forms.TextBox()
         CType(Me.pb_canvas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ms_menu.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'pb_canvas
@@ -234,7 +222,7 @@ Partial Class game
         Me.ms_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_file, Me.tsmi_game, Me.tsmi_view})
         Me.ms_menu.Location = New System.Drawing.Point(0, 0)
         Me.ms_menu.Name = "ms_menu"
-        Me.ms_menu.Size = New System.Drawing.Size(818, 24)
+        Me.ms_menu.Size = New System.Drawing.Size(830, 24)
         Me.ms_menu.TabIndex = 13
         Me.ms_menu.Text = "MenuStrip1"
         '
@@ -493,7 +481,7 @@ Partial Class game
         Me.GroupBox2.Controls.Add(Me.TextBox3)
         Me.GroupBox2.Controls.Add(Me.Button2)
         Me.GroupBox2.Controls.Add(Me.TextBox4)
-        Me.GroupBox2.Location = New System.Drawing.Point(27, 678)
+        Me.GroupBox2.Location = New System.Drawing.Point(268, 616)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(360, 56)
         Me.GroupBox2.TabIndex = 20
@@ -537,109 +525,21 @@ Partial Class game
         Me.TextBox4.Size = New System.Drawing.Size(41, 20)
         Me.TextBox4.TabIndex = 15
         '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.Label1)
-        Me.GroupBox3.Controls.Add(Me.TextBox9)
-        Me.GroupBox3.Controls.Add(Me.Button3)
-        Me.GroupBox3.Controls.Add(Me.TextBox10)
-        Me.GroupBox3.Location = New System.Drawing.Point(268, 616)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(245, 56)
-        Me.GroupBox3.TabIndex = 21
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Algebraic notation"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(196, 25)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 20
-        Me.Label1.Text = "Label1"
-        '
-        'TextBox9
-        '
-        Me.TextBox9.Location = New System.Drawing.Point(55, 22)
-        Me.TextBox9.Name = "TextBox9"
-        Me.TextBox9.Size = New System.Drawing.Size(42, 20)
-        Me.TextBox9.TabIndex = 18
-        '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(103, 17)
+        Me.Button3.Location = New System.Drawing.Point(670, 635)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
-        Me.Button3.TabIndex = 16
-        Me.Button3.Text = "Run"
+        Me.Button3.TabIndex = 22
+        Me.Button3.Text = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
-        '
-        'TextBox10
-        '
-        Me.TextBox10.Location = New System.Drawing.Point(8, 22)
-        Me.TextBox10.Name = "TextBox10"
-        Me.TextBox10.Size = New System.Drawing.Size(41, 20)
-        Me.TextBox10.TabIndex = 15
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.TextBox7)
-        Me.GroupBox4.Controls.Add(Me.TextBox8)
-        Me.GroupBox4.Controls.Add(Me.TextBox11)
-        Me.GroupBox4.Controls.Add(Me.Button4)
-        Me.GroupBox4.Controls.Add(Me.TextBox12)
-        Me.GroupBox4.Location = New System.Drawing.Point(406, 678)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(360, 56)
-        Me.GroupBox4.TabIndex = 21
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Take piece"
-        '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(182, 22)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(42, 20)
-        Me.TextBox7.TabIndex = 20
-        '
-        'TextBox8
-        '
-        Me.TextBox8.Location = New System.Drawing.Point(135, 22)
-        Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(41, 20)
-        Me.TextBox8.TabIndex = 19
-        '
-        'TextBox11
-        '
-        Me.TextBox11.Location = New System.Drawing.Point(55, 22)
-        Me.TextBox11.Name = "TextBox11"
-        Me.TextBox11.Size = New System.Drawing.Size(42, 20)
-        Me.TextBox11.TabIndex = 18
-        '
-        'Button4
-        '
-        Me.Button4.Location = New System.Drawing.Point(270, 20)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(75, 23)
-        Me.Button4.TabIndex = 16
-        Me.Button4.Text = "Run"
-        Me.Button4.UseVisualStyleBackColor = True
-        '
-        'TextBox12
-        '
-        Me.TextBox12.Location = New System.Drawing.Point(8, 22)
-        Me.TextBox12.Name = "TextBox12"
-        Me.TextBox12.Size = New System.Drawing.Size(41, 20)
-        Me.TextBox12.TabIndex = 15
         '
         'game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(818, 750)
-        Me.Controls.Add(Me.GroupBox4)
-        Me.Controls.Add(Me.GroupBox3)
+        Me.ClientSize = New System.Drawing.Size(830, 685)
+        Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.lb_visualStub)
@@ -666,10 +566,6 @@ Partial Class game
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -733,15 +629,5 @@ Partial Class game
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents TextBox9 As System.Windows.Forms.TextBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
-    Friend WithEvents TextBox10 As System.Windows.Forms.TextBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
-    Friend WithEvents TextBox7 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox8 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox11 As System.Windows.Forms.TextBox
-    Friend WithEvents Button4 As System.Windows.Forms.Button
-    Friend WithEvents TextBox12 As System.Windows.Forms.TextBox
 End Class
