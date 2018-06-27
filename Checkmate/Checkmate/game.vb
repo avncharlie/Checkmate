@@ -20,9 +20,12 @@
     Dim whiteTimer As New Timer With {.Interval = 100}
     Dim blackTimer As New Timer With {.Interval = 100}
 
-    ' interval is the slight pause before switching sides
-    Dim movePauseTimer As New Timer With {.Interval = 400}
+    ' slight pause before switching sides
+    Dim movePauseTimer As New Timer With {.Interval = options.delayBeforeSwitchingSides}
     Dim ignoreMoveTimer = False
+
+    ' special moves in here (first item - possible captures, second - en passant captures, third - pawn promotions, fourth - kingside castling, fifth - queenside castling)
+    Dim specialMoves() As String = {"", "", "", "", ""}
 
     ' turn - if true, white, if false, black
     Dim turn As Boolean = True
@@ -237,10 +240,6 @@
 
     ' move piece in chessboard, update history, store previous chessboard position in previousChessboards
     Private Sub movePiece(ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
-        ' update moveIndicator
-        turn = Not turn
-        updateMoveIndicator()
-
         ' make history
         makeHistory(x1, y1, x2, y2)
 
@@ -275,8 +274,33 @@
             rollbackBoardPosition()
 
             updateHistoryListView()
-            displayBoard()
+
+            switchSide(False)
         End If
+    End Sub
+
+    ' flip board with delay
+    Private Sub flipBoardWithDelay()
+        displayBoard(Not turn)
+
+        ' makes sure delay is same for both sides
+        movePauseTimer.Stop()
+        movePauseTimer.Start()
+
+        ignoreMoveTimer = False
+    End Sub
+
+    ' switch side
+    Private Sub switchSide(Optional ByVal delay As Boolean = True)
+        ' update moveIndicator
+        turn = Not turn
+        updateMoveIndicator()
+        If delay Then
+            flipBoardWithDelay()
+        Else
+            displayBoard(turn)
+        End If
+        changeClocks()
     End Sub
 
 
@@ -285,27 +309,109 @@
     '   | | | _|\__ \ | | \__ \
     '   |_| |___|___/ |_| |___/
 
+    ' return if square is valid for specific piece
+    Private Function isValid(ByVal x As Char, ByVal y As Char, ByVal p As Char) As String
+        isValid = "foof"
+    End Function
+
+    ' return possible moves for piece in position if board is blank
+    Private Function possibleMovesOnBlankBoard(ByVal x As Integer, ByVal y As Integer, ByVal p As Char) As String
+        Dim possibleMoves = ""
+
+        Select Case p
+            Case "P"
+                possibleMoves = x & " " & y + 1
+                If y = 1 Then
+                    possibleMoves = possibleMoves & "," & x & " " & y + 2
+                End If
+            Case "p"
+                possibleMoves = x & " " & y - 1
+                If y = 6 Then
+                    possibleMoves = possibleMoves & "," & x & " " & y - 2
+                End If
+        End Select
+        possibleMovesOnBlankBoard = possibleMoves
+    End Function
+
+    ' add to specialMoves
+    Private Sub addToSpecialMoves(ByVal index As Integer, ByVal move As String)
+        If specialMoves(index) <> "" Then
+            specialMoves(index) = specialMoves(index) & "," & move
+        Else
+            specialMoves(index) = move
+        End If
+    End Sub
+
+    Private Sub displaySpecialMoves() Handles Button3.Click
+        ListBox1.Items.Add(specialMoves(0))
+        ListBox1.Items.Add(specialMoves(1))
+        ListBox1.Items.Add(specialMoves(2))
+        ListBox1.Items.Add(specialMoves(3))
+        ListBox1.Items.Add(specialMoves(4))
+    End Sub
+
+    Private Sub refreshSpecialMoves() Handles Button3.Click
+        For x = 0 To 4
+            specialMoves(x) = ""
+        Next
+    End Sub
+
+    ' returns possible special moves for each piece and position (captures etc) and updates specialMove array
+    Private Function possibleSpecialMoves(ByVal x As Integer, ByVal y As Integer, ByVal p As Char) As String
+        refreshSpecialMoves()
+        Dim possibleMoves = ""
+        Dim capture = ""
+        Select Case p
+            Case "P"
+                ' captures
+                If Asc(chessboard(x + 1, y + 1)) >= 97 Then
+                    capture = x + 1 & " " & y + 1
+                ElseIf Asc(chessboard(x - 1, y + 1)) >= 97 Then
+                    capture = x - 1 & " " & y + 1
+                End If
+                addToSpecialMoves(0, capture)
+            Case "p"
+                ' captures
+                If Asc(chessboard(x + 1, y - 1)) < 97 Then
+                    capture = x + 1 & " " & y - 1
+                ElseIf Asc(chessboard(x - 1, y - 1)) < 97 Then
+                    capture = x - 1 & " " & y - 1
+                End If
+                addToSpecialMoves(0, capture)
+        End Select
+        possibleSpecialMoves = possibleMoves
+    End Function
+
+    ' returns valid moves for piece
+    Private Function validMoves(ByVal x As Integer, ByVal y As Integer) As String
+        Dim piece = chessboard(x, y)
+        Dim possibleMoves = possibleMovesOnBlankBoard(x, y, piece)
+        Dim specialMoves = possibleSpecialMoves(x, y, piece)
+        Dim allMoves = ""
+
+        If specialMoves <> "" Then
+            allMoves = possibleMoves & "," & specialMoves
+        Else
+            allMoves = possibleMoves
+        End If
+
+        validMoves = allMoves
+    End Function
+
+    ' valid move test
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Label2.Text = validMoves(TextBox1.Text, TextBox2.Text)
+    End Sub
+
     ' takeback previous move test
     Private Sub btn_takeBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_takeBack.Click
         takeBackPreviousMove()
     End Sub
 
-    ' piece at coordinate test
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        Label2.Text = chessboard(TextBox1.Text, TextBox2.Text)
-    End Sub
-
     ' move piece test
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         movePiece(TextBox4.Text, TextBox3.Text, TextBox6.Text, TextBox5.Text)
-
-        displayBoard(Not turn)
-
-        ' makes sure delay is same for both sides
-        movePauseTimer.Stop()
-        movePauseTimer.Start()
-
-        ignoreMoveTimer = False
+        switchSide()
     End Sub
 
 
@@ -416,5 +522,13 @@
         pauseBlackTimer(False)
     End Sub
 
+    ' change clocks based on turn
+    Private Sub changeClocks()
+        If turn Then
+            whiteMoveChangeClocks()
+        Else
+            blackMoveChangeClocks()
+        End If
+    End Sub
 
 End Class

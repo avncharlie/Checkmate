@@ -3,7 +3,7 @@
         pb_mainScreen.Image = Checkmate.My.Resources.pic_mainScreenChessboard
     End Sub
 
-    Private Sub btn_newGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_newTimedGame.Click
+    Private Sub btn_newTimedGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_newTimedGame.Click
         timeControls.Show()
         Me.Hide()
     End Sub
@@ -12,7 +12,7 @@
         If e.KeyCode = Keys.Escape Then Me.Close()
     End Sub
 
-    Private Sub btn_newGame_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_newGame.Click
+    Private Sub btn_newGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_newGame.Click
         Me.Hide()
         game.Show()
     End Sub

@@ -60,7 +60,7 @@
     End Sub
 
     ' validate input of textboxes
-    Private Sub tbox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles tbox_increment.KeyPress, tbox_totalTime.KeyPress
+    Private Sub tbox_validateKeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles tbox_increment.KeyPress, tbox_totalTime.KeyPress
         Dim allowedChars As String = "0123456789"
         If allowedChars.IndexOf(e.KeyChar) = -1 And Char.IsControl(e.KeyChar) <> True Then
             e.Handled = True
