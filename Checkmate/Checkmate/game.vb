@@ -342,12 +342,8 @@
         End If
     End Sub
 
-    Private Sub displaySpecialMoves() Handles Button3.Click
-        ListBox1.Items.Add(specialMoves(0))
-        ListBox1.Items.Add(specialMoves(1))
-        ListBox1.Items.Add(specialMoves(2))
-        ListBox1.Items.Add(specialMoves(3))
-        ListBox1.Items.Add(specialMoves(4))
+    Private Sub tester() Handles Button3.Click
+        chess.foo()
     End Sub
 
     Private Sub refreshSpecialMoves() Handles Button3.Click
@@ -417,7 +413,7 @@
 
     '   ___ _    ___   ___ _  _____ 
     '  / __| |  / _ \ / __| |/ / __|
-    ' | (__| |_| (_) | (__| ' <\__ \
+    ' | (__| |_| (_) | (__| ' <\__ \    
     '  \___|____\___/ \___|_|\_\___/
 
     ' setup clocks
@@ -530,5 +526,4 @@
             blackMoveChangeClocks()
         End If
     End Sub
-
 End Class
