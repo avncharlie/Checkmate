@@ -1,79 +1,14 @@
 ﻿Public Class game
 
-    '  ___ ___ _____ _   _ ___ 
-    ' / __| __|_   _| | | | _ \
-    ' \__ \ _|  | | | |_| |  _/
-    ' |___/___| |_|  \___/|_|  
-
-    ' chessboard, move history and previous chessboards
-    Dim chessboard(7, 7) As Char
-    Dim history As String = ""
-    Dim previousChessboards As String = Checkmate.My.Resources.txt_chessboardStartingPosition
-
-    ' time left
-    Dim timeLeftWhite As New TimeSpan(0, options.totalTime, 0)
-    Dim timeLeftBlack As New TimeSpan(0, options.totalTime, 0)
-    Dim increment As New TimeSpan(0, 0, options.increment)
-
-    ' interval is a set time of 100
-    Dim interval As TimeSpan = TimeSpan.FromMilliseconds(100)
-    Dim whiteTimer As New Timer With {.Interval = 100}
-    Dim blackTimer As New Timer With {.Interval = 100}
-
-    ' slight pause before switching sides
-    Dim movePauseTimer As New Timer With {.Interval = options.delayBeforeSwitchingSides}
-    Dim ignoreMoveTimer = False
-
-    ' special moves in here (first item - possible captures, second - en passant captures, third - pawn promotions, fourth - kingside castling, fifth - queenside castling)
-    Dim specialMoves() As String = {"", "", "", "", ""}
-
-    ' turn - if true, white, if false, black
-    Dim turn As Boolean = True
-
-    '  __  __   _   ___ _  _ 
-    ' |  \/  | /_\ |_ _| \| |
-    ' | |\/| |/ _ \ | || .` |
-    ' |_|  |_/_/ \_\___|_|\_|
-
-    ' game load function (main)
-    Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'setupClocks()
-        'updateHistoryListView()
-        Dim board = chess.boardFromString(Checkmate.My.Resources.txt_chessboardStartingPosition)
-        displayBoard(board)
-    End Sub
-
-
-    '  _  _ ___ _    ___ ___ ___  ___ 
-    ' | || | __| |  | _ \ __| _ \/ __|
-    ' | __ | _|| |__|  _/ _||   /\__ \
-    ' |_||_|___|____|_| |___|_|_\|___/
-
     ' display board
-    Private Sub displayBoard(ByVal b As Char(,), Optional ByVal whiteSideOrientation As Boolean = True)
-        lb_visualStub.Items.Clear()
-        Dim foo As String = ""
-        For y = 0 To 7
-            foo = ""
-            For x = 0 To 7
-                If whiteSideOrientation Then
-                    foo = foo & " " & b(x, 7 - y)
-                Else
-                    foo = foo & " " & b(x, y)
-                End If
-            Next
-            lb_visualStub.Items.Add(foo)
-        Next
-    End Sub
-
     ' ############################################################### update move indicator ###############################################################
-    Private Sub updateMoveIndicator()
-        If turn Then
-            lbl_moveIndicator.Text = "White to move"
-        Else
-            lbl_moveIndicator.Text = "Black to move"
-        End If
-    End Sub
+    'Private Sub updateMoveIndicator()
+    '    If turn Then
+    '        lbl_moveIndicator.Text = "White to move"
+    '    Else
+    '        lbl_moveIndicator.Text = "Black to move"
+    '    End If
+    'End Sub
 
 
     '  _  _ ___ ___ _____ ___  _____   __
@@ -82,22 +17,22 @@
     ' |_||_|___|___/ |_| \___/|_|_\ |_|  
 
     '  update history visually 
-    Private Sub updateHistoryVisually(ByVal history As Char())
-        lv_moves.Items.Clear()
+    'Private Sub updateHistoryVisually(ByVal history As Char())
+    '    lv_moves.Items.Clear()
 
-        Dim index = 0
-        For x = 0 To history.Length - 1
-            index = index + 1
-            If index Mod 2 = 0 Then
-                lv_moves.Items.Add(New ListViewItem({" ", history(x - 1), history(x)}))
-            End If
-        Next
-        If history.Length Mod 2 <> 0 Then
-            For a = 1 To history.Length Mod 2
-                lv_moves.Items.Add(New ListViewItem({" ", history(history.Length - a)}))
-            Next
-        End If
-    End Sub
+    '    Dim index = 0
+    '    For x = 0 To history.Length - 1
+    '        index = index + 1
+    '        If index Mod 2 = 0 Then
+    '            lv_moves.Items.Add(New ListViewItem({" ", history(x - 1), history(x)}))
+    '        End If
+    '    Next
+    '    If history.Length Mod 2 <> 0 Then
+    '        For a = 1 To history.Length Mod 2
+    '            lv_moves.Items.Add(New ListViewItem({" ", history(history.Length - a)}))
+    '        Next
+    '    End If
+    'End Sub
 
 
     '  ___  ___   _   ___ ___    __  __   _   _  _ ___ ___ _   _ _      _ _____ ___ ___  _  _ 
@@ -157,240 +92,160 @@
     '    ignoreMoveTimer = False
     'End Sub
 
-    '' switch side
-    'Private Sub switchSide(Optional ByVal delay As Boolean = True)
-    '    ' update moveIndicator
-    '    turn = Not turn
-    '    updateMoveIndicator()
-    '    If delay Then
-    '        flipBoardWithDelay()
-    '    Else
-    '        displayBoard(chessboard, turn)
-    '    End If
-    '    changeClocks()
-    'End Sub
+    Dim newGame As chess.Game
 
+    Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        ' initialise game
+        newGame = chess.initGame(My.Resources.txt_chessboardStartingPosition, 1, 100, 10)
+        AddHandler newGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf newGamewhiteTimeDisplay)
+        AddHandler newGame.blackTime.timer.Tick, Sub() chess.clockTick(newGame.blackTime, AddressOf newGameblackTimeDisplay)
 
-    '  _____ ___ ___ _____ ___ 
-    ' |_   _| __/ __|_   _/ __|
-    '   | | | _|\__ \ | | \__ \
-    '   |_| |___|___/ |_| |___/
-
-    ' return if square is valid for specific piece
-    'Private Function isValid(ByVal x As Char, ByVal y As Char, ByVal p As Char) As String
-    '    isValid = "foof"
-    'End Function
-
-    '' return possible moves for piece in position if board is blank
-    'Private Function possibleMovesOnBlankBoard(ByVal x As Integer, ByVal y As Integer, ByVal p As Char) As String
-    '    Dim possibleMoves = ""
-
-    '    Select Case p
-    '        Case "P"
-    '            possibleMoves = x & " " & y + 1
-    '            If y = 1 Then
-    '                possibleMoves = possibleMoves & "," & x & " " & y + 2
-    '            End If
-    '        Case "p"
-    '            possibleMoves = x & " " & y - 1
-    '            If y = 6 Then
-    '                possibleMoves = possibleMoves & "," & x & " " & y - 2
-    '            End If
-    '    End Select
-    '    possibleMovesOnBlankBoard = possibleMoves
-    'End Function
-
-    '' add to specialMoves
-    'Private Sub addToSpecialMoves(ByVal index As Integer, ByVal move As String)
-    '    If specialMoves(index) <> "" Then
-    '        specialMoves(index) = specialMoves(index) & "," & move
-    '    Else
-    '        specialMoves(index) = move
-    '    End If
-    'End Sub
-
-    Private Sub tester() Handles Button3.Click
-        chess.foo()
+        ' display board
+        'newGame.board(0, 4) = "P"
+        'newGame.board(1, 4) = "p"
+        'displayGame(newGame)
+        'chess.validMoves(newGame, {0, 4})
     End Sub
 
-    'Private Sub refreshSpecialMoves() Handles Button3.Click
-    '    For x = 0 To 4
-    '        specialMoves(x) = ""
-    '    Next
-    'End Sub
+    ' update white time label from newGame (called on timer tick)
+    Sub newGamewhiteTimeDisplay()
+        displayWhiteTime(newGame.whiteTime.timeLeft)
+    End Sub
 
-    '' returns possible special moves for each piece and position (captures etc) and updates specialMove array
-    'Private Function possibleSpecialMoves(ByVal x As Integer, ByVal y As Integer, ByVal p As Char) As String
-    '    refreshSpecialMoves()
-    '    Dim possibleMoves = ""
-    '    Dim capture = ""
-    '    Select Case p
-    '        Case "P"
-    '            ' captures
-    '            If Asc(chessboard(x + 1, y + 1)) >= 97 Then
-    '                capture = x + 1 & " " & y + 1
-    '            ElseIf Asc(chessboard(x - 1, y + 1)) >= 97 Then
-    '                capture = x - 1 & " " & y + 1
-    '            End If
-    '            addToSpecialMoves(0, capture)
-    '        Case "p"
-    '            ' captures
-    '            If Asc(chessboard(x + 1, y - 1)) < 97 Then
-    '                capture = x + 1 & " " & y - 1
-    '            ElseIf Asc(chessboard(x - 1, y - 1)) < 97 Then
-    '                capture = x - 1 & " " & y - 1
-    '            End If
-    '            addToSpecialMoves(0, capture)
-    '    End Select
-    '    possibleSpecialMoves = possibleMoves
-    'End Function
+    ' update black time label from newGame (called on timer tick)
+    Sub newGameblackTimeDisplay()
+        displayBlackTime(newGame.blackTime.timeLeft)
+    End Sub
 
-    ' returns valid moves for piece
-    'Private Function validMoves(ByVal x As Integer, ByVal y As Integer) As String
-    '    Dim piece = chessboard(x, y)
-    '    Dim possibleMoves = possibleMovesOnBlankBoard(x, y, piece)
-    '    Dim specialMoves = possibleSpecialMoves(x, y, piece)
-    '    Dim allMoves = ""
+    ' display game
+    Private Sub displayGame(ByVal game As chess.Game)
+        displayBoard(game.board)
+        displayHistory(game.history)
+        displayBlackTime(game.blackTime.timeLeft)
+        displayWhiteTime(game.whiteTime.timeLeft)
+    End Sub
 
-    '    If specialMoves <> "" Then
-    '        allMoves = possibleMoves & "," & specialMoves
-    '    Else
-    '        allMoves = possibleMoves
-    '    End If
+    ' display white time
+    Sub displayWhiteTime(ByVal time As TimeSpan)
+        lbl_whiteTimeCounter.Text = chess.timespanToString(time)
+    End Sub
 
-    '    validMoves = allMoves
-    'End Function
+    ' display black time
+    Sub displayBlackTime(ByVal time As TimeSpan)
+        lbl_blackTimeCounter.Text = chess.timespanToString(time)
+    End Sub
 
-    '' valid move test
-    'Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-    '    Label2.Text = validMoves(TextBox1.Text, TextBox2.Text)
-    'End Sub
+    ' display board
+    Private Sub displayBoard(ByVal b As Char(,), Optional ByVal whiteSideOrientation As Boolean = True)
+        lb_visualStub.Items.Clear()
+        Dim foo As String = ""
+        For y = 0 To 7
+            foo = ""
+            For x = 0 To 7
+                If whiteSideOrientation Then
+                    foo = foo & " " & b(x, 7 - y)
+                Else
+                    foo = foo & " " & b(x, y)
+                End If
+            Next
+            lb_visualStub.Items.Add(foo)
+        Next
+    End Sub
 
-    '' takeback previous move test
-    'Private Sub btn_takeBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_takeBack.Click
-    '    takeBackPreviousMove()
-    'End Sub
+    ' display history
+    Private Sub displayHistory(ByVal history As String())
+        lv_moves.Items.Clear()
 
-    '' move piece test
-    'Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
-    '    movePiece(TextBox4.Text, TextBox3.Text, TextBox6.Text, TextBox5.Text)
-    '    switchSide()
-    'End Sub
+        Dim index = 0
+        For x = 0 To history.Length - 1
+            index = index + 1
+            If index Mod 2 = 0 Then
+                lv_moves.Items.Add(New ListViewItem({" ", history(x - 1), history(x)}))
+            End If
+        Next
+        If history.Length Mod 2 <> 0 Then
+            For a = 1 To history.Length Mod 2
+                lv_moves.Items.Add(New ListViewItem({" ", history(history.Length - a)}))
+            Next
+        End If
+    End Sub
 
+    ' test move
+    Private Sub testMove(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Dim move As Move
+        move.gameState = newGame
+        move.startCoords = {TextBox4.Text, TextBox3.Text}
+        move.destinationCoords = {TextBox6.Text, TextBox5.Text}
+        move.moveKeys = {0}
+        move.promotion = ""
 
-    '   ___ _    ___   ___ _  _____ 
-    '  / __| |  / _ \ / __| |/ / __|
-    ' | (__| |_| (_) | (__| ' <\__ \    
-    '  \___|____\___/ \___|_|\_\___/
+        newGame = chess.doMove(move)
+        displayGame(newGame)
+    End Sub
 
-    '' setup clocks
-    'Private Sub setupClocks()
-    '    initTimers()
-    '    updateWhiteTimerLabel()
-    '    updateBlackTimerLabel()
-    'End Sub
+    ' takeback move
+    Private Sub btn_takeBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_takeBack.Click
+        newGame = chess.takebackMove(newGame)
+        displayGame(newGame)
+    End Sub
 
-    '' initialise timers (give them handler functions)
-    'Private Sub initTimers()
-    '    AddHandler whiteTimer.Tick, AddressOf whiteTimer_tick
-    '    AddHandler blackTimer.Tick, AddressOf blackTimer_tick
-    '    AddHandler movePauseTimer.Tick, AddressOf moveTimer
-    'End Sub
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        Dim move As Move
+        move.gameState = newGame
+        move.startCoords = {7, 1}
+        move.destinationCoords = {7, 3}
+        move.moveKeys = {0}
+        move.promotion = ""
+        newGame = chess.doMove(move)
 
-    '' gives slight delay before switching sides of board
-    'Private Sub moveTimer(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    If ignoreMoveTimer = False Then
-    '        ignoreMoveTimer = True
-    '        displayBoard(chessboard, turn)
-    '    End If
-    'End Sub
+        Dim move2 As Move
+        move2.gameState = newGame
+        move2.startCoords = {2, 6}
+        move2.destinationCoords = {2, 4}
+        move2.moveKeys = {0}
+        move2.promotion = ""
+        newGame = chess.doMove(move2)
 
-    '' update white time remaining on tick and update label
-    'Private Sub whiteTimer_tick(ByVal sender As Object, ByVal e As EventArgs)
-    '    timeLeftWhite = timeLeftWhite.Subtract(interval)
-    '    updateWhiteTimerLabel()
-    'End Sub
+        Dim move3 As Move
+        move3.gameState = newGame
+        move3.startCoords = {5, 1}
+        move3.destinationCoords = {5, 3}
+        move3.moveKeys = {0}
+        move3.promotion = ""
+        newGame = chess.doMove(move3)
 
-    '' update black time remaining on tick and update label
-    'Private Sub blackTimer_tick(ByVal sender As Object, ByVal e As EventArgs)
-    '    timeLeftBlack = timeLeftBlack.Subtract(interval)
-    '    updateBlackTimerLabel()
-    'End Sub
+        Dim move4 As Move
+        move4.gameState = newGame
+        move4.startCoords = {2, 4}
+        move4.destinationCoords = {2, 3}
+        move4.moveKeys = {0}
+        move4.promotion = ""
+        newGame = chess.doMove(move4)
 
-    '' update white timer label
-    'Private Sub updateWhiteTimerLabel()
-    '    lbl_whiteTimeCounter.Text = timeToString(timeLeftWhite)
-    'End Sub
+        Dim move5 As Move
+        move5.gameState = newGame
+        move5.startCoords = {1, 1}
+        move5.destinationCoords = {1, 3}
+        move5.moveKeys = {0}
+        move5.promotion = ""
+        newGame = chess.doMove(move5)
 
-    '' update black timer label
-    'Private Sub updateBlackTimerLabel()
-    '    lbl_blackTimeCounter.Text = timeToString(timeLeftBlack)
-    'End Sub
+        Dim move6 As Move
+        move6.gameState = newGame
+        move6.startCoords = {2, 3}
+        move6.destinationCoords = {1, 2}
+        move6.moveKeys = {2}
+        move6.promotion = ""
+        newGame = chess.doMove(move6)
 
-    '' remove trailing zeroes from integers
-    'Private Function removeTrailingZeroes(ByVal num As Integer) As String
-    '    If num <> 0 Then
-    '        Dim temp As String = num.ToString
-    '        temp = temp.TrimEnd(New String({"0"}))
-    '        removeTrailingZeroes = temp
-    '    Else
-    '        removeTrailingZeroes = num
-    '    End If
-    'End Function
+        newGame.board(4, 4) = "q"
+        newGame.board(4, 1) = " "
 
-    '' convert TimeSpan to string, takes care of all possible time ranges
-    'Private Function timeToString(ByVal time As TimeSpan) As String
-    '    If time.TotalHours >= 1 Then
-    '        timeToString = String.Format("{0:00}:{1:00}:{2:00}", time.TotalHours, time.Minutes, time.Seconds)
-    '    ElseIf time.Minutes >= 1 Then
-    '        timeToString = String.Format("{0:00}:{1:00}:{2:00}", time.Minutes, time.Seconds, removeTrailingZeroes(time.Milliseconds))
-    '    Else
-    '        timeToString = String.Format("{0:00}:{1:00}", time.Seconds, removeTrailingZeroes(time.Milliseconds))
-    '    End If
-    'End Function
+        newGame.board(7, 3) = "R"
+        newGame.board(5, 3) = " "
 
-    '' pause or continue white timer
-    'Private Sub pauseWhiteTimer(ByVal flag As Boolean)
-    '    whiteTimer.Enabled = Not flag
-    'End Sub
+        displayGame(newGame)
 
-    '' pause or continue black timer
-    'Private Sub pauseBlackTimer(ByVal flag As Boolean)
-    '    blackTimer.Enabled = Not flag
-    'End Sub
-
-    '' add increment to black timer
-    'Private Sub addBlackIncrement()
-    '    timeLeftBlack = timeLeftBlack.Add(increment)
-    '    updateBlackTimerLabel()
-    'End Sub
-
-    '' add increment to white timer
-    'Private Sub addWhiteIncrement()
-    '    timeLeftWhite = timeLeftWhite.Add(increment)
-    '    updateWhiteTimerLabel()
-    'End Sub
-
-    '' pause black timer, add increment
-    'Private Sub whiteMoveChangeClocks()
-    '    pauseBlackTimer(True)
-    '    addWhiteIncrement()
-    '    pauseWhiteTimer(False)
-    'End Sub
-
-    '' pause white timer, add increment
-    'Private Sub blackMoveChangeClocks()
-    '    pauseWhiteTimer(True)
-    '    addBlackIncrement()
-    '    pauseBlackTimer(False)
-    'End Sub
-
-    '' change clocks based on turn
-    'Private Sub changeClocks()
-    '    If turn Then
-    '        whiteMoveChangeClocks()
-    '    Else
-    '        blackMoveChangeClocks()
-    '    End If
-    'End Sub
+        chess.validMoves(newGame, {7, 3})
+    End Sub
 End Class

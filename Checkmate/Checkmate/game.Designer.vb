@@ -84,6 +84,7 @@ Partial Class game
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
         CType(Me.pb_canvas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ms_menu.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -543,11 +544,21 @@ Partial Class game
         Me.Button3.Text = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(969, 640)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
+        Me.Button4.TabIndex = 23
+        Me.Button4.Text = "Button4"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
         'game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1426, 685)
+        Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.GroupBox2)
@@ -641,4 +652,5 @@ Partial Class game
     Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
     Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents Button4 As System.Windows.Forms.Button
 End Class
