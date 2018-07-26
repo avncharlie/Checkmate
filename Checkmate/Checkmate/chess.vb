@@ -23,9 +23,7 @@
     ' functions todo
     ' function that will detect checkmate or any kind of draw
     '    in client side code, would be called after doMove 
-
     ' save game to file
-
     ' load game from file
 
     Structure ChessClock
@@ -83,6 +81,21 @@
     Function coordstoSAN(ByVal coords As Integer()) As String
         coordstoSAN = Chr(coords(0) + 97) & coords(1) + 1
     End Function
+
+    ' given a valid start coords and dest coords and a game, return an int array with matching moveKeys
+    Function getMoveKeys(ByVal startCoords As Integer(), ByVal destCoords As Integer(), ByVal game As Game) As Integer()
+        Dim moveDict As New Dictionary(Of Integer(), Integer())
+        moveDict = chess.validMoves(game, startCoords)
+        Dim moveKeys() As Integer
+        moveKeys = {}
+        For Each keyValuePair In moveDict
+            If keyValuePair.Key(0) = destCoords(0) And keyValuePair.Key(1) = destCoords(1) Then
+                moveKeys = keyValuePair.Value
+            End If
+        Next
+        getMoveKeys = moveKeys
+    End Function
+
 
     ' add move to history or boardHistory (returns new array), redim if necessary
     Function updateHistory(ByVal s As String, ByVal history() As String) As String()
@@ -278,17 +291,17 @@
 
     ' given a Game structure, returns a Game structure with sides switched
     ' this updates the whiteToMove variable and toggles the timers, and handles setting the timer on the first turn
-    Function switchSideGame(ByVal game As Game, Optional ByVal firstTurn As Boolean = False)
+    Function switchSideGame(ByVal game As Game)
         Dim gameSideSwitched As Game
         gameSideSwitched = game
-        If firstTurn Then
-            enableClock(gameSideSwitched.whiteTime, True)
-            enableClock(gameSideSwitched.blackTime, False)
-            gameSideSwitched.whiteToMove = True
+
+        ' if first turn
+        If gameSideSwitched.boardHistory.Length = 2 Then
+            enableClock(gameSideSwitched.whiteTime, False)
+            enableClock(gameSideSwitched.blackTime, True)
         Else
             toggleClock(gameSideSwitched.whiteTime)
             toggleClock(gameSideSwitched.blackTime)
-            gameSideSwitched.whiteToMove = Not gameSideSwitched.whiteToMove
         End If
         switchSideGame = gameSideSwitched
     End Function
@@ -1137,6 +1150,10 @@
 
             ' update whiteToMove (switch sides)
             gameBeforeMove.whiteToMove = Not game.whiteToMove
+
+            ' toggle clocks
+            toggleClock(gameBeforeMove.whiteTime)
+            toggleClock(gameBeforeMove.blackTime)
 
             takebackMove = gameBeforeMove
         Else

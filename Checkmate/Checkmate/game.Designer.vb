@@ -85,6 +85,7 @@ Partial Class game
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.pb_canvas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ms_menu.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -224,7 +225,7 @@ Partial Class game
         Me.ms_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_file, Me.tsmi_game, Me.tsmi_view})
         Me.ms_menu.Location = New System.Drawing.Point(0, 0)
         Me.ms_menu.Name = "ms_menu"
-        Me.ms_menu.Size = New System.Drawing.Size(1426, 24)
+        Me.ms_menu.Size = New System.Drawing.Size(1284, 24)
         Me.ms_menu.TabIndex = 13
         Me.ms_menu.Text = "MenuStrip1"
         '
@@ -465,6 +466,7 @@ Partial Class game
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.TextBox2)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Button1)
@@ -474,7 +476,7 @@ Partial Class game
         Me.GroupBox1.Size = New System.Drawing.Size(403, 56)
         Me.GroupBox1.TabIndex = 19
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Piece at coordinate"
+        Me.GroupBox1.Text = "Valid moves"
         '
         'GroupBox2
         '
@@ -553,11 +555,20 @@ Partial Class game
         Me.Button4.Text = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(196, 24)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 13)
+        Me.Label1.TabIndex = 19
+        Me.Label1.Text = "Label1"
+        '
         'game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1426, 685)
+        Me.ClientSize = New System.Drawing.Size(1284, 685)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.ListBox1)
@@ -653,4 +664,5 @@ Partial Class game
     Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 End Class

@@ -94,17 +94,14 @@
 
     Dim newGame As chess.Game
 
+    ' switch side delay!!!
+
     Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' initialise game
         newGame = chess.initGame(My.Resources.txt_chessboardStartingPosition, 1, 100, 10)
         AddHandler newGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf newGamewhiteTimeDisplay)
         AddHandler newGame.blackTime.timer.Tick, Sub() chess.clockTick(newGame.blackTime, AddressOf newGameblackTimeDisplay)
-
-        ' display board
-        'newGame.board(0, 4) = "P"
-        'newGame.board(1, 4) = "p"
-        'displayGame(newGame)
-        'chess.validMoves(newGame, {0, 4})
+        displayGame(newGame)
     End Sub
 
     ' update white time label from newGame (called on timer tick)
@@ -117,12 +114,21 @@
         displayBlackTime(newGame.blackTime.timeLeft)
     End Sub
 
+    Sub displayMoveIndicator(ByVal whiteToMove As Boolean)
+        If whiteToMove Then
+            lbl_moveIndicator.Text = "White to move"
+        Else
+            lbl_moveIndicator.Text = "Black to move"
+        End If
+    End Sub
+
     ' display game
     Private Sub displayGame(ByVal game As chess.Game)
-        displayBoard(game.board)
+        displayBoard(game.board, game.whiteToMove)
         displayHistory(game.history)
         displayBlackTime(game.blackTime.timeLeft)
         displayWhiteTime(game.whiteTime.timeLeft)
+        displayMoveIndicator(game.whiteToMove)
     End Sub
 
     ' display white time
@@ -170,23 +176,42 @@
         End If
     End Sub
 
-    ' test move
-    Private Sub testMove(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
-        Dim move As Move
-        move.gameState = newGame
-        move.startCoords = {TextBox4.Text, TextBox3.Text}
-        move.destinationCoords = {TextBox6.Text, TextBox5.Text}
-        move.moveKeys = {0}
-        move.promotion = ""
-
-        newGame = chess.doMove(move)
-        displayGame(newGame)
-    End Sub
-
     ' takeback move
     Private Sub btn_takeBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_takeBack.Click
         newGame = chess.takebackMove(newGame)
         displayGame(newGame)
+    End Sub
+
+    ' test move
+    Private Sub testMove(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Dim startCoords() As Integer = {TextBox4.Text, TextBox3.Text}
+        Dim destCoords() As Integer = {TextBox6.Text, TextBox5.Text}
+
+        Dim move As Move
+        move.gameState = newGame
+        move.startCoords = startCoords
+        move.destinationCoords = destCoords
+        move.moveKeys = chess.getMoveKeys(startCoords, destCoords, newGame)
+        move.promotion = ""
+
+        newGame = chess.doMove(move)
+        newGame = chess.switchSideGame(newGame)
+        displayGame(newGame)
+    End Sub
+
+    Private Sub displayValidMoves(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Dim coords() As Integer
+        coords = {TextBox1.Text, TextBox2.Text}
+
+        Dim moveDict As New Dictionary(Of Integer(), Integer())
+        moveDict = chess.validMoves(newGame, coords)
+
+        Dim s As String
+        s = ""
+        For Each keyValuePair In moveDict
+            s = s & keyValuePair.Key(0) & " " & keyValuePair.Key(1) & ", "
+        Next
+        Label1.Text = s
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
@@ -248,4 +273,5 @@
 
         chess.validMoves(newGame, {7, 3})
     End Sub
+
 End Class
