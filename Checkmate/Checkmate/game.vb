@@ -94,13 +94,42 @@
 
     Dim newGame As chess.Game
 
-    ' switch side delay!!!
+    ' switch side delay
+    ' notice that 3 fold repetition and 50 move rule are not implemented
+    ' visuals
+    ' load history
+
+    ' test all moves
+    ' en passant included
+    ' taking a piece on a pawn promotion
+
+    ' pawn promotion!!
 
     Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' initialise game
-        newGame = chess.initGame(My.Resources.txt_chessboardStartingPosition, 1, 100, 10)
-        AddHandler newGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf newGamewhiteTimeDisplay)
-        AddHandler newGame.blackTime.timer.Tick, Sub() chess.clockTick(newGame.blackTime, AddressOf newGameblackTimeDisplay)
+
+        If options.loadGame Then
+            newGame = chess.loadGame(options.loadGamePath)
+            MsgBox("u ready")
+            ' set up timers
+            If newGame.boardHistory.Length > 1 Then
+                If newGame.whiteToMove Then
+                    enableClock(newGame.whiteTime, True)
+                    enableClock(newGame.blackTime, False)
+                Else
+                    enableClock(newGame.whiteTime, False)
+                    enableClock(newGame.blackTime, True)
+                End If
+            Else
+                enableClock(newGame.whiteTime, False)
+                enableClock(newGame.blackTime, False)
+            End If
+        Else
+            newGame = chess.initGame(My.Resources.txt_chessboardStartingPosition, 1, 100, 10)
+        End If
+
+        AddHandler newGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf newGamewhiteTimeDisplay, AddressOf endGame, True)
+        AddHandler newGame.blackTime.timer.Tick, Sub() chess.clockTick(newGame.blackTime, AddressOf newGameblackTimeDisplay, AddressOf endGame, False)
         displayGame(newGame)
     End Sub
 
@@ -182,6 +211,32 @@
         displayGame(newGame)
     End Sub
 
+    ' end game
+    Private Sub endGame(ByVal whiteWin As Boolean, ByVal gameStatus As Integer)
+        Dim winner As String
+        Dim loser As String
+        If whiteWin Then
+            winner = "White"
+            loser = "Black"
+        Else
+            winner = "Black"
+            loser = "White"
+        End If
+
+        Select Case gameStatus
+            Case 1
+                MsgBox(winner & " wins by checkmate!")
+            Case 2
+                MsgBox("Draw by stalemate")
+            Case 3
+                MsgBox("Draw from insufficient material")
+            Case 4
+                MsgBox(winner & " wins on time!")
+            Case 5
+                MsgBox(loser & " resigns")
+        End Select
+    End Sub
+
     ' test move
     Private Sub testMove(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         Dim startCoords() As Integer = {TextBox4.Text, TextBox3.Text}
@@ -192,6 +247,7 @@
         move.startCoords = startCoords
         move.destinationCoords = destCoords
         move.moveKeys = chess.getMoveKeys(startCoords, destCoords, newGame)
+        ' check for pawn promotion
         move.promotion = ""
 
         newGame = chess.doMove(move)
@@ -214,64 +270,39 @@
         Label1.Text = s
     End Sub
 
-    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        Dim move As Move
-        move.gameState = newGame
-        move.startCoords = {7, 1}
-        move.destinationCoords = {7, 3}
-        move.moveKeys = {0}
-        move.promotion = ""
-        newGame = chess.doMove(move)
 
-        Dim move2 As Move
-        move2.gameState = newGame
-        move2.startCoords = {2, 6}
-        move2.destinationCoords = {2, 4}
-        move2.moveKeys = {0}
-        move2.promotion = ""
-        newGame = chess.doMove(move2)
+    Private Sub saveGame()
+        ' save current states of clocks
+        Dim blackTimerEnabled As Boolean
+        Dim whiteTimerEnabled As Boolean
+        blackTimerEnabled = newGame.blackTime.timer.Enabled
+        whiteTimerEnabled = newGame.whiteTime.timer.Enabled
 
-        Dim move3 As Move
-        move3.gameState = newGame
-        move3.startCoords = {5, 1}
-        move3.destinationCoords = {5, 3}
-        move3.moveKeys = {0}
-        move3.promotion = ""
-        newGame = chess.doMove(move3)
+        ' pause both clocks while saving file
+        enableClock(newGame.blackTime, False)
+        enableClock(newGame.whiteTime, False)
 
-        Dim move4 As Move
-        move4.gameState = newGame
-        move4.startCoords = {2, 4}
-        move4.destinationCoords = {2, 3}
-        move4.moveKeys = {0}
-        move4.promotion = ""
-        newGame = chess.doMove(move4)
+        Dim saveFileDialog = New SaveFileDialog()
+        saveFileDialog.Filter = ".checkmate (*.checkmate)|*.checkmate"
+        saveFileDialog.Title = "Save game"
+        saveFileDialog.ShowDialog()
 
-        Dim move5 As Move
-        move5.gameState = newGame
-        move5.startCoords = {1, 1}
-        move5.destinationCoords = {1, 3}
-        move5.moveKeys = {0}
-        move5.promotion = ""
-        newGame = chess.doMove(move5)
+        If saveFileDialog.FileName <> "" Then
+            chess.saveGame(newGame, saveFileDialog.FileName, False)
+        End If
 
-        Dim move6 As Move
-        move6.gameState = newGame
-        move6.startCoords = {2, 3}
-        move6.destinationCoords = {1, 2}
-        move6.moveKeys = {2}
-        move6.promotion = ""
-        newGame = chess.doMove(move6)
-
-        newGame.board(4, 4) = "q"
-        newGame.board(4, 1) = " "
-
-        newGame.board(7, 3) = "R"
-        newGame.board(5, 3) = " "
-
-        displayGame(newGame)
-
-        chess.validMoves(newGame, {7, 3})
+        ' resume clocks
+        enableClock(newGame.blackTime, blackTimerEnabled)
+        enableClock(newGame.whiteTime, whiteTimerEnabled)
     End Sub
 
+    Private Sub game_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.S And e.Modifiers = Keys.Control Then
+            saveGame()
+        End If
+    End Sub
+
+    Private Sub tsmi_save_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_save.Click
+        saveGame()
+    End Sub
 End Class

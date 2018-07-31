@@ -76,16 +76,15 @@ Partial Class game
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.pb_canvas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ms_menu.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -225,7 +224,7 @@ Partial Class game
         Me.ms_menu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_file, Me.tsmi_game, Me.tsmi_view})
         Me.ms_menu.Location = New System.Drawing.Point(0, 0)
         Me.ms_menu.Name = "ms_menu"
-        Me.ms_menu.Size = New System.Drawing.Size(1284, 24)
+        Me.ms_menu.Size = New System.Drawing.Size(925, 24)
         Me.ms_menu.TabIndex = 13
         Me.ms_menu.Text = "MenuStrip1"
         '
@@ -239,46 +238,46 @@ Partial Class game
         'tsmi_about
         '
         Me.tsmi_about.Name = "tsmi_about"
-        Me.tsmi_about.Size = New System.Drawing.Size(142, 22)
+        Me.tsmi_about.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_about.Text = "About"
         '
         'tss_1
         '
         Me.tss_1.Name = "tss_1"
-        Me.tss_1.Size = New System.Drawing.Size(139, 6)
+        Me.tss_1.Size = New System.Drawing.Size(149, 6)
         '
         'tsmi_save
         '
         Me.tsmi_save.Name = "tsmi_save"
-        Me.tsmi_save.Size = New System.Drawing.Size(142, 22)
+        Me.tsmi_save.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_save.Text = "Save..."
         '
         'tsmi_loadGame
         '
         Me.tsmi_loadGame.Name = "tsmi_loadGame"
-        Me.tsmi_loadGame.Size = New System.Drawing.Size(142, 22)
+        Me.tsmi_loadGame.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_loadGame.Text = "Load game..."
         '
         'tss_2
         '
         Me.tss_2.Name = "tss_2"
-        Me.tss_2.Size = New System.Drawing.Size(139, 6)
+        Me.tss_2.Size = New System.Drawing.Size(149, 6)
         '
         'tsmi_options
         '
         Me.tsmi_options.Name = "tsmi_options"
-        Me.tsmi_options.Size = New System.Drawing.Size(142, 22)
+        Me.tsmi_options.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_options.Text = "Options..."
         '
         'tss_3
         '
         Me.tss_3.Name = "tss_3"
-        Me.tss_3.Size = New System.Drawing.Size(139, 6)
+        Me.tss_3.Size = New System.Drawing.Size(149, 6)
         '
         'tsmi_exit
         '
         Me.tsmi_exit.Name = "tsmi_exit"
-        Me.tsmi_exit.Size = New System.Drawing.Size(142, 22)
+        Me.tsmi_exit.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_exit.Text = "Exit"
         '
         'tsmi_game
@@ -478,6 +477,15 @@ Partial Class game
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Valid moves"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(196, 24)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 13)
+        Me.Label1.TabIndex = 19
+        Me.Label1.Text = "Label1"
+        '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.TextBox5)
@@ -529,17 +537,9 @@ Partial Class game
         Me.TextBox4.Size = New System.Drawing.Size(41, 20)
         Me.TextBox4.TabIndex = 15
         '
-        'ListBox1
-        '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(838, 58)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(557, 459)
-        Me.ListBox1.TabIndex = 21
-        '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(849, 640)
+        Me.Button3.Location = New System.Drawing.Point(828, 371)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(75, 23)
         Me.Button3.TabIndex = 22
@@ -548,30 +548,20 @@ Partial Class game
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(969, 640)
+        Me.Button4.Location = New System.Drawing.Point(828, 401)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(75, 23)
         Me.Button4.TabIndex = 23
         Me.Button4.Text = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(196, 24)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 19
-        Me.Label1.Text = "Label1"
-        '
         'game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1284, 685)
+        Me.ClientSize = New System.Drawing.Size(925, 685)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.lb_visualStub)
@@ -588,6 +578,7 @@ Partial Class game
         Me.Controls.Add(Me.pb_canvas)
         Me.Controls.Add(Me.ms_menu)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
         Me.MainMenuStrip = Me.ms_menu
         Me.Name = "game"
         Me.Text = "Checkmate"
@@ -661,8 +652,7 @@ Partial Class game
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
-    Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
     Friend WithEvents Button3 As System.Windows.Forms.Button
-    Friend WithEvents Button4 As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Button4 As System.Windows.Forms.Button
 End Class
