@@ -31,7 +31,7 @@
 
         If chooseFileDialog.ShowDialog() = DialogResult.OK Then
             strFileName = chooseFileDialog.FileName
-            If Not chess.isValidCheckmateFile(strFileName) Then
+            If Not chess.isValidChessFile(strFileName) Then
                 MsgBox("This is not a valid Checkmate file (it could not be processed)")
             Else
                 options.loadGame = True

@@ -1,6 +1,196 @@
 ﻿Module chess
 
-    ' data type definitions of terms used:
+    '    ██████╗██╗  ██╗███████╗███████╗███████╗  ██╗   ██╗██████╗ 
+    '   ██╔════╝██║  ██║██╔════╝██╔════╝██╔════╝  ██║   ██║██╔══██╗
+    '   ██║     ███████║█████╗  ███████╗███████╗  ██║   ██║██████╔╝
+    '   ██║     ██╔══██║██╔══╝  ╚════██║╚════██║  ╚██╗ ██╔╝██╔══██╗
+    '   ╚██████╗██║  ██║███████╗███████║███████║██╗╚████╔╝ ██████╔╝
+    '    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝ ╚═══╝  ╚═════╝ 
+    '   A modular VB.NET chess library 
+    '   Created by Alvin Charles, alvin.charles@cgs.act.edu.au
+    '
+    '   USER GUIDE CONTENTS (line numbers shown)
+    '     INTRODUCTION.................................................................................................... 24
+    '     BASIC USAGE / INITIALISATION.................................................................................... 39
+    '     MOVING PIECES / MOVE VALIDATION................................................................................. 64
+    '     TAKING BACK MOVES.............................................................................................. 121
+    '     CHESSCLOCK MANIPULATION........................................................................................ 126
+    '     CHECKING GAME STATUS........................................................................................... 160
+    '     SAVING AND LOADING GAMES....................................................................................... 171
+    '     GLOSSARY OF TERMS.............................................................................................. 193
+    '     CONCLUSION..................................................................................................... 221
+    '
+    '
+    '   INTRODUCTION
+    ' chess.vb is a chess library written in VB that is used to manage chess games.
+    ' Specifically, its capabilities are:
+    '   - Storing current game position and previous game positions
+    '   - Generating and storing game history in SAN format
+    '   - Emulating chess clocks, including increment
+    '   - Taking back moves from a game
+    '   - Generating valid moves for given piece (in accordance with all FIDE Laws of Chess, with the exemption of draw by
+    '     either 50 move rule or 3-fold repetition)
+    '   - Checking game status (checkmate, stalemate, insufficient material or win on time)
+    '   - Storing and loading game structures into files
+    ' Below is a user guide for this library and at the very end is a glossary of terms and their data types that are used in
+    ' the documentation.
+    '
+    '
+    '   BASIC USAGE / INITIALISATION
+    ' It does this mainly through Game structures. These structures hold a snapshot of a chess game in a specific
+    ' point in time.
+    ' They contain:
+    '   1. Public board As Char(,)
+    '       - This contains a 2d array that contains the board
+    '   2. Public history As String()
+    '       - This contains a string array of Standard Algebraic Notation moves
+    '   3. Public boardHistory As String()
+    '       - This contains a history of board positions in stringBoard form (this is explained later)
+    '   4. Public whiteTime As ChessClock
+    '       - This is a ChessClock object, which will be explained below
+    '   5. Public blackTime As ChessClock
+    '   6. Public whiteToMove As Boolean
+    '       - This holds a boolean that shows who's turn it is to move
+    '
+    ' To use a Game structure, first initialise it using initGame function. For more information, read the blurb above
+    ' the function below.
+    ' Then set up the timers. This is also explained in the blurb. E.g:
+    '     newGame = chess.initGame(My.Resources.txt_chessboardStartingPosition, 1, 100, 10)
+    '     AddHandler newGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf whiteTimeDisplay, AddressOf endGame, True)
+    '     AddHandler newGame.blackTime.timer.Tick, Sub() chess.clockTick(newGame.blackTime, AddressOf blackTimeDisplay, AddressOf endGame, False)
+    ' Now a game structure is set up. Any one of the properties of the structure described above can be accessed at any time.
+    '
+    '
+    '   MOVING PIECES / MOVE VALIDATION
+    ' In order to do a move on a board or use any move related functions, a Move structure must be created. They contain:
+    '   1. Public gameState As Game
+    '       - This will contain a Game structure 
+    '   2. Public startCoords As Integer()
+    '       - Start coordinates of the move
+    '   3. Public destinationCoords As Integer()
+    '       - Destination coordinates of the move
+    '   4. Public moveKeys As Integer()
+    '       - Array of moveKeys (explained below)
+    '   5. Public promotion As Char
+    '       - In the case that the move is a pawn promotion, the piece the pawn will be promoted to.
+    ' To move a piece in a game, use the doMove function. This function takes a Move Structure, and will return a game
+    ' structure with the move completed on it. This updates the game.board, game.history, game.boardHistory and
+    ' game.whiteToMove variables.
+    '
+    ' However, in order to generate valid moves for a piece, moveKeys and moveDicts need to be understood.
+    ' moveKeys are a system of categorising moves. They are:
+    '      0 - normal move
+    '      1 - capture
+    '      2 - en passant capture
+    '      3 - pawn promotion
+    '      4 - kingside castling
+    '      5 - queenside castling
+    '      6 - check (if the move puts the other side in check)
+    '      7 - checkmate (if the move puts the other side in checkmate.
+    '
+    ' moveKeys are needed as they tell the doMove function what to do with the move, and how to update the history as
+    ' needed. A move may have multiple moveKeys, e.g. a pawn that takes a piece on the last rank and then puts the other
+    ' side in checkmate would the moveKeys {1, 3, 7}.
+    '
+    ' To generate valid moves and their corresponding moveKeys, use the validMoves function. This takes a Game structure, 
+    ' a coordinate pair (of the piece you want valid moves for) and returns a moveDict. A moveDict is a dictionary of the
+    ' form (coords: <array of moveKeys>).
+    '
+    ' To see the corresponding array of moveKeys for a pair of valid start and end coordinates, use the function
+    ' getMoveKeys. It takes pair of start coordinates, end coordinates and a Game structure.
+    '
+    ' After doing this, to switch sides of the Game, the switchSideGame function can be called. This takes a Game structure
+    ' and switches the clocks and the whiteToMove variables.
+    '
+    ' To put it together, here is an example of doing a move:
+    '    Dim move As Move
+    '    move.gameState = exampleGameStructure
+    '    move.startCoords = startCoordsReceivedByUser
+    '    move.destinationCoords = destCoordsReceivedByUser
+    '    move.moveKeys = chess.getMoveKeys(startCoords, destCoords, exampleGameStructure)
+    '    move.promotion = ""
+    '    If move.moveKeys.Contains(3) Then 'this means it is a pawn promotion
+    '        move.promotion = getPawnPromotionPieceFromUser()
+    '    End If
+    '
+    '    newGame = chess.doMove(move)
+    '    newGame = chess.switchSideGame(newGame)
+    '    displayGame(newGame)
+    '
+    '
+    '   TAKING BACK MOVES
+    ' To take back a move, use the takebackMove function. This takes a game and takes it back a move. This can be done as a
+    ' Game structure stores all previous history of a game inside of it.
+    '
+    '
+    '   CHESSCLOCK MANIPULATION
+    ' ChessClocks are the structures used to represent real life chessclocks. They manage timing the game, and have all the
+    ' features of a real chess clock. This includes adding increment to moves. ChessClock structures contain:
+    '   1. Public totalTime As TimeSpan
+    '      - This contains the totalTime this clock has (to start with)
+    '   2. Public timeLeft As TimeSpan
+    '      - This contains the time left on the clock
+    '   3. Public interval As TimeSpan
+    '      - This contains how often the clock ticks, or updates
+    '   4. Public increment As TimeSpan
+    '      - This contains the increment value of the clock
+    '   5. Public timer As Timer
+    '      - This contains a VB Timer object, which manages the actual clock
+    '
+    ' There are many easy to understand functions that manipulate the ChessClock. These shouldn't really have to be used as
+    ' the switchSideGame functions look after switching the clocks after a move is done.
+    '
+    ' The initialisation of the white and black ChessClocks are done when the game is initialised. However, to finish the
+    ' process, add handlers to the ChessClock timer. This is hard to explain, so an example will be shown followed by an
+    ' explanation. Example:
+    '    AddHandler exampleGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf displayTime, AddressOf endGame, True)
+    ' Adding a handler means associating a subroutine with an action a VB control triggers. To do this AddHandler must 
+    ' called on the ChessClock.timer.Tick action, which triggers every tick of the timer. The interval this ticks is set by
+    ' the ChessClock.interval property. The second side of the above statement is a VB lambda, or an anonymous subroutine, 
+    ' that calls the clockTick function. The reason this function cannot be called directly is as handlers can only trigger 
+    ' subroutines, not functions. 
+    '
+    ' The clockTick functions takes a few parameters - byref a ChessClock structure to modify, the address of a function that
+    ' will be called every time the clock ticks (this can be used to visually update time), and the address of a function
+    ' that will invoked whenever the timer reaches below zero. This endGame function must take 2 parameters - a boolean that
+    ' is true if the white side lost or false if the black side lost, and a gameStatus number (detailed below). Finally, 
+    ' clockTick also takes a boolean value if the clock being modified is either the white clock or the black clock. (true if
+    ' white, false if black.)
+    '
+    '   CHECKING GAME STATUS
+    ' Game status is represented using the gameStatus key:
+    '      0 - normal
+    '      1 - checkmate
+    '      2 - stalemate
+    '      3 - insufficient material
+    '      4 - win on time
+    '      5 - resignation
+    ' The gameStatus function takes a game as a parameter and a side to check as a boolean (true is white, false is black), and
+    ' returns a gameStatus key.
+    '
+    '   SAVING AND LOADING GAMES
+    ' To save a game to a file, use the saveGame function. It takes a Game structure and a filepath, and saves the game to the
+    ' specified file. An optional parameter is the fileExtension parameter, which if set saves the game
+    ' as 'filepath & "." & fileExtension', as opposed to just 'filepath'. This can be used to create custom file extensions for
+    ' your app.
+    '
+    ' To load a game from a file, call the loadFile function. This takes filePath and returns a game structure. By default it 
+    ' automatically starts the timers, but an optional parameter setUpTimers is provided that can disable this.
+    '
+    ' To check if a file is a valid readable file that can be read into a Game structure, use the isValidChessFile function.
+    ' This takes a file path and returns a boolean, True if it is valid, or False if not.
+    '
+    ' Game structures are written to files as follows:
+    '   line 1: boardhistory (stringboards seperated by commas)
+    '   line 2: history (SANMoves seperated by commas)
+    '   line 3: whiteToMove (0 is False, 1 is True)
+    '   line 4: whiteTime (totalTime, timeleft, interval, increment)
+    '   line 5: blacktime (totalTime, timeleft, interval, increment)
+    ' ChessClock properties (the variables in brackets) are represented as an amount of Ticks. Ticks in VB are nanoseconds. The
+    ' loadGame function can read these Tick amount and create ChessClock structures from them.
+    '
+    '
+    '   GLOSSARY OF TERMS
     '   - board: 2d char array of pieces
     '   - string board: char of length 64 holding all pieces on board
     '   - coords: 2 item integer array in form of [x, y]
@@ -17,8 +207,8 @@
     '      5 - queenside castling
     '      6 - check
     '      7 - checkmate
-    '   - moveDict: a dictionary with the form (coords, <array of moveKeys>), used to show possible moves 
-    '   - line
+    '   - moveDict: a dictionary with the form (coords: <array of moveKeys>), used to show possible moves 
+    '   - line: a 2d array of integers (holding coordinates)
     '   - gameStatus
     '      0 - normal
     '      1 - checkmate
@@ -26,16 +216,15 @@
     '      3 - insufficient material
     '      4 - win on time
     '      5 - resignation
+    '
+    '
+    '   CONCLUSION
+    ' While this was a basic overview of how this library works, it does not detail all the tools available below. For a more
+    ' comprehensive look at the library, take a look at all the Public functions and subroutines in each region, as there are more
+    ' than what is detailed above.
 
-    '   explain basics of how algorithms work (insufficient material especially)
-    '   timer delay when opening new game
-
-
-    ' functions todo:
-    '   save game to file
-    '   load game from file
-
-
+#Region "Structures"
+    ' used for representing timers in timed games
     Public Structure ChessClock
         Public totalTime As TimeSpan
         Public timeLeft As TimeSpan
@@ -44,6 +233,7 @@
         Public timer As Timer
     End Structure
 
+    ' contains the full state of a game in any moment
     Public Structure Game
         Public board As Char(,)
         Public history As String()
@@ -53,20 +243,18 @@
         Public whiteToMove As Boolean
     End Structure
 
+    ' contains information needed for a move
     Public Structure Move
-        Public gameState As Game
+        Public gameState As game
         Public startCoords As Integer()
         Public destinationCoords As Integer()
         Public moveKeys As Integer()
         Public promotion As Char
     End Structure
+#End Region
 
-    ' line 1: boardhistory (stringboards seperated by commas)
-    ' line 2: history (SANMoves seperated by commas)
-    ' line 3: whiteToMove (0 is False, 1 is True)
-    ' line 4: whiteTime (totalTime, timeleft, interval, increment)
-    ' line 5: blacktime (totalTime, timeleft, interval, increment)
-
+#Region "Save and Load Games"
+#Region "Private functions"
     ' given a path, creates or overwrites a file on the path
     Private Sub createOrOverwriteFile(ByVal filePath As String)
         Dim file As System.IO.FileStream
@@ -107,9 +295,10 @@
 
         stringToChessClock = clock
     End Function
+#End Region
 
     ' load game from file (returns game object, timers need to be initialised, for more info see documentation on initGame)
-    Public Function loadGame(ByVal filePath As String, Optional ByVal setUpTimers As Boolean = True) As Game
+    Public Function loadGame(ByVal filePath As String, Optional ByVal setUpTimers As Boolean = True) As game
         ' initialise vars that store data from file
         Dim boardHistoryString As String
         Dim historyString As String
@@ -162,24 +351,11 @@
         loadGame = newGame
     End Function
 
-    ' validates checkmate file (returns true if valid, false if not)
-    Public Function isValidCheckmateFile(ByVal filePath As String) As Boolean
-        Dim isValidFile As Boolean
-        Try
-            loadGame(filePath)
-            isValidFile = True
-        Catch ex As Exception
-            isValidFile = False
-        End Try
-        FileSystem.FileClose()
-        isValidCheckmateFile = isValidFile
-    End Function
-
-    ' writes game to file, given file path (creates file if not there and adds .checkmate extension)
-    Public Sub saveGame(ByVal game As Game, ByVal filePath As String, Optional ByVal addCheckmateExtension As Boolean = True)
+    ' writes game to file, given file path (creates file if not there and adds .checkmate extension if specified)
+    Public Sub saveGame(ByVal game As Game, ByVal filePath As String, Optional ByVal addFileExtension As Boolean = True, Optional ByVal fileExtension As String = "txt")
         ' create file if it doesn't exist, overwrite it if it does
-        If addCheckmateExtension Then
-            filePath = filePath & ".checkmate"
+        If addFileExtension Then
+            filePath = filePath & "." & fileExtension
         End If
 
         createOrOverwriteFile(filePath)
@@ -214,53 +390,23 @@
         fileWriter.Close()
     End Sub
 
-    ' returns a board made from a string board
-    Public Function boardFromString(ByVal s As String) As Char(,)
-
-        Dim board(7, 7) As Char
-        Dim index = 0
-        For y = 0 To 7
-            For x = 0 To 7
-                board(x, y) = s(index)
-                index = index + 1
-            Next
-        Next
-        boardFromString = board
+    ' validates checkmate file (returns true if valid, false if not)
+    Public Function isValidChessFile(ByVal filePath As String) As Boolean
+        Dim isValidFile As Boolean
+        Try
+            loadGame(filePath)
+            isValidFile = True
+        Catch ex As Exception
+            isValidFile = False
+        End Try
+        FileSystem.FileClose()
+        isValidChessFile = isValidFile
     End Function
+#End Region
 
-    ' returns a string board made from a board
-    Public Function boardAsString(ByVal b As Char(,)) As String
-
-        Dim s As String = ""
-        For y = 0 To 7
-            For x = 0 To 7
-                s = s + b(x, y)
-            Next
-        Next
-        boardAsString = s
-    End Function
-
-    ' returns a SAN made from coords
-    Public Function coordstoSAN(ByVal coords As Integer()) As String
-        coordstoSAN = Chr(coords(0) + 97) & coords(1) + 1
-    End Function
-
-    ' given a valid start coords and dest coords and a game, return an int array with matching moveKeys
-    Public Function getMoveKeys(ByVal startCoords As Integer(), ByVal destCoords As Integer(), ByVal game As Game) As Integer()
-        Dim moveDict As New Dictionary(Of Integer(), Integer())
-        moveDict = chess.validMoves(game, startCoords)
-        Dim moveKeys() As Integer
-        moveKeys = {}
-        For Each keyValuePair In moveDict
-            If keyValuePair.Key(0) = destCoords(0) And keyValuePair.Key(1) = destCoords(1) Then
-                moveKeys = keyValuePair.Value
-            End If
-        Next
-        getMoveKeys = moveKeys
-    End Function
-
+#Region "Check Game status"
     ' given a game and a side to check, returns true if checkmate, false if else
-    Public Function isCheckmate(ByVal game As Game, ByVal checkWhiteSide As Boolean) As Boolean
+    Public Function isCheckmate(ByVal game As game, ByVal checkWhiteSide As Boolean) As Boolean
         ' check if king is in check first
         ' get all valid move for side to check (into a line)
         ' go through all moves and check whether any result in the king not in check
@@ -352,7 +498,7 @@
     End Function
 
     ' given a game and a side to check, returns true if stalemate
-    Public Function isStalemate(ByVal game As Game, ByVal checkWhiteSide As Boolean) As Boolean
+    Public Function isStalemate(ByVal game As game, ByVal checkWhiteSide As Boolean) As Boolean
         Dim isPositionStalemate As Boolean
         isPositionStalemate = True
 
@@ -450,35 +596,8 @@
         isInsufficientMaterial = insufficient
     End Function
 
-    ' add move to history or boardHistory (returns new array), redim if necessary
-    Public Function updateHistory(ByVal s As String, ByVal history() As String) As String()
-        If history.Length > 0 Then
-            If String.IsNullOrEmpty(history(history.Length - 1)) Then
-                ' if history array has more space
-                Dim firstNullIndex As Integer
-
-                For x = 0 To history.Length - 1
-                    If String.IsNullOrEmpty(history(x)) Then
-                        firstNullIndex = x
-                        Exit For
-                    End If
-                Next
-
-                history(firstNullIndex) = s
-                updateHistory = history
-            Else
-                ' if history array has no more space
-                ' redim array and recurse once
-                ReDim Preserve history(history.Length)
-                updateHistory = updateHistory(s, history)
-            End If
-        Else
-            updateHistory = {s}
-        End If
-    End Function
-
-    ' reurn game status
-    Public Function gameStatus(ByVal game As Game, ByVal checkWhiteSide As Boolean) As Integer
+    ' return game status
+    Public Function gameStatus(ByVal game As game, ByVal checkWhiteSide As Boolean) As Integer
         Dim status As Integer
         status = 0
 
@@ -497,56 +616,12 @@
 
         gameStatus = status
     End Function
+#End Region
 
-    ' return SANmove given a Move object
-    Public Function getSANMove(ByVal move As Move) As String
-        Dim movingPieceFile = coordstoSAN(move.startCoords)(0)
-        Dim destinationCoordsSAN = coordstoSAN(move.destinationCoords)
-        Dim movingPiece = Char.ToUpper(move.gameState.board(move.startCoords(0), move.startCoords(1)))
-        Dim SANMove = destinationCoordsSAN
-
-        If movingPiece <> "P" Then
-            SANMove = movingPiece & destinationCoordsSAN
-        End If
-
-        For x = 0 To move.moveKeys.Length - 1
-            ' take care of special moves
-            Select Case move.moveKeys(x)
-                Case 1
-                    If movingPiece <> "P" Then
-                        SANMove = movingPiece & "x" & destinationCoordsSAN
-                    Else
-                        SANMove = movingPieceFile & "x" & destinationCoordsSAN
-                    End If
-
-                Case 2
-                    SANMove = movingPieceFile & "x" & destinationCoordsSAN & " e.p"
-
-                Case 3
-                    SANMove = SANMove & "=" & move.promotion
-                    If move.moveKeys.Length = 1 Then
-                        SANMove = destinationCoordsSAN & "=" & move.promotion
-                    End If
-
-                Case 4
-                    SANMove = "0-0"
-
-                Case 5
-                    SANMove = "0-0-0"
-
-                Case 6
-                    SANMove = SANMove + "+"
-
-                Case 7
-                    SANMove = SANMove + "#"
-            End Select
-        Next
-
-        getSANMove = SANMove
-    End Function
-
+#Region "Initialise new Game"
+#Region "Private functions"
     ' initialise and return a ChessClock structure given time constraints
-    Public Function initChessClock(ByVal totalTime As Integer, ByVal interval As Integer, ByVal increment As Integer) As ChessClock
+    Private Function initChessClock(ByVal totalTime As Integer, ByVal interval As Integer, ByVal increment As Integer) As ChessClock
         Dim clock As ChessClock
         clock.totalTime = New TimeSpan(0, totalTime, 0)
         clock.timeLeft = New TimeSpan(0, totalTime, 0)
@@ -555,6 +630,7 @@
         clock.timer = New Timer With {.Interval = interval}
         initChessClock = clock
     End Function
+#End Region
 
     ' initialise new Game structure, given a stringboard and time constraints
     ' does not add handlers to the timer objects, this needs to be done manually
@@ -586,9 +662,12 @@
 
         initGame = newGame
     End Function
+#End Region
 
+#Region "Do move / takeback move"
+#Region "Private functions"
     ' returns board after move given a Move structure
-    Public Function moveOnBoard(ByVal move As Move) As Char(,)
+    Private Function moveOnBoard(ByVal move As Move) As Char(,)
         Dim newBoard(7, 7) As Char
         Array.Copy(move.gameState.board, newBoard, move.gameState.board.Length)
 
@@ -651,9 +730,134 @@
         moveOnBoard = newBoard
     End Function
 
+    ' add move to history or boardHistory (returns new array), redim if necessary
+    Private Function updateHistory(ByVal s As String, ByVal history() As String) As String()
+        If history.Length > 0 Then
+            If String.IsNullOrEmpty(history(history.Length - 1)) Then
+                ' if history array has more space
+                Dim firstNullIndex As Integer
+
+                For x = 0 To history.Length - 1
+                    If String.IsNullOrEmpty(history(x)) Then
+                        firstNullIndex = x
+                        Exit For
+                    End If
+                Next
+
+                history(firstNullIndex) = s
+                updateHistory = history
+            Else
+                ' if history array has no more space
+                ' redim array and recurse once
+                ReDim Preserve history(history.Length)
+                updateHistory = updateHistory(s, history)
+            End If
+        Else
+            updateHistory = {s}
+        End If
+    End Function
+
+    ' return SANmove given a Move object
+    Private Function getSANMove(ByVal move As Move) As String
+        Dim movingPieceFile = coordstoSAN(move.startCoords)(0)
+        Dim destinationCoordsSAN = coordstoSAN(move.destinationCoords)
+        Dim movingPiece = Char.ToUpper(move.gameState.board(move.startCoords(0), move.startCoords(1)))
+        Dim SANMove = destinationCoordsSAN
+
+        If movingPiece <> "P" Then
+            SANMove = movingPiece & destinationCoordsSAN
+        End If
+
+        For x = 0 To move.moveKeys.Length - 1
+            ' take care of special moves
+            Select Case move.moveKeys(x)
+                Case 1
+                    If movingPiece <> "P" Then
+                        SANMove = movingPiece & "x" & destinationCoordsSAN
+                    Else
+                        SANMove = movingPieceFile & "x" & destinationCoordsSAN
+                    End If
+
+                Case 2
+                    SANMove = movingPieceFile & "x" & destinationCoordsSAN & " e.p"
+
+                Case 3
+                    SANMove = SANMove & "=" & move.promotion
+                    If move.moveKeys.Length = 1 Then
+                        SANMove = destinationCoordsSAN & "=" & move.promotion
+                    End If
+
+                Case 4
+                    SANMove = "0-0"
+
+                Case 5
+                    SANMove = "0-0-0"
+
+                Case 6
+                    SANMove = SANMove + "+"
+
+                Case 7
+                    SANMove = SANMove + "#"
+            End Select
+        Next
+
+        getSANMove = SANMove
+    End Function
+#End Region
+
+    ' given a Move structure detailing wanted move, returns a Game structure with move completed
+    ' this updates the board, history, boardHistory and whiteToMove variables
+    Public Function doMove(ByVal move As Move) As game
+        Dim gameAfterMove As Game
+        gameAfterMove.history = updateHistory(getSANMove(move), move.gameState.history)
+        gameAfterMove.board = moveOnBoard(move)
+        gameAfterMove.boardHistory = updateHistory(boardAsString(gameAfterMove.board), move.gameState.boardHistory)
+        gameAfterMove.whiteTime = move.gameState.whiteTime
+        gameAfterMove.blackTime = move.gameState.blackTime
+        gameAfterMove.whiteToMove = Not move.gameState.whiteToMove
+
+        doMove = gameAfterMove
+    End Function
+
+    ' given a game structure return a game object taken a move back
+    Public Function takebackMove(ByVal game As game) As game
+        If game.boardHistory.Length > 1 Then
+            Dim gameBeforeMove As Game
+
+            ' update board
+            gameBeforeMove.board = boardFromString(game.boardHistory(game.boardHistory.Length - 2))
+
+            ' update history 
+            Dim historyBeforeMove = game.history
+            Array.Resize(historyBeforeMove, historyBeforeMove.Length - 1)
+            gameBeforeMove.history = historyBeforeMove
+
+            ' update boardHistory
+            Dim boardHistoryBeforeMove = game.boardHistory
+            Array.Resize(boardHistoryBeforeMove, boardHistoryBeforeMove.Length - 1)
+            gameBeforeMove.boardHistory = boardHistoryBeforeMove
+
+            ' copy time left for both sides
+            gameBeforeMove.whiteTime = game.whiteTime
+            gameBeforeMove.blackTime = game.blackTime
+
+            ' update whiteToMove (switch sides)
+            gameBeforeMove.whiteToMove = Not game.whiteToMove
+
+            ' toggle clocks
+            toggleClock(gameBeforeMove.whiteTime)
+            toggleClock(gameBeforeMove.blackTime)
+
+            takebackMove = gameBeforeMove
+        Else
+            takebackMove = game
+        End If
+
+    End Function
+
     ' given a Game structure, returns a Game structure with sides switched
     ' this updates the whiteToMove variable and toggles the timers, and handles setting the timer on the first turn
-    Public Function switchSideGame(ByVal game As Game)
+    Public Function switchSideGame(ByVal game As game)
         Dim gameSideSwitched As Game
         gameSideSwitched = game
 
@@ -668,57 +872,10 @@
         switchSideGame = gameSideSwitched
     End Function
 
-    ' given a Move structure detailing wanted move, returns a Game structure with move completed
-    ' this updates the board, history, boardHistory and whiteToMove variables
-    Public Function doMove(ByVal move As Move) As Game
-        Dim gameAfterMove As Game
-        gameAfterMove.history = updateHistory(getSANMove(move), move.gameState.history)
-        gameAfterMove.board = moveOnBoard(move)
-        gameAfterMove.boardHistory = updateHistory(boardAsString(gameAfterMove.board), move.gameState.boardHistory)
-        gameAfterMove.whiteTime = move.gameState.whiteTime
-        gameAfterMove.blackTime = move.gameState.blackTime
-        gameAfterMove.whiteToMove = Not move.gameState.whiteToMove
+#End Region
 
-        doMove = gameAfterMove
-    End Function
-
-    ' resizes and adds coords to a line
-    Private Function addToLine(ByVal line As Integer(,), ByVal coords As Integer()) As Integer(,)
-        If line(0, 0) <> -1 And line(0, 1) <> -1 Then
-            Dim newLine(line.GetLength(0), line.GetLength(1) - 1) As Integer
-            For x = 0 To line.GetLength(0) - 1
-                For y = 0 To line.GetLength(1) - 1
-                    newLine(x, y) = line(x, y)
-                Next
-            Next
-            newLine(newLine.GetLength(0) - 1, 0) = coords(0)
-            newLine(newLine.GetLength(0) - 1, 1) = coords(1)
-            addToLine = newLine
-        Else
-            line(0, 0) = coords(0)
-            line(0, 1) = coords(1)
-            addToLine = line
-        End If
-    End Function
-
-    ' returns true if coordinates are in bounds, false if not
-    Private Function coordsInBounds(ByVal coords As Integer()) As Boolean
-        Dim inBounds = False
-        If coords(0) >= 0 And coords(0) <= 7 And coords(1) >= 0 And coords(1) <= 7 Then
-            inBounds = True
-        End If
-        coordsInBounds = inBounds
-    End Function
-
-    ' initialises an empty line
-    Private Function initLine() As Integer(,)
-        Dim line(,) As Integer
-        ReDim line(0, 1)
-        line(0, 0) = -1
-        line(0, 1) = -1
-        initLine = line
-    End Function
-
+#Region "Move validation"
+#Region "Private functions"
     ' given a board, a line and a piece works out valid moves
     ' if return captures is true, return captures as well (won't return for knights or pawns or special captures.
     Private Function validMovesFromLine(ByVal line As Integer(,), ByVal board As Char(,), Optional ByVal pieceIsWhite As Boolean = True, Optional ByVal returnCaptures As Boolean = False, Optional ByVal allowKingCapture As Boolean = False) As Integer(,)
@@ -763,16 +920,6 @@
         Else
             validMovesFromLine = validMoves
         End If
-    End Function
-
-    ' line to moveDict
-    Private Function lineToMoveDict(ByVal line As Integer(,), Optional ByVal defaultMoveKey As Integer = 0) As Dictionary(Of Integer(), Integer())
-        Dim moveDict As New Dictionary(Of Integer(), Integer())
-        For row = 0 To line.GetLength(0) - 1
-            moveDict.Add({line(row, 0), line(row, 1)}, {defaultMoveKey})
-        Next
-
-        lineToMoveDict = moveDict
     End Function
 
     ' returns a moveDict of moves for pieces where the moveKey is either 0 or 1
@@ -893,26 +1040,6 @@
         genPossibleLine = line
     End Function
 
-    ' checks if line is empty
-    Private Function isLineEmpty(ByVal line As Integer(,)) As Boolean
-        If line(0, 0) = -1 And line(0, 1) = -1 Then
-            isLineEmpty = True
-        Else
-            isLineEmpty = False
-        End If
-    End Function
-
-    ' filter empty values in moveDict
-    Private Function filterEmptyValues(ByVal moveDict As Dictionary(Of Integer(), Integer())) As Dictionary(Of Integer(), Integer())
-        Dim newDict As New Dictionary(Of Integer(), Integer())
-        For Each keyValuePair In moveDict
-            If Not (keyValuePair.Key(0) = -1 And keyValuePair.Key(1) = -1) Then
-                newDict.Add(keyValuePair.Key, keyValuePair.Value)
-            End If
-        Next
-        filterEmptyValues = newDict
-    End Function
-
     ' given a line of possible moves, returns a moveDict with the valid moves inside
     Private Function validateLine(ByVal line As Integer(,), ByVal board As Char(,), Optional ByVal moveKey As Integer = 0) As Dictionary(Of Integer(), Integer())
         Dim validNormalMoves(,) As Integer
@@ -925,11 +1052,6 @@
         End If
 
         validateLine = validMoveDict
-    End Function
-
-    ' add moveDict to other moveDict
-    Private Function addMoveDicts(ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal moveDict2 As Dictionary(Of Integer(), Integer())) As Dictionary(Of Integer(), Integer())
-        addMoveDicts = moveDict.Union(moveDict2).ToDictionary(Function(d) d.Key, Function(d) d.Value)
     End Function
 
     ' get the amount of lines each piece has
@@ -1108,16 +1230,8 @@
         getCaptures = moveDict
     End Function
 
-    ' init moveDict
-    Private Function initMoveDict()
-        Dim moveDict As New Dictionary(Of Integer(), Integer())
-        moveDict.Add({-1, -1}, {-1})
-        moveDict.Clear()
-        initMoveDict = moveDict
-    End Function
-
     ' return possible en passant
-    Private Function possibleEnPassant(ByVal pieceIsWhite As Boolean, ByVal coords As Integer(), ByVal game As Game, Optional ByVal moveKey As Integer = 2) As Dictionary(Of Integer(), Integer())
+    Private Function possibleEnPassant(ByVal pieceIsWhite As Boolean, ByVal coords As Integer(), ByVal game As game, Optional ByVal moveKey As Integer = 2) As Dictionary(Of Integer(), Integer())
         ' moveDict
         Dim moveDict As New Dictionary(Of Integer(), Integer())
         moveDict = initMoveDict()
@@ -1200,7 +1314,7 @@
     End Function
 
     ' returns an array of pieces that have been in a specified coords
-    Private Function pieceInCoordinateThroughGame(ByVal coords As Integer(), ByVal game As Game) As Char()
+    Private Function pieceInCoordinateThroughGame(ByVal coords As Integer(), ByVal game As game) As Char()
         Dim pieces() As Char
         ReDim pieces(game.boardHistory.Length - 1)
 
@@ -1227,40 +1341,8 @@
         isCharArrayValid = isValid
     End Function
 
-    ' given the coords of a piece, checks if it is being attacked (used to find if king in check)
-    Private Function isPieceBeingAttacked(ByVal coords As Integer(), ByVal board As Char(,)) As Boolean
-        Dim pieceBeingAttacked As Boolean
-        pieceBeingAttacked = False
-
-        Dim pieceIsWhite As Boolean
-        pieceIsWhite = Char.IsUpper(board(coords(0), coords(1)))
-
-        Dim square As Char
-        Dim pieceOnSquareIsWhite As Boolean
-        Dim captures As New Dictionary(Of Integer(), Integer())
-
-        For x = 0 To 7
-            For y = 0 To 7
-                square = board(x, y)
-                pieceOnSquareIsWhite = Char.IsUpper(square)
-                If square <> " " Then
-                    If Not pieceOnSquareIsWhite = pieceIsWhite Then
-                        captures = getCaptures(Char.ToUpper(square), pieceOnSquareIsWhite, {x, y}, board, 1, True)
-                        For Each keyValuePair In captures
-                            If keyValuePair.Key(0) = coords(0) And keyValuePair.Key(1) = coords(1) Then
-                                pieceBeingAttacked = True
-                            End If
-                        Next
-                    End If
-                End If
-            Next
-        Next
-
-        isPieceBeingAttacked = pieceBeingAttacked
-    End Function
-
     ' given a line of moves, checks if the king would be in check if moved through them (used in castling)
-    Private Function kingInCheckThroughMoves(ByVal line As Integer(,), ByVal game As Game) As Boolean
+    Private Function kingInCheckThroughMoves(ByVal line As Integer(,), ByVal game As game) As Boolean
         Dim tempBoard(,) As Char
         Dim inCheck = False
 
@@ -1280,7 +1362,7 @@
     End Function
 
     ' return possible castles
-    Private Function possibleCastles(ByVal kingIsWhite As Boolean, ByVal game As Game) As Dictionary(Of Integer(), Integer())
+    Private Function possibleCastles(ByVal kingIsWhite As Boolean, ByVal game As game) As Dictionary(Of Integer(), Integer())
         ' check if either piece has moved throughout the game
         Dim kingCoords As Char()
         Dim kingSideRookCoords As Char()
@@ -1378,23 +1460,8 @@
         possibleCastles = moveDict
     End Function
 
-    ' find the coordinates of the last occurunce of a specific piece on a board (used to find the king)
-    Private Function findCoordsOfPieceOnBoard(ByVal piece As Char, ByVal board As Char(,)) As Integer()
-        Dim coords() As Integer
-        coords = {-1, -1}
-        For x = 0 To 7
-            For y = 0 To 7
-                If board(x, y) = piece Then
-                    coords(0) = x
-                    coords(1) = y
-                End If
-            Next
-        Next
-        findCoordsOfPieceOnBoard = coords
-    End Function
-
     ' given a moveDict and a board, returns a moveDict with all the moves that leave the king in check removed
-    Private Function removeMovesThatResultInCheck(ByVal whiteSideTurn As Boolean, ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As Game) As Dictionary(Of Integer(), Integer())
+    Private Function removeMovesThatResultInCheck(ByVal whiteSideTurn As Boolean, ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As game) As Dictionary(Of Integer(), Integer())
         Dim newMoveDict As Dictionary(Of Integer(), Integer())
         newMoveDict = initMoveDict()
 
@@ -1438,7 +1505,7 @@
     End Function
 
     ' given a moveDict, append moveKey 6 to any moves that result in check for other side
-    Private Function possibleCheckMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As Game) As Dictionary(Of Integer(), Integer())
+    Private Function possibleCheckMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As game) As Dictionary(Of Integer(), Integer())
         Dim newMoveDict As Dictionary(Of Integer(), Integer())
         newMoveDict = initMoveDict()
 
@@ -1486,7 +1553,7 @@
     End Function
 
     ' given a moveDict, append moveKey 7 to any moves that result in a checkmate for other side
-    Private Function possibleCheckmateMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As Game) As Dictionary(Of Integer(), Integer())
+    Private Function possibleCheckmateMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As game) As Dictionary(Of Integer(), Integer())
         Dim newMoveDict As Dictionary(Of Integer(), Integer())
         newMoveDict = initMoveDict()
 
@@ -1526,9 +1593,10 @@
 
         possibleCheckmateMoves = newMoveDict
     End Function
+#End Region
 
     ' given a board and coords, return valid moves in dictionary (<valid moves coords> : <array of related movekeys>)
-    Public Function validMoves(ByVal gameState As Game, ByVal coords As Integer(), Optional ByVal disableCheckingForCheck As Boolean = False) As Dictionary(Of Integer(), Integer())
+    Public Function validMoves(ByVal gameState As game, ByVal coords As Integer(), Optional ByVal disableCheckingForCheck As Boolean = False) As Dictionary(Of Integer(), Integer())
         Dim piece As Char
         piece = gameState.board(coords(0), coords(1))
 
@@ -1586,66 +1654,34 @@
         validMoves = moveDict
     End Function
 
-    ' given a game structure return a game object taken a move back
-    Public Function takebackMove(ByVal game As Game) As Game
-        If game.boardHistory.Length > 1 Then
-            Dim gameBeforeMove As Game
-
-            ' update board
-            gameBeforeMove.board = boardFromString(game.boardHistory(game.boardHistory.Length - 2))
-
-            ' update history 
-            Dim historyBeforeMove = game.history
-            Array.Resize(historyBeforeMove, historyBeforeMove.Length - 1)
-            gameBeforeMove.history = historyBeforeMove
-
-            ' update boardHistory
-            Dim boardHistoryBeforeMove = game.boardHistory
-            Array.Resize(boardHistoryBeforeMove, boardHistoryBeforeMove.Length - 1)
-            gameBeforeMove.boardHistory = boardHistoryBeforeMove
-
-            ' copy time left for both sides
-            gameBeforeMove.whiteTime = game.whiteTime
-            gameBeforeMove.blackTime = game.blackTime
-
-            ' update whiteToMove (switch sides)
-            gameBeforeMove.whiteToMove = Not game.whiteToMove
-
-            ' toggle clocks
-            toggleClock(gameBeforeMove.whiteTime)
-            toggleClock(gameBeforeMove.blackTime)
-
-            takebackMove = gameBeforeMove
-        Else
-            takebackMove = game
-        End If
-
+    ' given a valid start coords and dest coords and a game, return an int array with matching moveKeys
+    Public Function getMoveKeys(ByVal startCoords As Integer(), ByVal destCoords As Integer(), ByVal game As game) As Integer()
+        Dim moveDict As New Dictionary(Of Integer(), Integer())
+        moveDict = chess.validMoves(game, startCoords)
+        Dim moveKeys() As Integer
+        moveKeys = {}
+        For Each keyValuePair In moveDict
+            If keyValuePair.Key(0) = destCoords(0) And keyValuePair.Key(1) = destCoords(1) Then
+                moveKeys = keyValuePair.Value
+            End If
+        Next
+        getMoveKeys = moveKeys
     End Function
+#End Region
 
-    ' DEBUG prints game info 
-    Public Sub printGame(ByVal game As Game)
-        Console.WriteLine("game board (as string): ")
-        Console.WriteLine(boardAsString(game.board))
-        Console.WriteLine("")
-        Console.WriteLine("game history: ")
-        For x = 0 To game.history.Length - 1
-            Console.WriteLine(game.history(x))
-        Next
-        Console.WriteLine("")
-        Console.WriteLine("game board history: ")
-        For x = 0 To game.boardHistory.Length - 1
-            Console.WriteLine(game.boardHistory(x))
-        Next
-        Console.WriteLine("")
-        Console.WriteLine("white time: ")
-        Console.WriteLine(game.whiteTime)
-        Console.WriteLine("")
-        Console.WriteLine("black time: ")
-        Console.WriteLine(game.blackTime)
-        Console.WriteLine("")
-        Console.WriteLine("white to move: ")
-        Console.WriteLine(game.whiteToMove)
-    End Sub
+#Region "ChessClock manipulation"
+#Region "Private functions"
+    ' makes sure each millisecond has only one trailing zero
+    Private Function formatMilliseconds(ByVal num As Integer) As String
+        If num <> 0 Then
+            Dim temp As String = num.ToString
+            temp = temp.TrimEnd(New String({"0"}))
+            formatMilliseconds = temp & "0"
+        Else
+            formatMilliseconds = num.ToString & "0"
+        End If
+    End Function
+#End Region
 
     ' given a clock byref, will add increment onto clock
     Public Sub clockAddIncrement(ByRef clock As ChessClock)
@@ -1665,7 +1701,6 @@
         End If
     End Sub
 
-
     ' given a clock byref, will enable it if enable is true, will disable if false
     Public Sub enableClock(ByRef clock As ChessClock, ByVal enable As Boolean)
         clock.timer.Enabled = enable
@@ -1676,18 +1711,7 @@
         clock.timer.Enabled = Not clock.timer.Enabled
     End Sub
 
-    ' makes sure each millisecond has only one trailing zero
-    Private Function formatMilliseconds(ByVal num As Integer) As String
-        If num <> 0 Then
-            Dim temp As String = num.ToString
-            temp = temp.TrimEnd(New String({"0"}))
-            formatMilliseconds = temp & "0"
-        Else
-            formatMilliseconds = num.ToString & "0"
-        End If
-    End Function
-
-    ' convert TimeSpan to string and takes care of all possible time ranges
+    ' convert TimeSpan to string and takes care of all possible time ranges (can be used for displaying time)
     Public Function timespanToString(ByVal time As TimeSpan) As String
         If time.TotalHours >= 1 Then
             timespanToString = String.Format("{0:00}:{1:00}:{2:00}", time.TotalHours, time.Minutes, time.Seconds)
@@ -1697,4 +1721,170 @@
             timespanToString = String.Format("{0:00}.{1:00}", time.Seconds, formatMilliseconds(time.Milliseconds))
         End If
     End Function
+#End Region
+
+#Region "Line manipulation"
+    ' initialises an empty line
+    Public Function initLine() As Integer(,)
+        Dim line(,) As Integer
+        ReDim line(0, 1)
+        line(0, 0) = -1
+        line(0, 1) = -1
+        initLine = line
+    End Function
+
+    ' resizes and adds coords to a line
+    Public Function addToLine(ByVal line As Integer(,), ByVal coords As Integer()) As Integer(,)
+        If line(0, 0) <> -1 And line(0, 1) <> -1 Then
+            Dim newLine(line.GetLength(0), line.GetLength(1) - 1) As Integer
+            For x = 0 To line.GetLength(0) - 1
+                For y = 0 To line.GetLength(1) - 1
+                    newLine(x, y) = line(x, y)
+                Next
+            Next
+            newLine(newLine.GetLength(0) - 1, 0) = coords(0)
+            newLine(newLine.GetLength(0) - 1, 1) = coords(1)
+            addToLine = newLine
+        Else
+            line(0, 0) = coords(0)
+            line(0, 1) = coords(1)
+            addToLine = line
+        End If
+    End Function
+
+    ' checks if line is empty
+    Public Function isLineEmpty(ByVal line As Integer(,)) As Boolean
+        If line(0, 0) = -1 And line(0, 1) = -1 Then
+            isLineEmpty = True
+        Else
+            isLineEmpty = False
+        End If
+    End Function
+
+    ' line to moveDict
+    Public Function lineToMoveDict(ByVal line As Integer(,), Optional ByVal defaultMoveKey As Integer = 0) As Dictionary(Of Integer(), Integer())
+        Dim moveDict As New Dictionary(Of Integer(), Integer())
+        For row = 0 To line.GetLength(0) - 1
+            moveDict.Add({line(row, 0), line(row, 1)}, {defaultMoveKey})
+        Next
+
+        lineToMoveDict = moveDict
+    End Function
+#End Region
+
+#Region "moveDict manipulation"
+    ' init moveDict
+    Public Function initMoveDict()
+        Dim moveDict As New Dictionary(Of Integer(), Integer())
+        moveDict.Add({-1, -1}, {-1})
+        moveDict.Clear()
+        initMoveDict = moveDict
+    End Function
+
+    ' filter empty values in moveDict
+    Public Function filterEmptyValues(ByVal moveDict As Dictionary(Of Integer(), Integer())) As Dictionary(Of Integer(), Integer())
+        Dim newDict As New Dictionary(Of Integer(), Integer())
+        For Each keyValuePair In moveDict
+            If Not (keyValuePair.Key(0) = -1 And keyValuePair.Key(1) = -1) Then
+                newDict.Add(keyValuePair.Key, keyValuePair.Value)
+            End If
+        Next
+        filterEmptyValues = newDict
+    End Function
+
+    ' add moveDict to other moveDict
+    Public Function addMoveDicts(ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal moveDict2 As Dictionary(Of Integer(), Integer())) As Dictionary(Of Integer(), Integer())
+        addMoveDicts = moveDict.Union(moveDict2).ToDictionary(Function(d) d.Key, Function(d) d.Value)
+    End Function
+#End Region
+
+#Region "Convenience / helper functions"
+    ' returns a board made from a string board
+    Public Function boardFromString(ByVal s As String) As Char(,)
+
+        Dim board(7, 7) As Char
+        Dim index = 0
+        For y = 0 To 7
+            For x = 0 To 7
+                board(x, y) = s(index)
+                index = index + 1
+            Next
+        Next
+        boardFromString = board
+    End Function
+
+    ' returns a string board made from a board
+    Public Function boardAsString(ByVal b As Char(,)) As String
+
+        Dim s As String = ""
+        For y = 0 To 7
+            For x = 0 To 7
+                s = s + b(x, y)
+            Next
+        Next
+        boardAsString = s
+    End Function
+
+    ' given the coords of a piece, checks if it is being attacked (used to find if king in check)
+    Public Function isPieceBeingAttacked(ByVal coords As Integer(), ByVal board As Char(,)) As Boolean
+        Dim pieceBeingAttacked As Boolean
+        pieceBeingAttacked = False
+
+        Dim pieceIsWhite As Boolean
+        pieceIsWhite = Char.IsUpper(board(coords(0), coords(1)))
+
+        Dim square As Char
+        Dim pieceOnSquareIsWhite As Boolean
+        Dim captures As New Dictionary(Of Integer(), Integer())
+
+        For x = 0 To 7
+            For y = 0 To 7
+                square = board(x, y)
+                pieceOnSquareIsWhite = Char.IsUpper(square)
+                If square <> " " Then
+                    If Not pieceOnSquareIsWhite = pieceIsWhite Then
+                        captures = getCaptures(Char.ToUpper(square), pieceOnSquareIsWhite, {x, y}, board, 1, True)
+                        For Each keyValuePair In captures
+                            If keyValuePair.Key(0) = coords(0) And keyValuePair.Key(1) = coords(1) Then
+                                pieceBeingAttacked = True
+                            End If
+                        Next
+                    End If
+                End If
+            Next
+        Next
+
+        isPieceBeingAttacked = pieceBeingAttacked
+    End Function
+
+    ' find the coordinates of the last occurunce of a specific piece on a board (used to find the king)
+    Public Function findCoordsOfPieceOnBoard(ByVal piece As Char, ByVal board As Char(,)) As Integer()
+        Dim coords() As Integer
+        coords = {-1, -1}
+        For x = 0 To 7
+            For y = 0 To 7
+                If board(x, y) = piece Then
+                    coords(0) = x
+                    coords(1) = y
+                End If
+            Next
+        Next
+        findCoordsOfPieceOnBoard = coords
+    End Function
+
+    ' returns true if coordinates are in bounds, false if not
+    Public Function coordsInBounds(ByVal coords As Integer()) As Boolean
+        Dim inBounds = False
+        If coords(0) >= 0 And coords(0) <= 7 And coords(1) >= 0 And coords(1) <= 7 Then
+            inBounds = True
+        End If
+        coordsInBounds = inBounds
+    End Function
+
+    ' returns a SAN made from coords
+    Public Function coordstoSAN(ByVal coords As Integer()) As String
+        coordstoSAN = Chr(coords(0) + 97) & coords(1) + 1
+    End Function
+#End Region
+
 End Module

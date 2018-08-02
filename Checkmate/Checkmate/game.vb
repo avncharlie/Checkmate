@@ -1,97 +1,5 @@
 ﻿Public Class game
 
-    ' display board
-    ' ############################################################### update move indicator ###############################################################
-    'Private Sub updateMoveIndicator()
-    '    If turn Then
-    '        lbl_moveIndicator.Text = "White to move"
-    '    Else
-    '        lbl_moveIndicator.Text = "Black to move"
-    '    End If
-    'End Sub
-
-
-    '  _  _ ___ ___ _____ ___  _____   __
-    ' | || |_ _/ __|_   _/ _ \| _ \ \ / /
-    ' | __ || |\__ \ | || (_) |   /\ V / 
-    ' |_||_|___|___/ |_| \___/|_|_\ |_|  
-
-    '  update history visually 
-    'Private Sub updateHistoryVisually(ByVal history As Char())
-    '    lv_moves.Items.Clear()
-
-    '    Dim index = 0
-    '    For x = 0 To history.Length - 1
-    '        index = index + 1
-    '        If index Mod 2 = 0 Then
-    '            lv_moves.Items.Add(New ListViewItem({" ", history(x - 1), history(x)}))
-    '        End If
-    '    Next
-    '    If history.Length Mod 2 <> 0 Then
-    '        For a = 1 To history.Length Mod 2
-    '            lv_moves.Items.Add(New ListViewItem({" ", history(history.Length - a)}))
-    '        Next
-    '    End If
-    'End Sub
-
-
-    '  ___  ___   _   ___ ___    __  __   _   _  _ ___ ___ _   _ _      _ _____ ___ ___  _  _ 
-    ' | _ )/ _ \ /_\ | _ \   \  |  \/  | /_\ | \| |_ _| _ \ | | | |    /_\_   _|_ _/ _ \| \| |
-    ' | _ \ (_) / _ \|   / |) | | |\/| |/ _ \| .` || ||  _/ |_| | |__ / _ \| |  | | (_) | .` |
-    ' |___/\___/_/ \_\_|_\___/  |_|  |_/_/ \_\_|\_|___|_|  \___/|____/_/ \_\_| |___\___/|_|\_|
-
-    ' move piece in chessboard, update history, store previous chessboard position in previousChessboards
-    'Private Sub movePiece(ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)
-    '    ' make history
-    '    makeHistory(x1, y1, x2, y2)
-
-    '    ' actually do move
-    '    chessboard(x2, y2) = chessboard(x1, y1)
-    '    chessboard(x1, y1) = " "
-
-    '    ' update previousChessboards
-    '    previousChessboards = previousChessboards & "," & currentBoardAsString()
-    'End Sub
-
-    ' rollback history string
-    'Private Sub rollbackHistoryString()
-    '    Dim historyArray = history.Split(",")
-    '    history = String.Join(",", historyArray.Take(historyArray.Length() - 1))
-    'End Sub
-
-    '' rollback board position
-    'Private Sub rollbackBoardPosition()
-    '    Dim previousChessboardsArray = previousChessboards.Split(",")
-    '    previousChessboards = String.Join(",", previousChessboardsArray.Take(previousChessboardsArray.Length() - 1))
-
-    '    previousChessboardsArray = previousChessboards.Split(",")
-    '    fillChessboardFromString(previousChessboardsArray(previousChessboardsArray.Length - 1))
-    'End Sub
-
-    '' take back previous move
-    'Private Sub takeBackPreviousMove()
-    '    ' checking that there is at least one previous board position
-    '    If previousChessboards.Contains(",") Then
-    '        rollbackHistoryString()
-    '        rollbackBoardPosition()
-
-    '        updateHistoryVisually()
-
-    '        switchSide(False)
-    '    End If
-    'End Sub
-
-    '' flip board with delay
-    'Private Sub flipBoardWithDelay()
-    '    displayBoard(chessboard, Not turn)
-
-    '    ' makes sure delay is same for both sides
-    '    movePauseTimer.Stop()
-    '    movePauseTimer.Start()
-
-    '    ignoreMoveTimer = False
-    'End Sub
-
     Dim newGame As chess.Game
 
     ' switch side delay
@@ -103,33 +11,23 @@
     ' en passant included
     ' taking a piece on a pawn promotion
 
+
+    ' history of games
+
     ' pawn promotion!!
 
     Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' initialise game
 
         If options.loadGame Then
-            newGame = chess.loadGame(options.loadGamePath)
-            MsgBox("u ready")
-            ' set up timers
-            If newGame.boardHistory.Length > 1 Then
-                If newGame.whiteToMove Then
-                    enableClock(newGame.whiteTime, True)
-                    enableClock(newGame.blackTime, False)
-                Else
-                    enableClock(newGame.whiteTime, False)
-                    enableClock(newGame.blackTime, True)
-                End If
-            Else
-                enableClock(newGame.whiteTime, False)
-                enableClock(newGame.blackTime, False)
-            End If
+            newGame = chess.loadGame(options.loadGamePath, False)
         Else
             newGame = chess.initGame(My.Resources.txt_chessboardStartingPosition, 1, 100, 10)
         End If
 
         AddHandler newGame.whiteTime.timer.Tick, Sub() chess.clockTick(newGame.whiteTime, AddressOf newGamewhiteTimeDisplay, AddressOf endGame, True)
         AddHandler newGame.blackTime.timer.Tick, Sub() chess.clockTick(newGame.blackTime, AddressOf newGameblackTimeDisplay, AddressOf endGame, False)
+
         displayGame(newGame)
     End Sub
 
@@ -247,8 +145,12 @@
         move.startCoords = startCoords
         move.destinationCoords = destCoords
         move.moveKeys = chess.getMoveKeys(startCoords, destCoords, newGame)
-        ' check for pawn promotion
         move.promotion = ""
+        'If move.moveKeys.Contains(3) Then 'pawn promotion
+        '    move.promotion = getPawnPromotionPieceFromUser()
+        'End If
+        ' check for pawn promotion
+
 
         newGame = chess.doMove(move)
         newGame = chess.switchSideGame(newGame)
@@ -288,7 +190,7 @@
         saveFileDialog.ShowDialog()
 
         If saveFileDialog.FileName <> "" Then
-            chess.saveGame(newGame, saveFileDialog.FileName, False)
+            chess.saveGame(newGame, saveFileDialog.FileName, True, "checkmate")
         End If
 
         ' resume clocks
