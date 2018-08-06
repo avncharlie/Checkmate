@@ -1,2 +1,7 @@
 Crown by Viktor Vorobyev from the Noun Project (used in icon.ico)
-Checkmate by Valter Bispo from the Noun Project (used in mainScreen.png)
+Checkmate by Valter Bispo from the Noun Project (used in mainScreenChessboard)
+alpha chess set pieces by Eric Bentzen
+cburnett chess set pieces by Colin M.L Burnett
+cheq chess set pieces by Adobe Systems, Inc.
+leipzig chess set pieces (freeware)
+merida chess set pieces (freeware)

@@ -157,6 +157,9 @@
     ' clockTick also takes a boolean value if the clock being modified is either the white clock or the black clock. (true if
     ' white, false if black.)
     '
+    ' If the totalTime variable is set to exactly zero, the clockTick function will then increment the timeLeft and function as
+    ' a stopwatch for that side. THis can be used in a game with no time controls.
+    '
     '   CHECKING GAME STATUS
     ' Game status is represented using the gameStatus key:
     '      0 - normal
@@ -512,8 +515,8 @@
         Dim square As Char
         Dim squareIsUpper As Boolean
 
-        Dim possibleMOves As Dictionary(Of Integer(), Integer())
-        possibleMOves = initMoveDict()
+        Dim possibleMoves As Dictionary(Of Integer(), Integer())
+        possibleMoves = initMoveDict()
 
         ' if king is not in check
         If Not isPieceBeingAttacked(findCoordsOfPieceOnBoard(kingChar, game.board), game.board) Then
@@ -807,7 +810,7 @@
 
     ' given a Move structure detailing wanted move, returns a Game structure with move completed
     ' this updates the board, history, boardHistory and whiteToMove variables
-    Public Function doMove(ByVal move As Move) As game
+    Public Function doMove(ByVal move As Move) As Game
         Dim gameAfterMove As Game
         gameAfterMove.history = updateHistory(getSANMove(move), move.gameState.history)
         gameAfterMove.board = moveOnBoard(move)
@@ -857,19 +860,22 @@
 
     ' given a Game structure, returns a Game structure with sides switched
     ' this updates the whiteToMove variable and toggles the timers, and handles setting the timer on the first turn
-    Public Function switchSideGame(ByVal game As game)
+    Public Function switchSide(ByVal game As game)
         Dim gameSideSwitched As Game
         gameSideSwitched = game
 
         ' if first turn
-        If gameSideSwitched.boardHistory.Length = 2 Then
-            enableClock(gameSideSwitched.whiteTime, False)
-            enableClock(gameSideSwitched.blackTime, True)
-        Else
-            toggleClock(gameSideSwitched.whiteTime)
-            toggleClock(gameSideSwitched.blackTime)
-        End If
-        switchSideGame = gameSideSwitched
+        'If gameSideSwitched.boardHistory.Length = 2 Then
+        '    enableClock(gameSideSwitched.whiteTime, False)
+        '    enableClock(gameSideSwitched.blackTime, True)
+        'Else
+        '    toggleClock(gameSideSwitched.whiteTime)
+        '    toggleClock(gameSideSwitched.blackTime)
+        'End If
+
+        toggleClock(gameSideSwitched.whiteTime)
+        toggleClock(gameSideSwitched.blackTime)
+        switchSide = gameSideSwitched
     End Function
 
 #End Region
@@ -1651,6 +1657,11 @@
             moveDict = possibleCheckmateMoves(coords, moveDict, gameState)
         End If
 
+        ' remove all moves if wrong side
+        If pieceIsWhite <> gameState.whiteToMove Then
+            moveDict = initMoveDict()
+        End If
+
         validMoves = moveDict
     End Function
 
@@ -1690,7 +1701,12 @@
 
     ' given a clock byref, will modify it based on interval. also takes an additional sub that will be called
     Public Sub clockTick(ByRef clock As ChessClock, ByRef updateTimeSub As Action, ByRef endGameSub As Action(Of Boolean, Integer), ByVal whiteClock As Boolean)
-        clock.timeLeft = clock.timeLeft.Subtract(clock.interval)
+        If clock.totalTime.Ticks = 0 Then
+            clock.timeLeft = clock.timeLeft.Add(clock.interval)
+        Else
+            clock.timeLeft = clock.timeLeft.Subtract(clock.interval)
+        End If
+
         If clock.timeLeft < New TimeSpan(0, 0, 0) Then
             Dim b = New TimeSpan(0, 0, 0) - TimeSpan.FromTicks(clock.interval.Ticks * 2)
             If clock.timeLeft > b Then

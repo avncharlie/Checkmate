@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Checkmate")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("Crown by Viktor Vorobyev from the Noun Project (used in icon.ico) Checkmate by Valter Bispo from the Noun Project (used in mainScreenChessboard) alpha chess set pieces by Eric Bentzen cburnett chess set pieces by Colin M.L Burnett cheq chess set pieces by Adobe Systems, Inc. leipzig chess set pieces (freeware) merida chess set pieces (freeware)")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Checkmate")> 
 <Assembly: AssemblyCopyright("Copyright ©  2018")> 

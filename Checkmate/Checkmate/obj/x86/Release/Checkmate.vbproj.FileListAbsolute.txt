@@ -1,0 +1,14 @@
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\bin\Release\Checkmate.exe
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\bin\Release\Checkmate.pdb
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\bin\Release\Checkmate.xml
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.about.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.customTimeControl.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.game.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.mainMenu.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.timeControlInfo.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.timeControls.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.Resources.resources
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.vbproj.GenerateResource.Cache
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.exe
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.xml
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.pdb
