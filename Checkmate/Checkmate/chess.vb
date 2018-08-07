@@ -6,7 +6,7 @@
     '   ██║     ██╔══██║██╔══╝  ╚════██║╚════██║  ╚██╗ ██╔╝██╔══██╗
     '   ╚██████╗██║  ██║███████╗███████║███████║██╗╚████╔╝ ██████╔╝
     '    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝ ╚═══╝  ╚═════╝ 
-    '   A modular VB.NET chess library 
+    '   A modular VB.NET chess library  
     '   Created by Alvin Charles, alvin.charles@cgs.act.edu.au
     '
     '   USER GUIDE CONTENTS (line numbers shown)

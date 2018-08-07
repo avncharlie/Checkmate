@@ -34,13 +34,15 @@ Partial Class game
         Me.ms_menu = New System.Windows.Forms.MenuStrip()
         Me.tsmi_file = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_about = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tss_1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tss_FileAboutSave = New System.Windows.Forms.ToolStripSeparator()
         Me.tsmi_saveGame = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tss_2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tss_fileSaveOptions = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmi_optionsFromFile = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tss_fileOptionsExit = New System.Windows.Forms.ToolStripSeparator()
         Me.tsmi_exit = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_game = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_takeBack = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tss_3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tss_gameTakebackResign = New System.Windows.Forms.ToolStripSeparator()
         Me.tsmi_resign = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_mainMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_view = New System.Windows.Forms.ToolStripMenuItem()
@@ -76,6 +78,10 @@ Partial Class game
         Me.btn_startGame = New System.Windows.Forms.Button()
         Me.lbl_startGameDialog = New System.Windows.Forms.Label()
         Me.pb_chessboard = New System.Windows.Forms.PictureBox()
+        Me.tss_gameMainmenuOptions = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmi_optionsFromGame = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tss_viewMoveOptions = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmi_optionsFromView = New System.Windows.Forms.ToolStripMenuItem()
         Me.ms_menu.SuspendLayout()
         Me.tlp_mainContainer.SuspendLayout()
         Me.tlp_sidebarContainer.SuspendLayout()
@@ -192,7 +198,7 @@ Partial Class game
         '
         'tsmi_file
         '
-        Me.tsmi_file.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_about, Me.tss_1, Me.tsmi_saveGame, Me.tss_2, Me.tsmi_exit})
+        Me.tsmi_file.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_about, Me.tss_FileAboutSave, Me.tsmi_saveGame, Me.tss_fileSaveOptions, Me.tsmi_optionsFromFile, Me.tss_fileOptionsExit, Me.tsmi_exit})
         Me.tsmi_file.Name = "tsmi_file"
         Me.tsmi_file.Size = New System.Drawing.Size(37, 20)
         Me.tsmi_file.Text = "File"
@@ -200,34 +206,45 @@ Partial Class game
         'tsmi_about
         '
         Me.tsmi_about.Name = "tsmi_about"
-        Me.tsmi_about.Size = New System.Drawing.Size(107, 22)
+        Me.tsmi_about.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_about.Text = "About"
         '
-        'tss_1
+        'tss_FileAboutSave
         '
-        Me.tss_1.Name = "tss_1"
-        Me.tss_1.Size = New System.Drawing.Size(104, 6)
+        Me.tss_FileAboutSave.Name = "tss_FileAboutSave"
+        Me.tss_FileAboutSave.Size = New System.Drawing.Size(149, 6)
         '
         'tsmi_saveGame
         '
         Me.tsmi_saveGame.Name = "tsmi_saveGame"
-        Me.tsmi_saveGame.Size = New System.Drawing.Size(107, 22)
+        Me.tsmi_saveGame.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_saveGame.Text = "Save..."
         '
-        'tss_2
+        'tss_fileSaveOptions
         '
-        Me.tss_2.Name = "tss_2"
-        Me.tss_2.Size = New System.Drawing.Size(104, 6)
+        Me.tss_fileSaveOptions.Name = "tss_fileSaveOptions"
+        Me.tss_fileSaveOptions.Size = New System.Drawing.Size(149, 6)
+        '
+        'tsmi_optionsFromFile
+        '
+        Me.tsmi_optionsFromFile.Name = "tsmi_optionsFromFile"
+        Me.tsmi_optionsFromFile.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_optionsFromFile.Text = "Options..."
+        '
+        'tss_fileOptionsExit
+        '
+        Me.tss_fileOptionsExit.Name = "tss_fileOptionsExit"
+        Me.tss_fileOptionsExit.Size = New System.Drawing.Size(149, 6)
         '
         'tsmi_exit
         '
         Me.tsmi_exit.Name = "tsmi_exit"
-        Me.tsmi_exit.Size = New System.Drawing.Size(107, 22)
+        Me.tsmi_exit.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_exit.Text = "Exit"
         '
         'tsmi_game
         '
-        Me.tsmi_game.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_takeBack, Me.tss_3, Me.tsmi_resign, Me.tsmi_mainMenu})
+        Me.tsmi_game.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_takeBack, Me.tss_gameTakebackResign, Me.tsmi_resign, Me.tsmi_mainMenu, Me.tss_gameMainmenuOptions, Me.tsmi_optionsFromGame})
         Me.tsmi_game.Name = "tsmi_game"
         Me.tsmi_game.Size = New System.Drawing.Size(50, 20)
         Me.tsmi_game.Text = "Game"
@@ -235,29 +252,29 @@ Partial Class game
         'tsmi_takeBack
         '
         Me.tsmi_takeBack.Name = "tsmi_takeBack"
-        Me.tsmi_takeBack.Size = New System.Drawing.Size(144, 22)
+        Me.tsmi_takeBack.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_takeBack.Text = "Take back..."
         '
-        'tss_3
+        'tss_gameTakebackResign
         '
-        Me.tss_3.Name = "tss_3"
-        Me.tss_3.Size = New System.Drawing.Size(141, 6)
+        Me.tss_gameTakebackResign.Name = "tss_gameTakebackResign"
+        Me.tss_gameTakebackResign.Size = New System.Drawing.Size(149, 6)
         '
         'tsmi_resign
         '
         Me.tsmi_resign.Name = "tsmi_resign"
-        Me.tsmi_resign.Size = New System.Drawing.Size(144, 22)
+        Me.tsmi_resign.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_resign.Text = "Resign"
         '
         'tsmi_mainMenu
         '
         Me.tsmi_mainMenu.Name = "tsmi_mainMenu"
-        Me.tsmi_mainMenu.Size = New System.Drawing.Size(144, 22)
+        Me.tsmi_mainMenu.Size = New System.Drawing.Size(152, 22)
         Me.tsmi_mainMenu.Text = "Main menu..."
         '
         'tsmi_view
         '
-        Me.tsmi_view.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_pieceStyle, Me.tsmi_moveHighlighting})
+        Me.tsmi_view.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_pieceStyle, Me.tsmi_moveHighlighting, Me.tss_viewMoveOptions, Me.tsmi_optionsFromView})
         Me.tsmi_view.Name = "tsmi_view"
         Me.tsmi_view.Size = New System.Drawing.Size(44, 20)
         Me.tsmi_view.Text = "View"
@@ -589,6 +606,28 @@ Partial Class game
         Me.pb_chessboard.TabIndex = 0
         Me.pb_chessboard.TabStop = False
         '
+        'tss_gameMainmenuOptions
+        '
+        Me.tss_gameMainmenuOptions.Name = "tss_gameMainmenuOptions"
+        Me.tss_gameMainmenuOptions.Size = New System.Drawing.Size(149, 6)
+        '
+        'tsmi_optionsFromGame
+        '
+        Me.tsmi_optionsFromGame.Name = "tsmi_optionsFromGame"
+        Me.tsmi_optionsFromGame.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_optionsFromGame.Text = "Options..."
+        '
+        'tss_viewMoveOptions
+        '
+        Me.tss_viewMoveOptions.Name = "tss_viewMoveOptions"
+        Me.tss_viewMoveOptions.Size = New System.Drawing.Size(196, 6)
+        '
+        'tsmi_optionsFromView
+        '
+        Me.tsmi_optionsFromView.Name = "tsmi_optionsFromView"
+        Me.tsmi_optionsFromView.Size = New System.Drawing.Size(199, 22)
+        Me.tsmi_optionsFromView.Text = "More options..."
+        '
         'game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -654,13 +693,13 @@ Partial Class game
     Friend WithEvents pb_pawnPromotionKnight As System.Windows.Forms.PictureBox
     Friend WithEvents tsmi_file As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_about As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents tss_1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tss_FileAboutSave As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents tsmi_saveGame As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents tss_2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tss_fileOptionsExit As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents tsmi_exit As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_game As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_takeBack As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents tss_3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tss_gameTakebackResign As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents tsmi_resign As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_mainMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_view As System.Windows.Forms.ToolStripMenuItem
@@ -674,4 +713,10 @@ Partial Class game
     Friend WithEvents tsmi_squares As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsmi_pieceStyle5 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btn_options As System.Windows.Forms.Button
+    Friend WithEvents tss_fileSaveOptions As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmi_optionsFromFile As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tss_gameMainmenuOptions As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmi_optionsFromGame As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tss_viewMoveOptions As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmi_optionsFromView As System.Windows.Forms.ToolStripMenuItem
 End Class

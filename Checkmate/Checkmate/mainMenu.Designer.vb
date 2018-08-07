@@ -28,6 +28,7 @@ Partial Class mainMenu
         Me.btn_newGame = New System.Windows.Forms.Button()
         Me.btn_loadGame = New System.Windows.Forms.Button()
         Me.btn_newTimedGame = New System.Windows.Forms.Button()
+        Me.btn_options = New System.Windows.Forms.Button()
         CType(Me.pb_mainScreen, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -67,7 +68,7 @@ Partial Class mainMenu
         Me.btn_loadGame.Location = New System.Drawing.Point(42, 257)
         Me.btn_loadGame.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_loadGame.Name = "btn_loadGame"
-        Me.btn_loadGame.Size = New System.Drawing.Size(204, 43)
+        Me.btn_loadGame.Size = New System.Drawing.Size(143, 43)
         Me.btn_loadGame.TabIndex = 4
         Me.btn_loadGame.Text = "Load Game"
         Me.btn_loadGame.UseVisualStyleBackColor = True
@@ -75,7 +76,7 @@ Partial Class mainMenu
         'btn_newTimedGame
         '
         Me.btn_newTimedGame.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_newTimedGame.Location = New System.Drawing.Point(42, 159)
+        Me.btn_newTimedGame.Location = New System.Drawing.Point(42, 151)
         Me.btn_newTimedGame.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_newTimedGame.Name = "btn_newTimedGame"
         Me.btn_newTimedGame.Size = New System.Drawing.Size(204, 43)
@@ -83,11 +84,22 @@ Partial Class mainMenu
         Me.btn_newTimedGame.Text = "New Timed Game"
         Me.btn_newTimedGame.UseVisualStyleBackColor = True
         '
+        'btn_options
+        '
+        Me.btn_options.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_options.Location = New System.Drawing.Point(189, 257)
+        Me.btn_options.Margin = New System.Windows.Forms.Padding(2)
+        Me.btn_options.Name = "btn_options"
+        Me.btn_options.Size = New System.Drawing.Size(57, 43)
+        Me.btn_options.TabIndex = 6
+        Me.btn_options.UseVisualStyleBackColor = True
+        '
         'mainMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(284, 347)
+        Me.Controls.Add(Me.btn_options)
         Me.Controls.Add(Me.btn_newTimedGame)
         Me.Controls.Add(Me.btn_loadGame)
         Me.Controls.Add(Me.btn_newGame)
@@ -105,4 +117,5 @@ Partial Class mainMenu
     Friend WithEvents btn_newGame As System.Windows.Forms.Button
     Friend WithEvents btn_loadGame As System.Windows.Forms.Button
     Friend WithEvents btn_newTimedGame As System.Windows.Forms.Button
+    Friend WithEvents btn_options As System.Windows.Forms.Button
 End Class

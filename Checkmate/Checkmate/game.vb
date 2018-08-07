@@ -10,6 +10,7 @@
     Dim startGameDialogShowing As Boolean
     Dim pawnPromotionDialogUp As Boolean
     Dim gameIsOver As Boolean
+    Dim optionsDialogUp As Boolean
 
     ' piece selection
     Dim pieceSelected As Boolean
@@ -20,7 +21,7 @@
     Dim switchSideFlag As Boolean
 
     ' holds chessclock enabled states every time the game is paused so they can be restored
-    Dim timerStates() As Integer
+    Dim timerStates() As Boolean
 
 #Region "Start game"
     ' game load function - initialises or loads game and sets all flag values
@@ -53,6 +54,10 @@
         pieceSelected = False
         switchSideFlag = False
         startGameDialogShowing = True
+        optionsDialogUp = False
+
+        ' initialise timerStates
+        timerStates = {False, False}
     End Sub
 
     ' confirm start game
@@ -166,7 +171,7 @@
     ' if a piece is not selected, it selects the piece and displays all valid moves
     Private Sub pb_chessboard_Click(ByVal sender As System.Object, ByVal e As MouseEventArgs) Handles pb_chessboard.Click
         ' if game hasn't started or isn't over
-        If Not startGameDialogShowing And Not gameIsOver Then
+        If Not startGameDialogShowing And Not gameIsOver And Not optionsDialogUp Then
             Dim coords() As Integer
             ' retrieve chessboard coord value from mouse coords
             coords = mouseCoordstoChessCoords({e.Location.X, e.Location.Y}, currentGame.whiteToMove)
@@ -208,11 +213,6 @@
                     ' deselects piece
                     selectPiece = False
 
-                    ' pauses clocks while sides switch
-                    timerStates = {currentGame.whiteTime.timer.Enabled, currentGame.blackTime.timer.Enabled}
-                    enableClock(currentGame.whiteTime, False)
-                    enableClock(currentGame.blackTime, False)
-
                     ' creates all of move except for promotion 
                     currentMove.gameState = currentGame
                     currentMove.startCoords = selectedPieceCoords
@@ -221,6 +221,11 @@
 
                     ' if move is pawn promotion set up pawn promotion dialog and don't do anything else
                     If currentMove.moveKeys.Contains(3) Then
+                        ' pauses clocks while sides switch
+                        timerStates = {currentGame.whiteTime.timer.Enabled, currentGame.blackTime.timer.Enabled}
+                        enableClock(currentGame.whiteTime, False)
+                        enableClock(currentGame.blackTime, False)
+
                         p_choosePawnPromotionPiece.Visible = True
 
                         pawnPromotionDialogUp = True
@@ -234,26 +239,71 @@
                         currentMove.promotion = ""
 
                         currentGame = chess.doMove(currentMove)
-                        displayGame(currentGame, False)
 
-                        switchSideDelayTimer.Enabled = False
-                        switchSideFlag = True
-                        switchSideDelayTimer.Enabled = True
+                        If options.boardSwitchingEnabled Then
+                            ' pauses clocks while sides switch
+                            timerStates = {currentGame.whiteTime.timer.Enabled, currentGame.blackTime.timer.Enabled}
+                            enableClock(currentGame.whiteTime, False)
+                            enableClock(currentGame.blackTime, False)
+
+                            displayGame(currentGame, False)
+                            switchSideDelayTimer.Enabled = False
+                            switchSideFlag = True
+                            switchSideDelayTimer.Enabled = True
+                        Else
+                            ' switch game sides (switch timers and board orientation)
+                            currentGame = chess.switchSide(currentGame)
+
+                            Dim whiteCurrentTurn As Boolean
+                            whiteCurrentTurn = currentGame.whiteToMove
+
+                            ' checking game status
+                            Dim gameStatus As Integer
+                            If whiteCurrentTurn Then
+                                gameStatus = chess.gameStatus(currentGame, True)
+                            Else
+                                gameStatus = chess.gameStatus(currentGame, False)
+                            End If
+
+                            ' either continue playing or end game
+                            If gameStatus = 0 Then
+                                ' if normal, just add timer increment
+                                If whiteCurrentTurn Then
+                                    chess.clockAddIncrement(currentGame.whiteTime)
+                                Else
+                                    chess.clockAddIncrement(currentGame.blackTime)
+                                End If
+                            Else
+                                endGame(Not whiteCurrentTurn, gameStatus)
+                            End If
+
+                            displayGame(currentGame)
+                        End If
+
                     End If
                 End If
             End If
 
             If Not selectedPieceCoords Is Nothing Then
+                ' deselect piece if selected again
                 If coords(0) = selectedPieceCoords(0) And coords(1) = selectedPieceCoords(1) And pieceSelected Then
                     selectPiece = False
                     pieceSelected = False
-                    displayBoard(currentGame.board, currentGame.whiteToMove)
+                    If options.boardSwitchingEnabled Then
+                        displayBoard(currentGame.board, currentGame.whiteToMove)
+                    Else
+                        displayBoard(currentGame.board, True)
+                    End If
                 End If
             End If
 
             If selectPiece Then
                 validMoves = chess.validMoves(currentGame, coords)
-                displayBoard(currentGame.board, currentGame.whiteToMove, options.pieceStyle, validMoves, coords, options.moveHighlightStyle)
+                If options.boardSwitchingEnabled Then
+                    displayBoard(currentGame.board, currentGame.whiteToMove, options.pieceStyle, validMoves, coords, options.moveHighlightStyle)
+                Else
+                    displayBoard(currentGame.board, True, options.pieceStyle, validMoves, coords, options.moveHighlightStyle)
+                End If
 
                 If Not validMoves.Count = 0 Then
                     pieceSelected = True
@@ -272,7 +322,7 @@
 
         Dim x = (mouseCoords(0) - (mouseCoords(0) Mod chessboardWidth)) / chessboardWidth
         Dim y = 7 - ((mouseCoords(1) - (mouseCoords(1) Mod chessboardHeight)) / chessboardHeight)
-        If Not whiteToMove Then
+        If Not whiteToMove And boardSwitchingEnabled Then
             y = (mouseCoords(1) - (mouseCoords(1) Mod chessboardHeight)) / chessboardHeight
         End If
 
@@ -317,7 +367,7 @@
 
     ' takeback move
     Private Sub btn_takeBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_takeBack.Click
-        If Not startGameDialogShowing And Not gameIsOver And Not pawnPromotionDialogUp Then
+        If Not startGameDialogShowing And Not gameIsOver And Not pawnPromotionDialogUp And Not optionsDialogUp Then
             currentGame = chess.takebackMove(currentGame)
             displayGame(currentGame)
         End If
@@ -343,11 +393,16 @@
     ' display game (wrapper functions that calls all other display functions)
     Private Sub displayGame(ByVal game As chess.Game, Optional ByVal switchSide As Boolean = True)
         resizeAndCenter()
-        If switchSide Then
-            displayBoard(game.board, game.whiteToMove, options.pieceStyle)
+        If options.boardSwitchingEnabled Then
+            If switchSide Then
+                displayBoard(game.board, game.whiteToMove, options.pieceStyle)
+            Else
+                displayBoard(game.board, Not game.whiteToMove, options.pieceStyle)
+            End If
         Else
-            displayBoard(game.board, Not game.whiteToMove, options.pieceStyle)
+            displayBoard(game.board, True, options.pieceStyle)
         End If
+
 
         displayHistory(game.history)
         displayBlackTime(game.blackTime.timeLeft)
@@ -716,7 +771,7 @@
 
     ' takeback move
     Private Sub tsmi_takeBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_takeBack.Click
-        If Not startGameDialogShowing And Not gameIsOver And Not pawnPromotionDialogUp Then
+        If Not startGameDialogShowing And Not gameIsOver And Not pawnPromotionDialogUp And Not optionsDialogUp Then
             currentGame = chess.takebackMove(currentGame)
             displayGame(currentGame)
         End If
@@ -724,7 +779,7 @@
 
     ' resign
     Private Sub tsmi_resign_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_resign.Click
-        If Not startGameDialogShowing And Not gameIsOver Then
+        If Not startGameDialogShowing And Not gameIsOver And Not optionsDialogUp Then
             endGame(Not currentGame.whiteToMove, 5)
         End If
     End Sub
@@ -786,8 +841,57 @@
         about.Show()
     End Sub
 #End Region
+    ' open game options
+    Private Sub openOptions()
+        ' save timer states
+
+        timerStates(0) = currentGame.whiteTime.timer.Enabled
+        timerStates(1) = currentGame.blackTime.timer.Enabled
+
+        ' pause timers
+        enableClock(currentGame.whiteTime, False)
+        enableClock(currentGame.blackTime, False)
+
+        optionsDialogUp = True
+
+        gameOptions.Show()
+
+
+    End Sub
+
+    ' do options
+    Public Sub closeOptions()
+        If boardSwitchingEnabled Then
+            displayBoard(currentGame.board, currentGame.whiteToMove, options.pieceStyle)
+        Else
+            displayBoard(currentGame.board, True, options.pieceStyle)
+        End If
+
+        optionsDialogUp = False
+
+        ' restore timer states
+        currentGame.whiteTime.timer.Enabled = timerStates(0)
+        currentGame.blackTime.timer.Enabled = timerStates(1)
+
+        If switchSideDelayTimer.Interval <> options.switchSideDelay Then
+            ' change timer interval value
+            switchSideDelayTimer.Interval = options.switchSideDelay
+        End If
+    End Sub
 
     Private Sub btn_options_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_options.Click
-        gameOptions.Show()
+        openOptions()
+    End Sub
+
+    Private Sub tsmi_optionsFromFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromFile.Click
+        openOptions()
+    End Sub
+
+    Private Sub tsmi_optionsFromGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromGame.Click
+        openOptions()
+    End Sub
+
+    Private Sub tsmi_optionsFromView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromView.Click
+        openOptions()
     End Sub
 End Class

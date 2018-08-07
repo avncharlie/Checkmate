@@ -27,11 +27,11 @@ Partial Class gameOptions
         Me.lbl_intervalHeader = New System.Windows.Forms.Label()
         Me.tb_interval = New System.Windows.Forms.TrackBar()
         Me.lbl_optionsHeader = New System.Windows.Forms.Label()
-        Me.btn_confirm = New System.Windows.Forms.Button()
+        Me.btn_save = New System.Windows.Forms.Button()
         Me.btn_restoreDefault = New System.Windows.Forms.Button()
         Me.lbl_pieceStyle = New System.Windows.Forms.Label()
         Me.cb_pieceStyle = New System.Windows.Forms.ComboBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btn_cancel = New System.Windows.Forms.Button()
         Me.tbox_switchSideDelay = New System.Windows.Forms.TextBox()
         Me.lbl_switchSideDelayHeader = New System.Windows.Forms.Label()
         Me.tb_switchSideDelay = New System.Windows.Forms.TrackBar()
@@ -57,6 +57,13 @@ Partial Class gameOptions
         Me.lbl_squareCapturesPreview = New System.Windows.Forms.Label()
         Me.btn_squareCaptures = New System.Windows.Forms.Button()
         Me.lbl_squareCaptures = New System.Windows.Forms.Label()
+        Me.lbl_kingInCheckPreview = New System.Windows.Forms.Label()
+        Me.btn_kingInCheck = New System.Windows.Forms.Button()
+        Me.lbl_kingInCheck = New System.Windows.Forms.Label()
+        Me.lbl_selectedPiecePreview = New System.Windows.Forms.Label()
+        Me.btn_selectedPiece = New System.Windows.Forms.Button()
+        Me.lbl_selectedPiece = New System.Windows.Forms.Label()
+        Me.lbl_intervalWarning = New System.Windows.Forms.Label()
         CType(Me.tb_interval, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tb_switchSideDelay, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pb_boardPreview, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -102,15 +109,15 @@ Partial Class gameOptions
         Me.lbl_optionsHeader.Text = "Options"
         Me.lbl_optionsHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'btn_confirm
+        'btn_save
         '
-        Me.btn_confirm.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_confirm.Location = New System.Drawing.Point(359, 609)
-        Me.btn_confirm.Name = "btn_confirm"
-        Me.btn_confirm.Size = New System.Drawing.Size(150, 40)
-        Me.btn_confirm.TabIndex = 10
-        Me.btn_confirm.Text = "Confirm and save"
-        Me.btn_confirm.UseVisualStyleBackColor = True
+        Me.btn_save.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_save.Location = New System.Drawing.Point(359, 609)
+        Me.btn_save.Name = "btn_save"
+        Me.btn_save.Size = New System.Drawing.Size(96, 40)
+        Me.btn_save.TabIndex = 10
+        Me.btn_save.Text = "Save"
+        Me.btn_save.UseVisualStyleBackColor = True
         '
         'btn_restoreDefault
         '
@@ -141,15 +148,15 @@ Partial Class gameOptions
         Me.cb_pieceStyle.Size = New System.Drawing.Size(121, 21)
         Me.cb_pieceStyle.TabIndex = 13
         '
-        'Button1
+        'btn_cancel
         '
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(12, 609)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(97, 40)
-        Me.Button1.TabIndex = 21
-        Me.Button1.Text = "Cancel"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btn_cancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_cancel.Location = New System.Drawing.Point(12, 609)
+        Me.btn_cancel.Name = "btn_cancel"
+        Me.btn_cancel.Size = New System.Drawing.Size(97, 40)
+        Me.btn_cancel.TabIndex = 21
+        Me.btn_cancel.Text = "Cancel"
+        Me.btn_cancel.UseVisualStyleBackColor = True
         '
         'tbox_switchSideDelay
         '
@@ -350,14 +357,14 @@ Partial Class gameOptions
         'lbl_squareCapturesPreview
         '
         Me.lbl_squareCapturesPreview.BackColor = System.Drawing.Color.White
-        Me.lbl_squareCapturesPreview.Location = New System.Drawing.Point(501, 382)
+        Me.lbl_squareCapturesPreview.Location = New System.Drawing.Point(501, 380)
         Me.lbl_squareCapturesPreview.Name = "lbl_squareCapturesPreview"
         Me.lbl_squareCapturesPreview.Size = New System.Drawing.Size(60, 24)
         Me.lbl_squareCapturesPreview.TabIndex = 45
         '
         'btn_squareCaptures
         '
-        Me.btn_squareCaptures.Location = New System.Drawing.Point(567, 382)
+        Me.btn_squareCaptures.Location = New System.Drawing.Point(567, 380)
         Me.btn_squareCaptures.Name = "btn_squareCaptures"
         Me.btn_squareCaptures.Size = New System.Drawing.Size(55, 24)
         Me.btn_squareCaptures.TabIndex = 44
@@ -368,17 +375,91 @@ Partial Class gameOptions
         '
         Me.lbl_squareCaptures.AutoSize = True
         Me.lbl_squareCaptures.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_squareCaptures.Location = New System.Drawing.Point(498, 363)
+        Me.lbl_squareCaptures.Location = New System.Drawing.Point(498, 361)
         Me.lbl_squareCaptures.Name = "lbl_squareCaptures"
         Me.lbl_squareCaptures.Size = New System.Drawing.Size(154, 16)
         Me.lbl_squareCaptures.TabIndex = 43
         Me.lbl_squareCaptures.Text = "Valid captures (squares)"
+        '
+        'lbl_kingInCheckPreview
+        '
+        Me.lbl_kingInCheckPreview.BackColor = System.Drawing.Color.White
+        Me.lbl_kingInCheckPreview.Location = New System.Drawing.Point(501, 459)
+        Me.lbl_kingInCheckPreview.Name = "lbl_kingInCheckPreview"
+        Me.lbl_kingInCheckPreview.Size = New System.Drawing.Size(60, 24)
+        Me.lbl_kingInCheckPreview.TabIndex = 48
+        '
+        'btn_kingInCheck
+        '
+        Me.btn_kingInCheck.Location = New System.Drawing.Point(567, 459)
+        Me.btn_kingInCheck.Name = "btn_kingInCheck"
+        Me.btn_kingInCheck.Size = New System.Drawing.Size(55, 24)
+        Me.btn_kingInCheck.TabIndex = 47
+        Me.btn_kingInCheck.Text = "Change"
+        Me.btn_kingInCheck.UseVisualStyleBackColor = True
+        '
+        'lbl_kingInCheck
+        '
+        Me.lbl_kingInCheck.AutoSize = True
+        Me.lbl_kingInCheck.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_kingInCheck.Location = New System.Drawing.Point(498, 440)
+        Me.lbl_kingInCheck.Name = "lbl_kingInCheck"
+        Me.lbl_kingInCheck.Size = New System.Drawing.Size(86, 16)
+        Me.lbl_kingInCheck.TabIndex = 46
+        Me.lbl_kingInCheck.Text = "King in check"
+        '
+        'lbl_selectedPiecePreview
+        '
+        Me.lbl_selectedPiecePreview.BackColor = System.Drawing.Color.White
+        Me.lbl_selectedPiecePreview.Location = New System.Drawing.Point(501, 537)
+        Me.lbl_selectedPiecePreview.Name = "lbl_selectedPiecePreview"
+        Me.lbl_selectedPiecePreview.Size = New System.Drawing.Size(60, 24)
+        Me.lbl_selectedPiecePreview.TabIndex = 51
+        '
+        'btn_selectedPiece
+        '
+        Me.btn_selectedPiece.Location = New System.Drawing.Point(567, 537)
+        Me.btn_selectedPiece.Name = "btn_selectedPiece"
+        Me.btn_selectedPiece.Size = New System.Drawing.Size(55, 24)
+        Me.btn_selectedPiece.TabIndex = 50
+        Me.btn_selectedPiece.Text = "Change"
+        Me.btn_selectedPiece.UseVisualStyleBackColor = True
+        '
+        'lbl_selectedPiece
+        '
+        Me.lbl_selectedPiece.AutoSize = True
+        Me.lbl_selectedPiece.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_selectedPiece.Location = New System.Drawing.Point(498, 518)
+        Me.lbl_selectedPiece.Name = "lbl_selectedPiece"
+        Me.lbl_selectedPiece.Size = New System.Drawing.Size(139, 16)
+        Me.lbl_selectedPiece.TabIndex = 49
+        Me.lbl_selectedPiece.Text = "Selected piece colour"
+        '
+        'lbl_intervalWarning
+        '
+        Me.lbl_intervalWarning.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lbl_intervalWarning.ForeColor = System.Drawing.Color.White
+        Me.lbl_intervalWarning.Location = New System.Drawing.Point(384, 9)
+        Me.lbl_intervalWarning.Name = "lbl_intervalWarning"
+        Me.lbl_intervalWarning.Padding = New System.Windows.Forms.Padding(3)
+        Me.lbl_intervalWarning.Size = New System.Drawing.Size(272, 57)
+        Me.lbl_intervalWarning.TabIndex = 52
+        Me.lbl_intervalWarning.Text = "Note: if timer interval is modified while a game has started, the changes will no" & _
+            "t take affect until the next game."
+        Me.lbl_intervalWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'gameOptions
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(668, 661)
+        Me.Controls.Add(Me.lbl_intervalWarning)
+        Me.Controls.Add(Me.lbl_selectedPiecePreview)
+        Me.Controls.Add(Me.btn_selectedPiece)
+        Me.Controls.Add(Me.lbl_selectedPiece)
+        Me.Controls.Add(Me.lbl_kingInCheckPreview)
+        Me.Controls.Add(Me.btn_kingInCheck)
+        Me.Controls.Add(Me.lbl_kingInCheck)
         Me.Controls.Add(Me.lbl_squareCapturesPreview)
         Me.Controls.Add(Me.btn_squareCaptures)
         Me.Controls.Add(Me.lbl_squareCaptures)
@@ -403,18 +484,22 @@ Partial Class gameOptions
         Me.Controls.Add(Me.tbox_switchSideDelay)
         Me.Controls.Add(Me.lbl_switchSideDelayHeader)
         Me.Controls.Add(Me.tb_switchSideDelay)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btn_cancel)
         Me.Controls.Add(Me.cb_pieceStyle)
         Me.Controls.Add(Me.lbl_pieceStyle)
         Me.Controls.Add(Me.btn_restoreDefault)
-        Me.Controls.Add(Me.btn_confirm)
+        Me.Controls.Add(Me.btn_save)
         Me.Controls.Add(Me.tbox_interval)
         Me.Controls.Add(Me.lbl_intervalHeader)
         Me.Controls.Add(Me.tb_interval)
         Me.Controls.Add(Me.lbl_optionsHeader)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "gameOptions"
         Me.Text = "Options"
+        Me.TopMost = True
         CType(Me.tb_interval, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tb_switchSideDelay, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pb_boardPreview, System.ComponentModel.ISupportInitialize).EndInit()
@@ -426,11 +511,11 @@ Partial Class gameOptions
     Friend WithEvents lbl_intervalHeader As System.Windows.Forms.Label
     Friend WithEvents tb_interval As System.Windows.Forms.TrackBar
     Friend WithEvents lbl_optionsHeader As System.Windows.Forms.Label
-    Friend WithEvents btn_confirm As System.Windows.Forms.Button
+    Friend WithEvents btn_save As System.Windows.Forms.Button
     Friend WithEvents btn_restoreDefault As System.Windows.Forms.Button
     Friend WithEvents lbl_pieceStyle As System.Windows.Forms.Label
     Friend WithEvents cb_pieceStyle As System.Windows.Forms.ComboBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btn_cancel As System.Windows.Forms.Button
     Friend WithEvents tbox_switchSideDelay As System.Windows.Forms.TextBox
     Friend WithEvents lbl_switchSideDelayHeader As System.Windows.Forms.Label
     Friend WithEvents tb_switchSideDelay As System.Windows.Forms.TrackBar
@@ -456,4 +541,11 @@ Partial Class gameOptions
     Friend WithEvents lbl_squareCapturesPreview As System.Windows.Forms.Label
     Friend WithEvents btn_squareCaptures As System.Windows.Forms.Button
     Friend WithEvents lbl_squareCaptures As System.Windows.Forms.Label
+    Friend WithEvents lbl_kingInCheckPreview As System.Windows.Forms.Label
+    Friend WithEvents btn_kingInCheck As System.Windows.Forms.Button
+    Friend WithEvents lbl_kingInCheck As System.Windows.Forms.Label
+    Friend WithEvents lbl_selectedPiecePreview As System.Windows.Forms.Label
+    Friend WithEvents btn_selectedPiece As System.Windows.Forms.Button
+    Friend WithEvents lbl_selectedPiece As System.Windows.Forms.Label
+    Friend WithEvents lbl_intervalWarning As System.Windows.Forms.Label
 End Class

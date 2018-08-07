@@ -12,3 +12,4 @@
 \\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.exe
 \\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.xml
 \\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.pdb
+\\Mac\Home\Documents\Quick Access\Checkmate\Checkmate\Checkmate\obj\x86\Release\Checkmate.gameOptions.resources
