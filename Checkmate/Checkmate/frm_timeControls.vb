@@ -1,17 +1,21 @@
-﻿Public Class timeControls
+﻿Public Class frm_timeControls
+    ' form closes on pressing escape
     Private Sub timeControls_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Escape Then Me.Close()
     End Sub
 
+    ' opens time control info form
     Private Sub link_howDoesThisWork_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles link_howDoesThisWork.LinkClicked
-        timeControlInfo.Show()
+        frm_timeControlInfo.Show()
     End Sub
 
+    ' opens custom time control button form
     Private Sub btn_custom_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_custom.Click
-        customTimeControl.Show()
+        frm_customTimeControl.Show()
         Me.Close()
     End Sub
 
+    ' handles all time control button clicks, opens main form
     Private Sub btn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_1.Click, btn_2.Click, btn_3.Click, btn_4.Click, btn_5.Click, btn_6.Click, btn_7.Click, btn_8.Click
         Dim name = CType(sender, Button).Name
         Dim totalTime As Integer
@@ -48,11 +52,12 @@
         options.increment = increment
 
         Me.Close()
-        game.Show()
+        frm_game.Show()
     End Sub
 
+    ' closes current form, goes back to mainMenu
     Private Sub btn_back_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_back.Click
-        mainMenu.Show()
+        frm_mainMenu.Show()
         Me.Close()
     End Sub
 End Class

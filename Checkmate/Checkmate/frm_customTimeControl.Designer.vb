@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class customTimeControl
+Partial Class frm_customTimeControl
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class customTimeControl
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(customTimeControl))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_customTimeControl))
         Me.lbl_customTimeControl = New System.Windows.Forms.Label()
         Me.tb_timePerSide = New System.Windows.Forms.TrackBar()
         Me.lbl_totalTimeLabel = New System.Windows.Forms.Label()

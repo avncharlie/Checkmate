@@ -1,4 +1,4 @@
-﻿Public Class gameOptions
+﻿Public Class frm_gameOptions
     Dim formJustLoadedFlagIntervalTbox As Boolean = True
     Dim formJustLoadedFlagSwitchSideTbox As Boolean = True
 
@@ -217,7 +217,7 @@
         updateBoardPreview()
     End Sub
 
-    ' validate textboxe input
+    ' validate textbox input
     Private Sub tbox_validateKeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles tbox_interval.KeyPress, tbox_switchSideDelay.KeyPress
         Dim allowedChars As String = "0123456789"
         If allowedChars.IndexOf(e.KeyChar) = -1 And Char.IsControl(e.KeyChar) <> True Then
@@ -257,7 +257,7 @@
         Dim validMoves As Dictionary(Of Integer(), Integer())
         validMoves = chess.validMoves(exampleGame, {4, 4}, True)
 
-        pb_boardPreview.Image = game.renderBoard(exampleGame.board, {pb_boardPreview.Width, pb_boardPreview.Height}, exampleGame.whiteToMove, pieceStyle, moveHighlightStyle, validMoves, {4, 4}, chessboardDarkSquares, chessboardLightSquares, validMoveIndicator, validDotCaptureIndicator, validSquareCaptureIndicator, kingInCheck, selectedPiece)
+        pb_boardPreview.Image = frm_game.renderBoard(exampleGame.board, {pb_boardPreview.Width, pb_boardPreview.Height}, exampleGame.whiteToMove, pieceStyle, moveHighlightStyle, validMoves, {4, 4}, chessboardDarkSquares, chessboardLightSquares, validMoveIndicator, validDotCaptureIndicator, validSquareCaptureIndicator, kingInCheck, selectedPiece)
     End Sub
 
     ' update move highlight style and refresh board preview
@@ -357,13 +357,15 @@
         saveOptionsToFile(resources.settingsFile)
 
         Me.Close()
-        game.closeOptions()
+        If Not options.optionsOpenedFromMainMenu Then
+            frm_game.closeOptions()
+        End If
     End Sub
 
     ' restore default values and close
     Private Sub btn_cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_cancel.Click
         restoreDefaults()
         Me.Close()
-        game.closeOptions()
+        frm_game.closeOptions()
     End Sub
 End Class

@@ -1,4 +1,4 @@
-﻿Public Class game
+﻿Public Class frm_game
     ' holds the game currently open
     Dim currentGame As chess.Game
 
@@ -11,6 +11,10 @@
     Dim pawnPromotionDialogUp As Boolean
     Dim gameIsOver As Boolean
     Dim optionsDialogUp As Boolean
+
+    ' holds player name
+    Dim whitePlayerName As String
+    Dim blackPlayerName As String
 
     ' piece selection
     Dim pieceSelected As Boolean
@@ -26,6 +30,9 @@
 #Region "Start game"
     ' game load function - initialises or loads game and sets all flag values
     Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        ' hide end game panel
+        p_endGame.Visible = False
+
         ' either load or initialise game to currentGame
         If options.loadGame Then
             ' load game from file
@@ -33,10 +40,13 @@
             Me.Text = checkmateFilePathToFile(options.loadGamePath)
             isGameNew = False
             lbl_startGameDialog.Text = "Continue game?"
+            loadNames(options.loadGamePath, whitePlayerName, blackPlayerName)
         Else
             ' initialise new game
             currentGame = chess.initGame(resources.stringboardStartingPosition, options.totalTime, options.interval, options.increment)
             isGameNew = True
+            p_enterNames.Visible = True
+            p_enterNames.BringToFront()
         End If
 
         ' initialise timers
@@ -58,13 +68,35 @@
 
         ' initialise timerStates
         timerStates = {False, False}
+
+    End Sub
+
+    ' load names from file
+    Private Sub loadNames(ByVal filePath As String, ByRef whiteName As String, ByRef blackName As String)
+        Dim temp As String
+
+        ' open file (assumes filePath is valid)
+        FileSystem.FileOpen(1, filePath, OpenMode.Input)
+
+        ' skip past all game data
+        temp = FileSystem.LineInput(1)
+        temp = FileSystem.LineInput(1)
+        temp = FileSystem.LineInput(1)
+        temp = FileSystem.LineInput(1)
+        temp = FileSystem.LineInput(1)
+
+        ' read names
+        whiteName = FileSystem.LineInput(1)
+        blackName = FileSystem.LineInput(1)
+
+        ' close file
+        FileSystem.FileClose(1)
     End Sub
 
     ' confirm start game
     Private Sub btn_startGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_startGame.Click
         startGameDialogShowing = False
-        lbl_startGameDialog.Visible = False
-        btn_startGame.Visible = False
+        p_startGame.Visible = False
 
         Dim gameStatus As Integer
         If currentGame.whiteToMove Then
@@ -100,6 +132,13 @@
 
         checkmateFilePathToFile = fileName
     End Function
+
+    ' set player names
+    Private Sub btn_confirmPlayerName_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_confirmPlayerName.Click
+        whitePlayerName = tb_whitePlayerName.Text
+        blackPlayerName = tb_blackPlayerName.Text
+        p_enterNames.Visible = False
+    End Sub
 #End Region
 
 #Region "Do move / takeback move"
@@ -207,9 +246,6 @@
             If pieceSelected Then
                 ' and a valid move clicked
                 If moveInMoveDict(coords, chess.validMoves(currentGame, selectedPieceCoords)) Then
-                    ' play sound
-                    My.Computer.Audio.Play(resources.chessSoundsFilePath(1))
-
                     ' deselects piece
                     selectPiece = False
 
@@ -236,6 +272,9 @@
                         pb_pawnPromotionRook.Image = Image.FromFile(resources.chessPiecesFilePath(rook, options.pieceStyle))
                         pb_pawnPromotionQueen.Image = Image.FromFile(resources.chessPiecesFilePath(queen, options.pieceStyle))
                     Else
+                        ' play sound
+                        My.Computer.Audio.Play(resources.chessSoundsFilePath(1))
+
                         currentMove.promotion = ""
 
                         currentGame = chess.doMove(currentMove)
@@ -331,6 +370,9 @@
 
     ' handles pawn promotion
     Private Sub pb_pawnPromotionClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles pb_pawnPromotionKnight.Click, pb_pawnPromotionBishop.Click, pb_pawnPromotionRook.Click, pb_pawnPromotionQueen.Click
+        ' play sound
+        My.Computer.Audio.Play(resources.chessSoundsFilePath(1))
+
         ' restore timers
         currentGame.whiteTime.timer.Enabled = timerStates(0)
         currentGame.blackTime.timer.Enabled = timerStates(1)
@@ -481,22 +523,20 @@
         p_chessboardContainer.Left = p_chessboardContainer.Parent.Width / 2 - p_chessboardContainer.Width / 2
 
         ' center start game dialog
-        lbl_startGameDialog.Top = lbl_startGameDialog.Parent.Height / 4
-        lbl_startGameDialog.Left = lbl_startGameDialog.Parent.Width / 2 - lbl_startGameDialog.Width / 2
-        btn_startGame.Top = lbl_startGameDialog.Parent.Height / 4 + 60
-        btn_startGame.Left = lbl_startGameDialog.Parent.Width / 2 - lbl_startGameDialog.Width / 2 + 94
+        p_startGame.Top = p_startGame.Parent.Height / 4 '- p_startGame.Height / 2
+        p_startGame.Left = p_startGame.Parent.Width / 2 - p_startGame.Width / 2
 
         ' center end game dialog
-        lbl_endGameDialog.Top = lbl_endGameDialog.Parent.Height / 4
-        lbl_endGameDialog.Left = lbl_endGameDialog.Parent.Width / 2 - lbl_endGameDialog.Width / 2
-        btn_endGameMainMenu.Top = btn_endGameMainMenu.Parent.Height / 4 + 85
-        btn_endGameMainMenu.Left = (btn_endGameMainMenu.Parent.Width / 2 - btn_endGameMainMenu.Width / 2) - 50
-        btn_endGameDialogClose.Top = btn_endGameDialogClose.Parent.Height / 4 + 85
-        btn_endGameDialogClose.Left = (btn_endGameDialogClose.Parent.Width / 2 - btn_endGameDialogClose.Width / 2) + 50
+        p_endGame.Top = p_endGame.Parent.Height / 4
+        p_endGame.Left = p_endGame.Parent.Width / 2 - p_endGame.Width / 2
 
         ' center pawn promotion dialog
         p_choosePawnPromotionPiece.Top = p_choosePawnPromotionPiece.Parent.Height / 4
         p_choosePawnPromotionPiece.Left = p_choosePawnPromotionPiece.Parent.Width / 2 - p_choosePawnPromotionPiece.Width / 2
+
+        ' center enter name dialog
+        p_enterNames.Top = p_enterNames.Parent.Height / 4
+        p_enterNames.Left = p_enterNames.Parent.Width / 2 - p_enterNames.Width / 2
     End Sub
 
     ' renders the board as a bitmap
@@ -618,31 +658,35 @@
                     End If
                 End If
 
+                ' ignore null error (this happens when saving options from the main menu. the settings still get saved)
+                Try
+                    ' if king in check indicate
+                    If Char.ToUpper(board(x, y)) = "K" And chess.isPieceBeingAttacked(chess.findCoordsOfPieceOnBoard(board(x, y), board), board) Then
+                        Dim divisor = 4
+                        Dim pointTriangleArray1() As Point
+                        Dim pointTriangleArray2() As Point
+                        Dim pointTriangleArray3() As Point
+                        Dim pointTriangleArray4() As Point
 
-                ' if king in check indicate
-                If Char.ToUpper(board(x, y)) = "K" And isPieceBeingAttacked(chess.findCoordsOfPieceOnBoard(board(x, y), board), board) Then
-                    Dim divisor = 4
-                    Dim pointTriangleArray1() As Point
-                    Dim pointTriangleArray2() As Point
-                    Dim pointTriangleArray3() As Point
-                    Dim pointTriangleArray4() As Point
+                        pointTriangleArray1 = {New Point(squareXCoord, squareYCoord), New Point(squareXCoord, squareYCoord + squareHeight / divisor), New Point(squareXCoord + squareHeight / divisor, squareYCoord)}
+                        pointTriangleArray2 = {New Point((squareXCoord + squareWidth) - squareWidth / divisor, squareYCoord), New Point(squareXCoord + squareWidth, squareYCoord), New Point(squareXCoord + squareHeight, squareYCoord + (squareHeight / divisor))}
+                        pointTriangleArray3 = {New Point(squareXCoord, squareYCoord + squareHeight), New Point(squareXCoord, (squareYCoord + squareHeight) - squareHeight / divisor), New Point(squareXCoord + squareHeight / divisor, squareYCoord + squareHeight)}
+                        pointTriangleArray4 = {New Point((squareXCoord + squareWidth) - squareWidth / divisor, squareYCoord + squareHeight), New Point(squareXCoord + squareWidth, squareYCoord + squareHeight), New Point(squareXCoord + squareWidth, (squareYCoord + squareHeight) - (squareHeight / divisor))}
 
-                    pointTriangleArray1 = {New Point(squareXCoord, squareYCoord), New Point(squareXCoord, squareYCoord + squareHeight / divisor), New Point(squareXCoord + squareHeight / divisor, squareYCoord)}
-                    pointTriangleArray2 = {New Point((squareXCoord + squareWidth) - squareWidth / divisor, squareYCoord), New Point(squareXCoord + squareWidth, squareYCoord), New Point(squareXCoord + squareHeight, squareYCoord + (squareHeight / divisor))}
-                    pointTriangleArray3 = {New Point(squareXCoord, squareYCoord + squareHeight), New Point(squareXCoord, (squareYCoord + squareHeight) - squareHeight / divisor), New Point(squareXCoord + squareHeight / divisor, squareYCoord + squareHeight)}
-                    pointTriangleArray4 = {New Point((squareXCoord + squareWidth) - squareWidth / divisor, squareYCoord + squareHeight), New Point(squareXCoord + squareWidth, squareYCoord + squareHeight), New Point(squareXCoord + squareWidth, (squareYCoord + squareHeight) - (squareHeight / divisor))}
+                        chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray1)
+                        chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray2)
+                        chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray3)
+                        chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray4)
+                    End If
 
-                    chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray1)
-                    chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray2)
-                    chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray3)
-                    chessboard_graphics.FillPolygon(New SolidBrush(ColorTranslator.FromHtml(kingInCheckHex)), pointTriangleArray4)
-                End If
+                    ' draw image and dot over if indicator style is dots
+                    chessboard_graphics.DrawImage(Image.FromFile(resources.chessPiecesFilePath(board(x, y), pieceStyle)), currentSquare)
+                    If drawMoveOverPiece Then
+                        chessboard_graphics.FillEllipse(New SolidBrush(ColorTranslator.FromHtml(validDotCaptureIndicatorHex)), validMoveIndicator)
+                    End If
+                Catch ex As Exception
 
-                chessboard_graphics.DrawImage(Image.FromFile(resources.chessPiecesFilePath(board(x, y), pieceStyle)), currentSquare)
-                If drawMoveOverPiece Then
-                    chessboard_graphics.FillEllipse(New SolidBrush(ColorTranslator.FromHtml(validDotCaptureIndicatorHex)), validMoveIndicator)
-                End If
-
+                End Try
 
 
                 whiteSquareOnTopLeft = Not whiteSquareOnTopLeft
@@ -674,6 +718,9 @@
 
         If saveFileDialog.FileName <> "" Then
             chess.saveGame(currentGame, saveFileDialog.FileName, True, "")
+
+            ' save names to file
+            My.Computer.FileSystem.WriteAllText(saveFileDialog.FileName, whitePlayerName & vbCrLf & blackPlayerName, True)
         End If
 
         ' update titlebar
@@ -700,36 +747,67 @@
 
         Dim message As String
 
-        Dim winner As String
-        Dim loser As String
+        Dim writeToHighscores As Boolean
+        writeToHighscores = False
+
+
+        Dim winningName As String
+        Dim losingName As String
+
         If whiteWin Then
-            winner = "White"
-            loser = "Black"
+            winningName = whitePlayerName
+            losingName = blackPlayerName
         Else
-            winner = "Black"
-            loser = "White"
+            winningName = blackPlayerName
+            losingName = whitePlayerName
         End If
+
+        Dim highscoreString As String
+        highscoreString = whitePlayerName & " vs " & blackPlayerName & ": "
 
         Select Case gameStatus
             Case 1
-                message = winner & " wins by checkmate!"
+                message = winningName & " wins by checkmate!"
+                highscoreString = highscoreString + winningName + " won by checkmate"
+                writeToHighscores = True
             Case 2
                 message = "Draw by stalemate"
             Case 3
                 message = "Draw from insufficient material"
             Case 4
-                message = winner & " wins on time!"
+                message = winningName & " wins on time!"
+                highscoreString = highscoreString + winningName + " won on time"
+                writeToHighscores = True
             Case Else
-                message = loser & " resigns, " & winner & " wins!"
+                message = losingName & " resigns, " & winningName & " wins!"
         End Select
+
+        If writeToHighscores Then
+            Dim timeLeft As String
+            timeLeft = ""
+
+            If whiteWin Then
+                If currentGame.whiteTime.totalTime = New TimeSpan(0, 0, 0) Then
+                    timeLeft = currentGame.whiteTime.timeLeft.Seconds & "." & currentGame.whiteTime.timeLeft.Milliseconds
+                Else
+                    timeLeft = (currentGame.whiteTime.totalTime - currentGame.whiteTime.timeLeft).Seconds & "." & (currentGame.whiteTime.totalTime - currentGame.whiteTime.timeLeft).Milliseconds
+                End If
+            Else
+                If currentGame.blackTime.totalTime = New TimeSpan(0, 0, 0) Then
+                    timeLeft = currentGame.blackTime.timeLeft.Seconds & "." & currentGame.blackTime.timeLeft.Milliseconds
+                Else
+                    timeLeft = (currentGame.blackTime.totalTime - currentGame.blackTime.timeLeft).Seconds & "." & (currentGame.blackTime.totalTime - currentGame.blackTime.timeLeft).Milliseconds
+                End If
+            End If
+
+            My.Computer.FileSystem.WriteAllText(resources.highscoreFile, highscoreString & " in " & timeLeft & " seconds!" & vbCrLf, True)
+        End If
 
         gameIsOver = True
 
         resizeAndCenter()
 
-        lbl_endGameDialog.Visible = True
-        btn_endGameMainMenu.Visible = True
-        btn_endGameDialogClose.Visible = True
+        p_endGame.Visible = True
 
         btn_endGameMainMenu.BringToFront()
         btn_endGameDialogClose.BringToFront()
@@ -746,14 +824,12 @@
 
     ' close end game dialog
     Private Sub btn_endGameNotifyClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_endGameDialogClose.Click
-        lbl_endGameDialog.Visible = False
-        btn_endGameMainMenu.Visible = False
-        btn_endGameDialogClose.Visible = False
+        p_endGame.Visible = False
     End Sub
 
     ' return to main menu from end game dialog
     Private Sub btn_endGameMainMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_endGameMainMenu.Click
-        mainMenu.Show()
+        frm_mainMenu.Show()
         Me.Close()
     End Sub
 #End Region
@@ -787,7 +863,7 @@
     ' go to main menu
     Private Sub tsmi_mainMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_mainMenu.Click
         Me.Close()
-        mainMenu.Show()
+        frm_mainMenu.Show()
     End Sub
 
     ' change piece style
@@ -838,13 +914,32 @@
 
     ' show about screen
     Private Sub tsmi_about_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_about.Click
-        about.Show()
+        frm_about.Show()
+    End Sub
+
+    ' open options
+    Private Sub tsmi_optionsFromFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromFile.Click
+        openOptions()
+    End Sub
+
+    ' open options
+    Private Sub tsmi_optionsFromGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromGame.Click
+        openOptions()
+    End Sub
+
+    ' open options
+    Private Sub tsmi_optionsFromView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromView.Click
+        openOptions()
     End Sub
 #End Region
-    ' open game options
-    Private Sub openOptions()
-        ' save timer states
 
+#Region "Options"
+    ' open game options and pause game
+    Private Sub openOptions()
+        ' set opened from mainmenu to be false
+        options.optionsOpenedFromMainMenu = False
+
+        ' save timer states
         timerStates(0) = currentGame.whiteTime.timer.Enabled
         timerStates(1) = currentGame.blackTime.timer.Enabled
 
@@ -854,12 +949,10 @@
 
         optionsDialogUp = True
 
-        gameOptions.Show()
-
-
+        frm_gameOptions.Show()
     End Sub
 
-    ' do options
+    ' close options and continue game
     Public Sub closeOptions()
         If boardSwitchingEnabled Then
             displayBoard(currentGame.board, currentGame.whiteToMove, options.pieceStyle)
@@ -879,19 +972,9 @@
         End If
     End Sub
 
+    ' options through button
     Private Sub btn_options_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_options.Click
         openOptions()
     End Sub
-
-    Private Sub tsmi_optionsFromFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromFile.Click
-        openOptions()
-    End Sub
-
-    Private Sub tsmi_optionsFromGame_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromGame.Click
-        openOptions()
-    End Sub
-
-    Private Sub tsmi_optionsFromView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_optionsFromView.Click
-        openOptions()
-    End Sub
+#End Region
 End Class

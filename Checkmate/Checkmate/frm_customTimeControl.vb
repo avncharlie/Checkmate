@@ -1,4 +1,4 @@
-﻿Public Class customTimeControl
+﻿Public Class frm_customTimeControl
     Dim finalTotalTime As Integer = 1
     Dim finalIncrement As Integer = 0
 
@@ -69,7 +69,7 @@
 
     ' show time controls form and hide this form when back button pressed
     Private Sub btn_back_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_back.Click
-        timeControls.Show()
+        frm_timeControls.Show()
         Me.Close()
     End Sub
 
@@ -78,6 +78,6 @@
         options.increment = finalIncrement
         options.totalTime = finalTotalTime
         Me.Close()
-        game.Show()
+        frm_game.Show()
     End Sub
 End Class

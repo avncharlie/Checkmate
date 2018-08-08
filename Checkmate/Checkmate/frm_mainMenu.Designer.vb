@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class mainMenu
+Partial Class frm_mainMenu
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,13 +22,14 @@ Partial Class mainMenu
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(mainMenu))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_mainMenu))
         Me.lbl_header = New System.Windows.Forms.Label()
         Me.pb_mainScreen = New System.Windows.Forms.PictureBox()
         Me.btn_newGame = New System.Windows.Forms.Button()
         Me.btn_loadGame = New System.Windows.Forms.Button()
         Me.btn_newTimedGame = New System.Windows.Forms.Button()
         Me.btn_options = New System.Windows.Forms.Button()
+        Me.btn_highScores = New System.Windows.Forms.Button()
         CType(Me.pb_mainScreen, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -54,7 +55,7 @@ Partial Class mainMenu
         'btn_newGame
         '
         Me.btn_newGame.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_newGame.Location = New System.Drawing.Point(42, 95)
+        Me.btn_newGame.Location = New System.Drawing.Point(42, 80)
         Me.btn_newGame.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_newGame.Name = "btn_newGame"
         Me.btn_newGame.Size = New System.Drawing.Size(204, 43)
@@ -65,10 +66,10 @@ Partial Class mainMenu
         'btn_loadGame
         '
         Me.btn_loadGame.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_loadGame.Location = New System.Drawing.Point(42, 257)
+        Me.btn_loadGame.Location = New System.Drawing.Point(42, 174)
         Me.btn_loadGame.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_loadGame.Name = "btn_loadGame"
-        Me.btn_loadGame.Size = New System.Drawing.Size(143, 43)
+        Me.btn_loadGame.Size = New System.Drawing.Size(204, 43)
         Me.btn_loadGame.TabIndex = 4
         Me.btn_loadGame.Text = "Load Game"
         Me.btn_loadGame.UseVisualStyleBackColor = True
@@ -76,7 +77,7 @@ Partial Class mainMenu
         'btn_newTimedGame
         '
         Me.btn_newTimedGame.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_newTimedGame.Location = New System.Drawing.Point(42, 151)
+        Me.btn_newTimedGame.Location = New System.Drawing.Point(42, 127)
         Me.btn_newTimedGame.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_newTimedGame.Name = "btn_newTimedGame"
         Me.btn_newTimedGame.Size = New System.Drawing.Size(204, 43)
@@ -87,25 +88,39 @@ Partial Class mainMenu
         'btn_options
         '
         Me.btn_options.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_options.Location = New System.Drawing.Point(189, 257)
+        Me.btn_options.Location = New System.Drawing.Point(189, 260)
         Me.btn_options.Margin = New System.Windows.Forms.Padding(2)
         Me.btn_options.Name = "btn_options"
         Me.btn_options.Size = New System.Drawing.Size(57, 43)
         Me.btn_options.TabIndex = 6
         Me.btn_options.UseVisualStyleBackColor = True
         '
+        'btn_highScores
+        '
+        Me.btn_highScores.Font = New System.Drawing.Font("Maiandra GD", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_highScores.Location = New System.Drawing.Point(42, 260)
+        Me.btn_highScores.Margin = New System.Windows.Forms.Padding(2)
+        Me.btn_highScores.Name = "btn_highScores"
+        Me.btn_highScores.Size = New System.Drawing.Size(143, 43)
+        Me.btn_highScores.TabIndex = 7
+        Me.btn_highScores.Text = "High scores"
+        Me.btn_highScores.UseVisualStyleBackColor = True
+        '
         'mainMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 347)
+        Me.ClientSize = New System.Drawing.Size(284, 342)
+        Me.Controls.Add(Me.btn_highScores)
         Me.Controls.Add(Me.btn_options)
         Me.Controls.Add(Me.btn_newTimedGame)
         Me.Controls.Add(Me.btn_loadGame)
         Me.Controls.Add(Me.btn_newGame)
         Me.Controls.Add(Me.pb_mainScreen)
         Me.Controls.Add(Me.lbl_header)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "mainMenu"
         Me.Text = "Checkmate"
         CType(Me.pb_mainScreen, System.ComponentModel.ISupportInitialize).EndInit()
@@ -118,4 +133,5 @@ Partial Class mainMenu
     Friend WithEvents btn_loadGame As System.Windows.Forms.Button
     Friend WithEvents btn_newTimedGame As System.Windows.Forms.Button
     Friend WithEvents btn_options As System.Windows.Forms.Button
+    Friend WithEvents btn_highScores As System.Windows.Forms.Button
 End Class

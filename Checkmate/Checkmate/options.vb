@@ -1,9 +1,11 @@
 ﻿Module options
-    ' Will be set by user in either new game creation or load game process
+    ' will be set by user in either new game creation or load game process
     Public increment As Integer = 0
     Public totalTime As Integer = 0
     Public loadGame As Boolean = False
     Public loadGamePath As String
+    Public whitePlayerName As String
+    Public blackPlayerName As String
 
     ' default values
     Public interval As Integer = resources.defaultInterval
@@ -18,4 +20,7 @@
     Public validSquareCaptureIndicatorHex As String = resources.defaultValidSquareCaptureIndicatorHex
     Public kingInCheckHex As String = resources.defaultKingInCheckHex
     Public selectedPieceHex As String = resources.defaultSelectedPieceHex
+
+    ' used by program
+    Public optionsOpenedFromMainMenu As Boolean = False
 End Module

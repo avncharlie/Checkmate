@@ -1237,7 +1237,7 @@
     End Function
 
     ' return possible en passant
-    Private Function possibleEnPassant(ByVal pieceIsWhite As Boolean, ByVal coords As Integer(), ByVal game As game, Optional ByVal moveKey As Integer = 2) As Dictionary(Of Integer(), Integer())
+    Private Function possibleEnPassant(ByVal pieceIsWhite As Boolean, ByVal coords As Integer(), ByVal game As Game, Optional ByVal moveKey As Integer = 2) As Dictionary(Of Integer(), Integer())
         ' moveDict
         Dim moveDict As New Dictionary(Of Integer(), Integer())
         moveDict = initMoveDict()
@@ -1320,7 +1320,7 @@
     End Function
 
     ' returns an array of pieces that have been in a specified coords
-    Private Function pieceInCoordinateThroughGame(ByVal coords As Integer(), ByVal game As game) As Char()
+    Private Function pieceInCoordinateThroughGame(ByVal coords As Integer(), ByVal game As Game) As Char()
         Dim pieces() As Char
         ReDim pieces(game.boardHistory.Length - 1)
 
@@ -1348,7 +1348,7 @@
     End Function
 
     ' given a line of moves, checks if the king would be in check if moved through them (used in castling)
-    Private Function kingInCheckThroughMoves(ByVal line As Integer(,), ByVal game As game) As Boolean
+    Private Function kingInCheckThroughMoves(ByVal line As Integer(,), ByVal game As Game) As Boolean
         Dim tempBoard(,) As Char
         Dim inCheck = False
 
@@ -1368,7 +1368,7 @@
     End Function
 
     ' return possible castles
-    Private Function possibleCastles(ByVal kingIsWhite As Boolean, ByVal game As game) As Dictionary(Of Integer(), Integer())
+    Private Function possibleCastles(ByVal kingIsWhite As Boolean, ByVal game As Game) As Dictionary(Of Integer(), Integer())
         ' check if either piece has moved throughout the game
         Dim kingCoords As Char()
         Dim kingSideRookCoords As Char()
@@ -1467,7 +1467,7 @@
     End Function
 
     ' given a moveDict and a board, returns a moveDict with all the moves that leave the king in check removed
-    Private Function removeMovesThatResultInCheck(ByVal whiteSideTurn As Boolean, ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As game) As Dictionary(Of Integer(), Integer())
+    Private Function removeMovesThatResultInCheck(ByVal whiteSideTurn As Boolean, ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As Game) As Dictionary(Of Integer(), Integer())
         Dim newMoveDict As Dictionary(Of Integer(), Integer())
         newMoveDict = initMoveDict()
 
@@ -1511,7 +1511,7 @@
     End Function
 
     ' given a moveDict, append moveKey 6 to any moves that result in check for other side
-    Private Function possibleCheckMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As game) As Dictionary(Of Integer(), Integer())
+    Private Function possibleCheckMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As Game) As Dictionary(Of Integer(), Integer())
         Dim newMoveDict As Dictionary(Of Integer(), Integer())
         newMoveDict = initMoveDict()
 
@@ -1559,7 +1559,7 @@
     End Function
 
     ' given a moveDict, append moveKey 7 to any moves that result in a checkmate for other side
-    Private Function possibleCheckmateMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As game) As Dictionary(Of Integer(), Integer())
+    Private Function possibleCheckmateMoves(ByVal startCoords As Integer(), ByVal moveDict As Dictionary(Of Integer(), Integer()), ByVal game As Game) As Dictionary(Of Integer(), Integer())
         Dim newMoveDict As Dictionary(Of Integer(), Integer())
         newMoveDict = initMoveDict()
 
@@ -1602,7 +1602,7 @@
 #End Region
 
     ' given a board and coords, return valid moves in dictionary (<valid moves coords> : <array of related movekeys>)
-    Public Function validMoves(ByVal gameState As game, ByVal coords As Integer(), Optional ByVal disableCheckingForCheck As Boolean = False) As Dictionary(Of Integer(), Integer())
+    Public Function validMoves(ByVal gameState As Game, ByVal coords As Integer(), Optional ByVal disableCheckingForCheck As Boolean = False) As Dictionary(Of Integer(), Integer())
         Dim piece As Char
         piece = gameState.board(coords(0), coords(1))
 
@@ -1666,7 +1666,7 @@
     End Function
 
     ' given a valid start coords and dest coords and a game, return an int array with matching moveKeys
-    Public Function getMoveKeys(ByVal startCoords As Integer(), ByVal destCoords As Integer(), ByVal game As game) As Integer()
+    Public Function getMoveKeys(ByVal startCoords As Integer(), ByVal destCoords As Integer(), ByVal game As Game) As Integer()
         Dim moveDict As New Dictionary(Of Integer(), Integer())
         moveDict = chess.validMoves(game, startCoords)
         Dim moveKeys() As Integer
@@ -1731,10 +1731,12 @@
     Public Function timespanToString(ByVal time As TimeSpan) As String
         If time.TotalHours >= 1 Then
             timespanToString = String.Format("{0:00}:{1:00}:{2:00}", time.TotalHours, time.Minutes, time.Seconds)
-        ElseIf time.Minutes >= 1 Then
-            timespanToString = String.Format("{0:00}:{1:00}.{2:00}", time.Minutes, time.Seconds, formatMilliseconds(time.Milliseconds))
         Else
-            timespanToString = String.Format("{0:00}.{1:00}", time.Seconds, formatMilliseconds(time.Milliseconds))
+            If time.Minutes >= 1 Then
+                timespanToString = String.Format("{0:00}:{1:00}.{2:00}", time.Minutes, time.Seconds, formatMilliseconds(time.Milliseconds))
+            Else
+                timespanToString = String.Format("{0:00}.{1:00}", time.Seconds, formatMilliseconds(time.Milliseconds))
+            End If
         End If
     End Function
 #End Region
@@ -1816,13 +1818,13 @@
 
 #Region "Convenience / helper functions"
     ' returns a board made from a string board
-    Public Function boardFromString(ByVal s As String) As Char(,)
+    Public Function boardFromString(ByVal stringBoard As String) As Char(,)
 
         Dim board(7, 7) As Char
         Dim index = 0
         For y = 0 To 7
             For x = 0 To 7
-                board(x, y) = s(index)
+                board(x, y) = stringBoard(index)
                 index = index + 1
             Next
         Next
@@ -1830,12 +1832,12 @@
     End Function
 
     ' returns a string board made from a board
-    Public Function boardAsString(ByVal b As Char(,)) As String
+    Public Function boardAsString(ByVal board As Char(,)) As String
 
         Dim s As String = ""
         For y = 0 To 7
             For x = 0 To 7
-                s = s + b(x, y)
+                s = s + board(x, y)
             Next
         Next
         boardAsString = s

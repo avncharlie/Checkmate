@@ -91,50 +91,56 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="about.Designer.vb">
-      <DependentUpon>about.vb</DependentUpon>
+    <Compile Include="frm_about.Designer.vb">
+      <DependentUpon>frm_about.vb</DependentUpon>
     </Compile>
-    <Compile Include="about.vb">
+    <Compile Include="frm_about.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="customTimeControl.Designer.vb">
-      <DependentUpon>customTimeControl.vb</DependentUpon>
+    <Compile Include="frm_customTimeControl.Designer.vb">
+      <DependentUpon>frm_customTimeControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="customTimeControl.vb">
+    <Compile Include="frm_customTimeControl.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="game.Designer.vb">
-      <DependentUpon>game.vb</DependentUpon>
+    <Compile Include="frm_game.Designer.vb">
+      <DependentUpon>frm_game.vb</DependentUpon>
     </Compile>
-    <Compile Include="game.vb">
+    <Compile Include="frm_game.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="gameOptions.Designer.vb">
-      <DependentUpon>gameOptions.vb</DependentUpon>
+    <Compile Include="frm_gameOptions.Designer.vb">
+      <DependentUpon>frm_gameOptions.vb</DependentUpon>
     </Compile>
-    <Compile Include="gameOptions.vb">
+    <Compile Include="frm_gameOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="mainMenu.Designer.vb">
-      <DependentUpon>mainMenu.vb</DependentUpon>
+    <Compile Include="frm_highScores.Designer.vb">
+      <DependentUpon>frm_highScores.vb</DependentUpon>
     </Compile>
-    <Compile Include="mainMenu.vb">
+    <Compile Include="frm_highScores.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_mainMenu.Designer.vb">
+      <DependentUpon>frm_mainMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_mainMenu.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="chess.vb" />
     <Compile Include="resources.vb" />
     <Compile Include="options.vb" />
-    <Compile Include="timeControlInfo.Designer.vb">
-      <DependentUpon>timeControlInfo.vb</DependentUpon>
+    <Compile Include="frm_timeControlInfo.Designer.vb">
+      <DependentUpon>frm_timeControlInfo.vb</DependentUpon>
     </Compile>
-    <Compile Include="timeControlInfo.vb">
+    <Compile Include="frm_timeControlInfo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="timeControls.vb">
+    <Compile Include="frm_timeControls.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="timeControls.Designer.vb">
-      <DependentUpon>timeControls.vb</DependentUpon>
+    <Compile Include="frm_timeControls.Designer.vb">
+      <DependentUpon>frm_timeControls.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -154,26 +160,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="about.resx">
-      <DependentUpon>about.vb</DependentUpon>
+    <EmbeddedResource Include="frm_about.resx">
+      <DependentUpon>frm_about.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="customTimeControl.resx">
-      <DependentUpon>customTimeControl.vb</DependentUpon>
+    <EmbeddedResource Include="frm_customTimeControl.resx">
+      <DependentUpon>frm_customTimeControl.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="game.resx">
-      <DependentUpon>game.vb</DependentUpon>
+    <EmbeddedResource Include="frm_game.resx">
+      <DependentUpon>frm_game.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="gameOptions.resx">
-      <DependentUpon>gameOptions.vb</DependentUpon>
+    <EmbeddedResource Include="frm_gameOptions.resx">
+      <DependentUpon>frm_gameOptions.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="mainMenu.resx">
-      <DependentUpon>mainMenu.vb</DependentUpon>
+    <EmbeddedResource Include="frm_highScores.resx">
+      <DependentUpon>frm_highScores.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="timeControlInfo.resx">
-      <DependentUpon>timeControlInfo.vb</DependentUpon>
+    <EmbeddedResource Include="frm_mainMenu.resx">
+      <DependentUpon>frm_mainMenu.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="timeControls.resx">
-      <DependentUpon>timeControls.vb</DependentUpon>
+    <EmbeddedResource Include="frm_timeControlInfo.resx">
+      <DependentUpon>frm_timeControlInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_timeControls.resx">
+      <DependentUpon>frm_timeControls.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

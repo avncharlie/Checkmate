@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class game
+Partial Class frm_game
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class game
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(game))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_game))
         Me.lbl_whiteTimeHeader = New System.Windows.Forms.Label()
         Me.lbl_blackTimeHeader = New System.Windows.Forms.Label()
         Me.lbl_whiteTimeCounter = New System.Windows.Forms.Label()
@@ -45,6 +45,8 @@ Partial Class game
         Me.tss_gameTakebackResign = New System.Windows.Forms.ToolStripSeparator()
         Me.tsmi_resign = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_mainMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tss_gameMainmenuOptions = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmi_optionsFromGame = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_view = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_pieceStyle = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_pieceStyle1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -55,33 +57,40 @@ Partial Class game
         Me.tsmi_moveHighlighting = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_dots = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmi_squares = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tss_viewMoveOptions = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmi_optionsFromView = New System.Windows.Forms.ToolStripMenuItem()
         Me.tlp_mainContainer = New System.Windows.Forms.TableLayoutPanel()
         Me.tlp_sidebarContainer = New System.Windows.Forms.TableLayoutPanel()
         Me.tlp_mainSidebarControls = New System.Windows.Forms.TableLayoutPanel()
         Me.lv_moves = New System.Windows.Forms.ListView()
-        Me.hiddenColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ch_hiddenColumn = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ch_white = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ch_black = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tlp_resignAndOptions = New System.Windows.Forms.TableLayoutPanel()
         Me.btn_options = New System.Windows.Forms.Button()
         Me.p_chessboardContainerContainer = New System.Windows.Forms.Panel()
         Me.p_chessboardContainer = New System.Windows.Forms.Panel()
+        Me.p_startGame = New System.Windows.Forms.Panel()
+        Me.lbl_startGameDialog = New System.Windows.Forms.Label()
+        Me.btn_startGame = New System.Windows.Forms.Button()
+        Me.p_endGame = New System.Windows.Forms.Panel()
+        Me.lbl_endGameDialog = New System.Windows.Forms.Label()
+        Me.btn_endGameMainMenu = New System.Windows.Forms.Button()
+        Me.btn_endGameDialogClose = New System.Windows.Forms.Button()
+        Me.p_enterNames = New System.Windows.Forms.Panel()
+        Me.btn_confirmPlayerName = New System.Windows.Forms.Button()
+        Me.tb_blackPlayerName = New System.Windows.Forms.TextBox()
+        Me.tb_whitePlayerName = New System.Windows.Forms.TextBox()
+        Me.lbl_blackPlayerHeader = New System.Windows.Forms.Label()
+        Me.lbl_whitePlayerName = New System.Windows.Forms.Label()
+        Me.lbl_enterNamesHeader = New System.Windows.Forms.Label()
         Me.p_choosePawnPromotionPiece = New System.Windows.Forms.Panel()
         Me.pb_pawnPromotionRook = New System.Windows.Forms.PictureBox()
         Me.pb_pawnPromotionQueen = New System.Windows.Forms.PictureBox()
         Me.pb_pawnPromotionBishop = New System.Windows.Forms.PictureBox()
         Me.pb_pawnPromotionKnight = New System.Windows.Forms.PictureBox()
         Me.lbl_pawnPromotion = New System.Windows.Forms.Label()
-        Me.btn_endGameDialogClose = New System.Windows.Forms.Button()
-        Me.btn_endGameMainMenu = New System.Windows.Forms.Button()
-        Me.lbl_endGameDialog = New System.Windows.Forms.Label()
-        Me.btn_startGame = New System.Windows.Forms.Button()
-        Me.lbl_startGameDialog = New System.Windows.Forms.Label()
         Me.pb_chessboard = New System.Windows.Forms.PictureBox()
-        Me.tss_gameMainmenuOptions = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsmi_optionsFromGame = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tss_viewMoveOptions = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsmi_optionsFromView = New System.Windows.Forms.ToolStripMenuItem()
         Me.ms_menu.SuspendLayout()
         Me.tlp_mainContainer.SuspendLayout()
         Me.tlp_sidebarContainer.SuspendLayout()
@@ -89,6 +98,9 @@ Partial Class game
         Me.tlp_resignAndOptions.SuspendLayout()
         Me.p_chessboardContainerContainer.SuspendLayout()
         Me.p_chessboardContainer.SuspendLayout()
+        Me.p_startGame.SuspendLayout()
+        Me.p_endGame.SuspendLayout()
+        Me.p_enterNames.SuspendLayout()
         Me.p_choosePawnPromotionPiece.SuspendLayout()
         CType(Me.pb_pawnPromotionRook, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pb_pawnPromotionQueen, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -206,40 +218,40 @@ Partial Class game
         'tsmi_about
         '
         Me.tsmi_about.Name = "tsmi_about"
-        Me.tsmi_about.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_about.Size = New System.Drawing.Size(125, 22)
         Me.tsmi_about.Text = "About"
         '
         'tss_FileAboutSave
         '
         Me.tss_FileAboutSave.Name = "tss_FileAboutSave"
-        Me.tss_FileAboutSave.Size = New System.Drawing.Size(149, 6)
+        Me.tss_FileAboutSave.Size = New System.Drawing.Size(122, 6)
         '
         'tsmi_saveGame
         '
         Me.tsmi_saveGame.Name = "tsmi_saveGame"
-        Me.tsmi_saveGame.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_saveGame.Size = New System.Drawing.Size(125, 22)
         Me.tsmi_saveGame.Text = "Save..."
         '
         'tss_fileSaveOptions
         '
         Me.tss_fileSaveOptions.Name = "tss_fileSaveOptions"
-        Me.tss_fileSaveOptions.Size = New System.Drawing.Size(149, 6)
+        Me.tss_fileSaveOptions.Size = New System.Drawing.Size(122, 6)
         '
         'tsmi_optionsFromFile
         '
         Me.tsmi_optionsFromFile.Name = "tsmi_optionsFromFile"
-        Me.tsmi_optionsFromFile.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_optionsFromFile.Size = New System.Drawing.Size(125, 22)
         Me.tsmi_optionsFromFile.Text = "Options..."
         '
         'tss_fileOptionsExit
         '
         Me.tss_fileOptionsExit.Name = "tss_fileOptionsExit"
-        Me.tss_fileOptionsExit.Size = New System.Drawing.Size(149, 6)
+        Me.tss_fileOptionsExit.Size = New System.Drawing.Size(122, 6)
         '
         'tsmi_exit
         '
         Me.tsmi_exit.Name = "tsmi_exit"
-        Me.tsmi_exit.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_exit.Size = New System.Drawing.Size(125, 22)
         Me.tsmi_exit.Text = "Exit"
         '
         'tsmi_game
@@ -252,25 +264,36 @@ Partial Class game
         'tsmi_takeBack
         '
         Me.tsmi_takeBack.Name = "tsmi_takeBack"
-        Me.tsmi_takeBack.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_takeBack.Size = New System.Drawing.Size(144, 22)
         Me.tsmi_takeBack.Text = "Take back..."
         '
         'tss_gameTakebackResign
         '
         Me.tss_gameTakebackResign.Name = "tss_gameTakebackResign"
-        Me.tss_gameTakebackResign.Size = New System.Drawing.Size(149, 6)
+        Me.tss_gameTakebackResign.Size = New System.Drawing.Size(141, 6)
         '
         'tsmi_resign
         '
         Me.tsmi_resign.Name = "tsmi_resign"
-        Me.tsmi_resign.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_resign.Size = New System.Drawing.Size(144, 22)
         Me.tsmi_resign.Text = "Resign"
         '
         'tsmi_mainMenu
         '
         Me.tsmi_mainMenu.Name = "tsmi_mainMenu"
-        Me.tsmi_mainMenu.Size = New System.Drawing.Size(152, 22)
+        Me.tsmi_mainMenu.Size = New System.Drawing.Size(144, 22)
         Me.tsmi_mainMenu.Text = "Main menu..."
+        '
+        'tss_gameMainmenuOptions
+        '
+        Me.tss_gameMainmenuOptions.Name = "tss_gameMainmenuOptions"
+        Me.tss_gameMainmenuOptions.Size = New System.Drawing.Size(141, 6)
+        '
+        'tsmi_optionsFromGame
+        '
+        Me.tsmi_optionsFromGame.Name = "tsmi_optionsFromGame"
+        Me.tsmi_optionsFromGame.Size = New System.Drawing.Size(144, 22)
+        Me.tsmi_optionsFromGame.Text = "Options..."
         '
         'tsmi_view
         '
@@ -345,6 +368,17 @@ Partial Class game
         Me.tsmi_squares.Size = New System.Drawing.Size(115, 22)
         Me.tsmi_squares.Text = "Squares"
         '
+        'tss_viewMoveOptions
+        '
+        Me.tss_viewMoveOptions.Name = "tss_viewMoveOptions"
+        Me.tss_viewMoveOptions.Size = New System.Drawing.Size(196, 6)
+        '
+        'tsmi_optionsFromView
+        '
+        Me.tsmi_optionsFromView.Name = "tsmi_optionsFromView"
+        Me.tsmi_optionsFromView.Size = New System.Drawing.Size(199, 22)
+        Me.tsmi_optionsFromView.Text = "More options..."
+        '
         'tlp_mainContainer
         '
         Me.tlp_mainContainer.ColumnCount = 2
@@ -403,7 +437,7 @@ Partial Class game
         '
         'lv_moves
         '
-        Me.lv_moves.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.hiddenColumn, Me.ch_white, Me.ch_black})
+        Me.lv_moves.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ch_hiddenColumn, Me.ch_white, Me.ch_black})
         Me.lv_moves.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lv_moves.Location = New System.Drawing.Point(3, 261)
         Me.lv_moves.Margin = New System.Windows.Forms.Padding(3, 0, 3, 3)
@@ -413,9 +447,9 @@ Partial Class game
         Me.lv_moves.UseCompatibleStateImageBehavior = False
         Me.lv_moves.View = System.Windows.Forms.View.Details
         '
-        'hiddenColumn
+        'ch_hiddenColumn
         '
-        Me.hiddenColumn.Width = 0
+        Me.ch_hiddenColumn.Width = 0
         '
         'ch_white
         '
@@ -467,17 +501,152 @@ Partial Class game
         'p_chessboardContainer
         '
         Me.p_chessboardContainer.BackColor = System.Drawing.Color.Transparent
+        Me.p_chessboardContainer.Controls.Add(Me.p_startGame)
+        Me.p_chessboardContainer.Controls.Add(Me.p_endGame)
+        Me.p_chessboardContainer.Controls.Add(Me.p_enterNames)
         Me.p_chessboardContainer.Controls.Add(Me.p_choosePawnPromotionPiece)
-        Me.p_chessboardContainer.Controls.Add(Me.btn_endGameDialogClose)
-        Me.p_chessboardContainer.Controls.Add(Me.btn_endGameMainMenu)
-        Me.p_chessboardContainer.Controls.Add(Me.lbl_endGameDialog)
-        Me.p_chessboardContainer.Controls.Add(Me.btn_startGame)
-        Me.p_chessboardContainer.Controls.Add(Me.lbl_startGameDialog)
         Me.p_chessboardContainer.Controls.Add(Me.pb_chessboard)
         Me.p_chessboardContainer.Location = New System.Drawing.Point(94, 0)
         Me.p_chessboardContainer.Name = "p_chessboardContainer"
         Me.p_chessboardContainer.Size = New System.Drawing.Size(577, 577)
         Me.p_chessboardContainer.TabIndex = 0
+        '
+        'p_startGame
+        '
+        Me.p_startGame.Controls.Add(Me.lbl_startGameDialog)
+        Me.p_startGame.Controls.Add(Me.btn_startGame)
+        Me.p_startGame.Location = New System.Drawing.Point(76, 178)
+        Me.p_startGame.Name = "p_startGame"
+        Me.p_startGame.Size = New System.Drawing.Size(242, 107)
+        Me.p_startGame.TabIndex = 9
+        '
+        'lbl_startGameDialog
+        '
+        Me.lbl_startGameDialog.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_startGameDialog.Location = New System.Drawing.Point(35, 0)
+        Me.lbl_startGameDialog.Name = "lbl_startGameDialog"
+        Me.lbl_startGameDialog.Padding = New System.Windows.Forms.Padding(0, 15, 0, 0)
+        Me.lbl_startGameDialog.Size = New System.Drawing.Size(179, 62)
+        Me.lbl_startGameDialog.TabIndex = 1
+        Me.lbl_startGameDialog.Text = "Start game?"
+        Me.lbl_startGameDialog.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'btn_startGame
+        '
+        Me.btn_startGame.Location = New System.Drawing.Point(78, 65)
+        Me.btn_startGame.Name = "btn_startGame"
+        Me.btn_startGame.Size = New System.Drawing.Size(83, 29)
+        Me.btn_startGame.TabIndex = 2
+        Me.btn_startGame.Text = "Confirm"
+        Me.btn_startGame.UseVisualStyleBackColor = True
+        '
+        'p_endGame
+        '
+        Me.p_endGame.Controls.Add(Me.lbl_endGameDialog)
+        Me.p_endGame.Controls.Add(Me.btn_endGameMainMenu)
+        Me.p_endGame.Controls.Add(Me.btn_endGameDialogClose)
+        Me.p_endGame.Location = New System.Drawing.Point(76, 40)
+        Me.p_endGame.Name = "p_endGame"
+        Me.p_endGame.Size = New System.Drawing.Size(240, 117)
+        Me.p_endGame.TabIndex = 8
+        '
+        'lbl_endGameDialog
+        '
+        Me.lbl_endGameDialog.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_endGameDialog.Location = New System.Drawing.Point(0, -1)
+        Me.lbl_endGameDialog.Name = "lbl_endGameDialog"
+        Me.lbl_endGameDialog.Padding = New System.Windows.Forms.Padding(0, 15, 0, 0)
+        Me.lbl_endGameDialog.Size = New System.Drawing.Size(240, 82)
+        Me.lbl_endGameDialog.TabIndex = 3
+        Me.lbl_endGameDialog.Text = "end game b"
+        Me.lbl_endGameDialog.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'btn_endGameMainMenu
+        '
+        Me.btn_endGameMainMenu.Location = New System.Drawing.Point(20, 84)
+        Me.btn_endGameMainMenu.Name = "btn_endGameMainMenu"
+        Me.btn_endGameMainMenu.Size = New System.Drawing.Size(75, 23)
+        Me.btn_endGameMainMenu.TabIndex = 4
+        Me.btn_endGameMainMenu.Text = "Main menu"
+        Me.btn_endGameMainMenu.UseVisualStyleBackColor = True
+        '
+        'btn_endGameDialogClose
+        '
+        Me.btn_endGameDialogClose.Location = New System.Drawing.Point(148, 84)
+        Me.btn_endGameDialogClose.Name = "btn_endGameDialogClose"
+        Me.btn_endGameDialogClose.Size = New System.Drawing.Size(75, 23)
+        Me.btn_endGameDialogClose.TabIndex = 5
+        Me.btn_endGameDialogClose.Text = "Close"
+        Me.btn_endGameDialogClose.UseVisualStyleBackColor = True
+        '
+        'p_enterNames
+        '
+        Me.p_enterNames.Controls.Add(Me.btn_confirmPlayerName)
+        Me.p_enterNames.Controls.Add(Me.tb_blackPlayerName)
+        Me.p_enterNames.Controls.Add(Me.tb_whitePlayerName)
+        Me.p_enterNames.Controls.Add(Me.lbl_blackPlayerHeader)
+        Me.p_enterNames.Controls.Add(Me.lbl_whitePlayerName)
+        Me.p_enterNames.Controls.Add(Me.lbl_enterNamesHeader)
+        Me.p_enterNames.Location = New System.Drawing.Point(96, 291)
+        Me.p_enterNames.Name = "p_enterNames"
+        Me.p_enterNames.Size = New System.Drawing.Size(342, 155)
+        Me.p_enterNames.TabIndex = 7
+        Me.p_enterNames.Visible = False
+        '
+        'btn_confirmPlayerName
+        '
+        Me.btn_confirmPlayerName.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_confirmPlayerName.Location = New System.Drawing.Point(248, 70)
+        Me.btn_confirmPlayerName.Name = "btn_confirmPlayerName"
+        Me.btn_confirmPlayerName.Size = New System.Drawing.Size(76, 60)
+        Me.btn_confirmPlayerName.TabIndex = 5
+        Me.btn_confirmPlayerName.Text = "Confirm"
+        Me.btn_confirmPlayerName.UseVisualStyleBackColor = True
+        '
+        'tb_blackPlayerName
+        '
+        Me.tb_blackPlayerName.Location = New System.Drawing.Point(92, 111)
+        Me.tb_blackPlayerName.Name = "tb_blackPlayerName"
+        Me.tb_blackPlayerName.Size = New System.Drawing.Size(130, 20)
+        Me.tb_blackPlayerName.TabIndex = 4
+        '
+        'tb_whitePlayerName
+        '
+        Me.tb_whitePlayerName.Location = New System.Drawing.Point(92, 70)
+        Me.tb_whitePlayerName.Name = "tb_whitePlayerName"
+        Me.tb_whitePlayerName.Size = New System.Drawing.Size(130, 20)
+        Me.tb_whitePlayerName.TabIndex = 3
+        '
+        'lbl_blackPlayerHeader
+        '
+        Me.lbl_blackPlayerHeader.Font = New System.Drawing.Font("Maiandra GD", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_blackPlayerHeader.Location = New System.Drawing.Point(13, 108)
+        Me.lbl_blackPlayerHeader.Name = "lbl_blackPlayerHeader"
+        Me.lbl_blackPlayerHeader.Size = New System.Drawing.Size(83, 23)
+        Me.lbl_blackPlayerHeader.TabIndex = 2
+        Me.lbl_blackPlayerHeader.Text = "Black:"
+        Me.lbl_blackPlayerHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_whitePlayerName
+        '
+        Me.lbl_whitePlayerName.Font = New System.Drawing.Font("Maiandra GD", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_whitePlayerName.Location = New System.Drawing.Point(10, 67)
+        Me.lbl_whitePlayerName.Name = "lbl_whitePlayerName"
+        Me.lbl_whitePlayerName.Size = New System.Drawing.Size(95, 23)
+        Me.lbl_whitePlayerName.TabIndex = 1
+        Me.lbl_whitePlayerName.Text = "White:"
+        Me.lbl_whitePlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_enterNamesHeader
+        '
+        Me.lbl_enterNamesHeader.BackColor = System.Drawing.Color.Gainsboro
+        Me.lbl_enterNamesHeader.Font = New System.Drawing.Font("Maiandra GD", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_enterNamesHeader.Location = New System.Drawing.Point(28, 9)
+        Me.lbl_enterNamesHeader.Name = "lbl_enterNamesHeader"
+        Me.lbl_enterNamesHeader.Size = New System.Drawing.Size(283, 40)
+        Me.lbl_enterNamesHeader.TabIndex = 0
+        Me.lbl_enterNamesHeader.Text = "Enter player names"
+        Me.lbl_enterNamesHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'p_choosePawnPromotionPiece
         '
@@ -486,7 +655,7 @@ Partial Class game
         Me.p_choosePawnPromotionPiece.Controls.Add(Me.pb_pawnPromotionBishop)
         Me.p_choosePawnPromotionPiece.Controls.Add(Me.pb_pawnPromotionKnight)
         Me.p_choosePawnPromotionPiece.Controls.Add(Me.lbl_pawnPromotion)
-        Me.p_choosePawnPromotionPiece.Location = New System.Drawing.Point(150, 145)
+        Me.p_choosePawnPromotionPiece.Location = New System.Drawing.Point(272, 25)
         Me.p_choosePawnPromotionPiece.Name = "p_choosePawnPromotionPiece"
         Me.p_choosePawnPromotionPiece.Size = New System.Drawing.Size(274, 119)
         Me.p_choosePawnPromotionPiece.TabIndex = 6
@@ -542,58 +711,6 @@ Partial Class game
         Me.lbl_pawnPromotion.Text = "Choose pawn promotion piece"
         Me.lbl_pawnPromotion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'btn_endGameDialogClose
-        '
-        Me.btn_endGameDialogClose.Location = New System.Drawing.Point(297, 228)
-        Me.btn_endGameDialogClose.Name = "btn_endGameDialogClose"
-        Me.btn_endGameDialogClose.Size = New System.Drawing.Size(75, 23)
-        Me.btn_endGameDialogClose.TabIndex = 5
-        Me.btn_endGameDialogClose.Text = "Close"
-        Me.btn_endGameDialogClose.UseVisualStyleBackColor = True
-        Me.btn_endGameDialogClose.Visible = False
-        '
-        'btn_endGameMainMenu
-        '
-        Me.btn_endGameMainMenu.Location = New System.Drawing.Point(198, 228)
-        Me.btn_endGameMainMenu.Name = "btn_endGameMainMenu"
-        Me.btn_endGameMainMenu.Size = New System.Drawing.Size(75, 23)
-        Me.btn_endGameMainMenu.TabIndex = 4
-        Me.btn_endGameMainMenu.Text = "Main menu"
-        Me.btn_endGameMainMenu.UseVisualStyleBackColor = True
-        Me.btn_endGameMainMenu.Visible = False
-        '
-        'lbl_endGameDialog
-        '
-        Me.lbl_endGameDialog.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_endGameDialog.Location = New System.Drawing.Point(152, 145)
-        Me.lbl_endGameDialog.Name = "lbl_endGameDialog"
-        Me.lbl_endGameDialog.Padding = New System.Windows.Forms.Padding(0, 15, 0, 0)
-        Me.lbl_endGameDialog.Size = New System.Drawing.Size(272, 119)
-        Me.lbl_endGameDialog.TabIndex = 3
-        Me.lbl_endGameDialog.Text = "end game b"
-        Me.lbl_endGameDialog.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.lbl_endGameDialog.Visible = False
-        '
-        'btn_startGame
-        '
-        Me.btn_startGame.Location = New System.Drawing.Point(245, 205)
-        Me.btn_startGame.Name = "btn_startGame"
-        Me.btn_startGame.Size = New System.Drawing.Size(83, 29)
-        Me.btn_startGame.TabIndex = 2
-        Me.btn_startGame.Text = "Confirm"
-        Me.btn_startGame.UseVisualStyleBackColor = True
-        '
-        'lbl_startGameDialog
-        '
-        Me.lbl_startGameDialog.Font = New System.Drawing.Font("Maiandra GD", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_startGameDialog.Location = New System.Drawing.Point(152, 145)
-        Me.lbl_startGameDialog.Name = "lbl_startGameDialog"
-        Me.lbl_startGameDialog.Padding = New System.Windows.Forms.Padding(0, 15, 0, 0)
-        Me.lbl_startGameDialog.Size = New System.Drawing.Size(272, 115)
-        Me.lbl_startGameDialog.TabIndex = 1
-        Me.lbl_startGameDialog.Text = "Start game?"
-        Me.lbl_startGameDialog.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
         'pb_chessboard
         '
         Me.pb_chessboard.BackColor = System.Drawing.Color.White
@@ -605,28 +722,6 @@ Partial Class game
         Me.pb_chessboard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.pb_chessboard.TabIndex = 0
         Me.pb_chessboard.TabStop = False
-        '
-        'tss_gameMainmenuOptions
-        '
-        Me.tss_gameMainmenuOptions.Name = "tss_gameMainmenuOptions"
-        Me.tss_gameMainmenuOptions.Size = New System.Drawing.Size(149, 6)
-        '
-        'tsmi_optionsFromGame
-        '
-        Me.tsmi_optionsFromGame.Name = "tsmi_optionsFromGame"
-        Me.tsmi_optionsFromGame.Size = New System.Drawing.Size(152, 22)
-        Me.tsmi_optionsFromGame.Text = "Options..."
-        '
-        'tss_viewMoveOptions
-        '
-        Me.tss_viewMoveOptions.Name = "tss_viewMoveOptions"
-        Me.tss_viewMoveOptions.Size = New System.Drawing.Size(196, 6)
-        '
-        'tsmi_optionsFromView
-        '
-        Me.tsmi_optionsFromView.Name = "tsmi_optionsFromView"
-        Me.tsmi_optionsFromView.Size = New System.Drawing.Size(199, 22)
-        Me.tsmi_optionsFromView.Text = "More options..."
         '
         'game
         '
@@ -650,6 +745,10 @@ Partial Class game
         Me.tlp_resignAndOptions.ResumeLayout(False)
         Me.p_chessboardContainerContainer.ResumeLayout(False)
         Me.p_chessboardContainer.ResumeLayout(False)
+        Me.p_startGame.ResumeLayout(False)
+        Me.p_endGame.ResumeLayout(False)
+        Me.p_enterNames.ResumeLayout(False)
+        Me.p_enterNames.PerformLayout()
         Me.p_choosePawnPromotionPiece.ResumeLayout(False)
         CType(Me.pb_pawnPromotionRook, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pb_pawnPromotionQueen, System.ComponentModel.ISupportInitialize).EndInit()
@@ -672,7 +771,7 @@ Partial Class game
     Friend WithEvents tlp_mainContainer As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents tlp_mainSidebarControls As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents lv_moves As System.Windows.Forms.ListView
-    Friend WithEvents hiddenColumn As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ch_hiddenColumn As System.Windows.Forms.ColumnHeader
     Friend WithEvents ch_white As System.Windows.Forms.ColumnHeader
     Friend WithEvents ch_black As System.Windows.Forms.ColumnHeader
     Friend WithEvents tlp_sidebarContainer As System.Windows.Forms.TableLayoutPanel
@@ -719,4 +818,13 @@ Partial Class game
     Friend WithEvents tsmi_optionsFromGame As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tss_viewMoveOptions As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents tsmi_optionsFromView As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents p_enterNames As System.Windows.Forms.Panel
+    Friend WithEvents tb_blackPlayerName As System.Windows.Forms.TextBox
+    Friend WithEvents tb_whitePlayerName As System.Windows.Forms.TextBox
+    Friend WithEvents lbl_blackPlayerHeader As System.Windows.Forms.Label
+    Friend WithEvents lbl_whitePlayerName As System.Windows.Forms.Label
+    Friend WithEvents lbl_enterNamesHeader As System.Windows.Forms.Label
+    Friend WithEvents btn_confirmPlayerName As System.Windows.Forms.Button
+    Friend WithEvents p_endGame As System.Windows.Forms.Panel
+    Friend WithEvents p_startGame As System.Windows.Forms.Panel
 End Class
