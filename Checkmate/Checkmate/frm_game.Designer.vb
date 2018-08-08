@@ -723,7 +723,7 @@ Partial Class frm_game
         Me.pb_chessboard.TabIndex = 0
         Me.pb_chessboard.TabStop = False
         '
-        'game
+        'frm_game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -734,7 +734,7 @@ Partial Class frm_game
         Me.KeyPreview = True
         Me.MainMenuStrip = Me.ms_menu
         Me.MinimumSize = New System.Drawing.Size(827, 650)
-        Me.Name = "game"
+        Me.Name = "frm_game"
         Me.Text = "Checkmate"
         Me.ms_menu.ResumeLayout(False)
         Me.ms_menu.PerformLayout()

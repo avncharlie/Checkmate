@@ -1,9 +1,15 @@
 ﻿Public Class frm_customTimeControl
+    ' if user is going back or continuing do not exit application
+    Dim goingPreviousOrNextForm As Boolean
+
+    ' holds the final customised total time and increment
     Dim finalTotalTime As Integer = 1
     Dim finalIncrement As Integer = 0
 
+    ' update label and set goingPreviousForm flag
     Private Sub customTimeControl_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         updateLabel()
+        goingPreviousOrNextForm = False
     End Sub
 
     ' update preview label
@@ -69,6 +75,7 @@
 
     ' show time controls form and hide this form when back button pressed
     Private Sub btn_back_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_back.Click
+        goingPreviousOrNextForm = True
         frm_timeControls.Show()
         Me.Close()
     End Sub
@@ -77,7 +84,15 @@
     Private Sub btn_continue_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_continue.Click
         options.increment = finalIncrement
         options.totalTime = finalTotalTime
+        goingPreviousOrNextForm = True
         Me.Close()
         frm_game.Show()
+    End Sub
+
+    ' close application when form closing
+    Private Sub frm_customTimeControl_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If Not goingPreviousOrNextForm Then
+            Application.Exit()
+        End If
     End Sub
 End Class

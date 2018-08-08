@@ -209,7 +209,7 @@ Partial Class frm_timeControls
         Me.btn_1.Text = "1 + 0"
         Me.btn_1.UseVisualStyleBackColor = True
         '
-        'timeControls
+        'frm_timeControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -220,7 +220,7 @@ Partial Class frm_timeControls
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.MaximizeBox = False
-        Me.Name = "timeControls"
+        Me.Name = "frm_timeControls"
         Me.Text = "Checkmate"
         Me.tlp_timeControls.ResumeLayout(False)
         Me.tlp_timeControls.PerformLayout()

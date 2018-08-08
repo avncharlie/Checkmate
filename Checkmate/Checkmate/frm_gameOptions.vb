@@ -366,6 +366,15 @@
     Private Sub btn_cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_cancel.Click
         restoreDefaults()
         Me.Close()
-        frm_game.closeOptions()
+        If Not options.optionsOpenedFromMainMenu Then
+            frm_game.closeOptions()
+        End If
+    End Sub
+
+    ' call closeOptions if not opened from main menu when user closes form
+    Private Sub frm_gameOptions_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If Not options.optionsOpenedFromMainMenu Then
+            frm_game.closeOptions()
+        End If
     End Sub
 End Class

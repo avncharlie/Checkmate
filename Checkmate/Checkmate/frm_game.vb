@@ -27,6 +27,9 @@
     ' holds chessclock enabled states every time the game is paused so they can be restored
     Dim timerStates() As Boolean
 
+    ' checks if the user wants to navigate to the main menu
+    Dim goingToMainMenu As Boolean
+
 #Region "Start game"
     ' game load function - initialises or loads game and sets all flag values
     Private Sub game_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -65,10 +68,10 @@
         switchSideFlag = False
         startGameDialogShowing = True
         optionsDialogUp = False
+        goingToMainMenu = False
 
         ' initialise timerStates
         timerStates = {False, False}
-
     End Sub
 
     ' load names from file
@@ -832,6 +835,13 @@
         frm_mainMenu.Show()
         Me.Close()
     End Sub
+
+    ' close application when form closing (if user not going to main menu)
+    Private Sub frm_game_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If Not goingToMainMenu Then
+            Application.Exit()
+        End If
+    End Sub
 #End Region
 
 #Region "Menu items"
@@ -862,6 +872,7 @@
 
     ' go to main menu
     Private Sub tsmi_mainMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_mainMenu.Click
+        goingToMainMenu = True
         Me.Close()
         frm_mainMenu.Show()
     End Sub
@@ -977,4 +988,6 @@
         openOptions()
     End Sub
 #End Region
+
+
 End Class

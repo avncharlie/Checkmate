@@ -131,7 +131,7 @@ Partial Class frm_customTimeControl
         Me.btn_back.Text = "Back"
         Me.btn_back.UseVisualStyleBackColor = True
         '
-        'customTimeControl
+        'frm_customTimeControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -149,7 +149,7 @@ Partial Class frm_customTimeControl
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.Name = "customTimeControl"
+        Me.Name = "frm_customTimeControl"
         Me.Text = "Custom Time Control"
         CType(Me.tb_timePerSide, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tb_increment, System.ComponentModel.ISupportInitialize).EndInit()

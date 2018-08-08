@@ -448,7 +448,7 @@ Partial Class frm_gameOptions
             "t take affect until the next game."
         Me.lbl_intervalWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'gameOptions
+        'frm_gameOptions
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -497,7 +497,7 @@ Partial Class frm_gameOptions
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "gameOptions"
+        Me.Name = "frm_gameOptions"
         Me.Text = "Options"
         Me.TopMost = True
         CType(Me.tb_interval, System.ComponentModel.ISupportInitialize).EndInit()

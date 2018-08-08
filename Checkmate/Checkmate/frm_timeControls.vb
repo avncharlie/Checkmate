@@ -1,4 +1,7 @@
 ﻿Public Class frm_timeControls
+    ' if set, do not close application on form close
+    Dim closeAppOnFormClose As Boolean
+
     ' form closes on pressing escape
     Private Sub timeControls_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Escape Then Me.Close()
@@ -11,6 +14,7 @@
 
     ' opens custom time control button form
     Private Sub btn_custom_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_custom.Click
+        closeAppOnFormClose = False
         frm_customTimeControl.Show()
         Me.Close()
     End Sub
@@ -51,13 +55,28 @@
         options.totalTime = totalTime
         options.increment = increment
 
+        closeAppOnFormClose = False
+
         Me.Close()
         frm_game.Show()
     End Sub
 
     ' closes current form, goes back to mainMenu
     Private Sub btn_back_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_back.Click
+        closeAppOnFormClose = False
         frm_mainMenu.Show()
         Me.Close()
+    End Sub
+
+    ' close application when form closing
+    Private Sub frm_timeControls_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        If closeAppOnFormClose Then
+            Application.Exit()
+        End If
+    End Sub
+
+    ' set flag
+    Private Sub frm_timeControls_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        closeAppOnFormClose = True
     End Sub
 End Class
