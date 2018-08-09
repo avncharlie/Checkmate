@@ -14,7 +14,7 @@
         Me.LabelVersion.Text = String.Format("Version {0}", My.Application.Info.Version.ToString)
         Me.LabelCopyright.Text = My.Application.Info.Copyright
         Me.LabelCompanyName.Text = My.Application.Info.CompanyName
-        Me.TextBoxDescription.Text = "Checkmate by Alvin Charles" & vbCrLf & vbCrLf & "Attribution - " & vbCrLf & "Crown by Viktor Vorobyev from the Noun Project" & vbCrLf & "Settings by EnQiu from the Noun Project" & "Checkmate by Valter Bispo from the Noun Project" & vbCrLf & "alpha chess set pieces by Eric Bentzen" & vbCrLf & "cburnett chess set pieces by Colin M.L Burnett" & vbCrLf & "cheq chess set pieces by Adobe Systems, Inc." & vbCrLf & "leipzig chess set pieces (freeware)" & vbCrLf & "merida chess set pieces (freeware)"
+        Me.TextBoxDescription.Text = "Checkmate by Alvin Charles" & vbCrLf & vbCrLf & "Attribution - " & vbCrLf & "Crown by Viktor Vorobyev from the Noun Project" & vbCrLf & "Settings by EnQiu from the Noun Project" & vbCrLf & "Checkmate by Valter Bispo from the Noun Project" & vbCrLf & "alpha chess set pieces by Eric Bentzen" & vbCrLf & "cburnett chess set pieces by Colin M.L Burnett" & vbCrLf & "cheq chess set pieces by Adobe Systems, Inc." & vbCrLf & "leipzig chess set pieces (freeware)" & vbCrLf & "merida chess set pieces (freeware)"
     End Sub
 
     ' close form on ok button click

@@ -332,9 +332,9 @@
                     selectPiece = False
                     pieceSelected = False
                     If options.boardSwitchingEnabled Then
-                        displayBoard(currentGame.board, currentGame.whiteToMove)
+                        displayBoard(currentGame.board, currentGame.whiteToMove, options.pieceStyle)
                     Else
-                        displayBoard(currentGame.board, True)
+                        displayBoard(currentGame.board, True, options.pieceStyle)
                     End If
                 End If
             End If
@@ -791,15 +791,21 @@
 
             If whiteWin Then
                 If currentGame.whiteTime.totalTime = New TimeSpan(0, 0, 0) Then
-                    timeLeft = currentGame.whiteTime.timeLeft.Seconds & "." & currentGame.whiteTime.timeLeft.Milliseconds
+                    timeLeft = currentGame.whiteTime.timeLeft.TotalSeconds
                 Else
-                    timeLeft = (currentGame.whiteTime.totalTime - currentGame.whiteTime.timeLeft).Seconds & "." & (currentGame.whiteTime.totalTime - currentGame.whiteTime.timeLeft).Milliseconds
+                    timeLeft = (currentGame.whiteTime.totalTime - currentGame.whiteTime.timeLeft).TotalSeconds
+                    If timeLeft < 0 Then
+                        timeLeft = 0 - timeLeft
+                    End If
                 End If
             Else
                 If currentGame.blackTime.totalTime = New TimeSpan(0, 0, 0) Then
-                    timeLeft = currentGame.blackTime.timeLeft.Seconds & "." & currentGame.blackTime.timeLeft.Milliseconds
+                    timeLeft = currentGame.blackTime.timeLeft.TotalSeconds
                 Else
-                    timeLeft = (currentGame.blackTime.totalTime - currentGame.blackTime.timeLeft).Seconds & "." & (currentGame.blackTime.totalTime - currentGame.blackTime.timeLeft).Milliseconds
+                    timeLeft = (currentGame.blackTime.totalTime - currentGame.blackTime.timeLeft).TotalSeconds
+                    If timeLeft < 0 Then
+                        timeLeft = 0 - timeLeft
+                    End If
                 End If
             End If
 
@@ -832,6 +838,7 @@
 
     ' return to main menu from end game dialog
     Private Sub btn_endGameMainMenu_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btn_endGameMainMenu.Click
+        goingToMainMenu = True
         frm_mainMenu.Show()
         Me.Close()
     End Sub

@@ -556,7 +556,7 @@ Partial Class frm_game
         Me.lbl_endGameDialog.Location = New System.Drawing.Point(0, -1)
         Me.lbl_endGameDialog.Name = "lbl_endGameDialog"
         Me.lbl_endGameDialog.Padding = New System.Windows.Forms.Padding(0, 15, 0, 0)
-        Me.lbl_endGameDialog.Size = New System.Drawing.Size(240, 82)
+        Me.lbl_endGameDialog.Size = New System.Drawing.Size(240, 118)
         Me.lbl_endGameDialog.TabIndex = 3
         Me.lbl_endGameDialog.Text = "end game b"
         Me.lbl_endGameDialog.TextAlign = System.Drawing.ContentAlignment.TopCenter
