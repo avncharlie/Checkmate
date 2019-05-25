@@ -1,0 +1,16 @@
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\bin\x64\Release\Checkmate.exe
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\bin\x64\Release\Checkmate.pdb
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\bin\x64\Release\Checkmate.xml
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_about.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_customTimeControl.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_game.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_gameOptions.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_highScores.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_mainMenu.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_timeControlInfo.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.frm_timeControls.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.Resources.resources
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.vbproj.GenerateResource.Cache
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.exe
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.xml
+\\Mac\Home\Documents\School\Year 11\Software\Year 11 major project\Checkmate\Checkmate\Checkmate\obj\x64\Release\Checkmate.pdb
